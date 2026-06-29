@@ -1,0 +1,5166 @@
+\documentclass[final,onefignum,onetabnum]{mousaviart}
+%\documentclass[review]{siamart190516}
+%%
+% I added these lines
+\usepackage{enumerate}
+\usepackage{mathrsfs}
+\usepackage{stackrel}
+\usepackage{bigints}
+\usepackage{enumitem}
+\usepackage{comment}
+%\usepackage{cleveref}
+%\usepackage{amsthm,amsmath,amssymb}
+%\usepackage{graphicx}
+%\usepackage{subcaption}
+%\newtheorem{definition}[theorem]{Definition}
+%\newtheorem{assumption}[theorem]{ASSUMPTION}
+\newtheorem{assumption}{Assumption}
+%\newsiamthm{assumption}{Assumption}
+%\newtheorem{example}[theorem]{Example}
+%\newtheorem{remark}[theorem]{Remark}
+%\theoremstyle{remark}
+%\newtheorem{note}[theorem]{Note}
+%% ------------------------------------------------------------------
+%% Code used in examples, needed to reproduce 
+%% ------------------------------------------------------------------
+%% Used for \set, used in an example below
+\usepackage{braket,amsfonts}
+
+%% Used in table example below
+\usepackage{array}
+
+%% Used in table and figure examples below
+\usepackage[caption=false]{subfig}
+%% Used for papers with subtables created with the subfig package
+\captionsetup[subtable]{position=bottom}
+\captionsetup[table]{position=bottom}
+
+%% Used for PgfPlots example, shown in the "Figures" section below.
+\usepackage{pgfplots}
+%% Used for creating new theorem and remark environments
+
+%\newsiamthm{claim}{Claim}
+\newsiamremark{remark}{Remark}
+%\newsiamremark{hypothesis}{Hypothesis}
+%\crefname{hypothesis}{Hypothesis}{Hypotheses}
+%\newsiamremark{remark}{Remark}
+%\newtheorem{remark}{Remark}%[section]
+%\newtheorem{lemmam}{\textbf{Lemma}}[section]
+%\newsiamlemma{lemma}{Lemma}
+%% Algorithm style, could alternatively use algpseudocode
+\usepackage{algorithmic}
+
+%% For figures
+\usepackage{graphicx,epstopdf}
+%% For referencing line numbers
+\Crefname{ALC@unique}{Line}{Lines}
+
+%% For creating math operators
+\usepackage{amsopn}
+\DeclareMathOperator{\Range}{Range}
+
+%% ------------------------------------------------------------------
+%% Macros for in-document examples. These are not meant to reused for
+%% SIAM journal papers.
+%% ------------------------------------------------------------------
+\usepackage{xspace}
+\usepackage{bold-extra}
+\usepackage[most]{tcolorbox}
+\newcommand{\BibTeX}{{\scshape Bib}\TeX\xspace}
+\newcounter{example}
+\colorlet{texcscolor}{blue!50!black}
+\colorlet{texemcolor}{red!70!black}
+\colorlet{texpreamble}{red!70!black}
+\colorlet{codebackground}{black!25!white!25}
+
+\newcommand\bs{\symbol{'134}} % print backslash in typewriter OT1/T1
+\newcommand{\preamble}[2][\small]{\textcolor{texpreamble}{#1\texttt{#2 \emph{\% <- Preamble}}}}
+
+\lstdefinestyle{siamlatex}{%
+	style=tcblatex,
+	texcsstyle=*\color{texcscolor},
+	texcsstyle=[2]\color{texemcolor},
+	keywordstyle=[2]\color{texemcolor},
+	moretexcs={cref,Cref,maketitle,mathcal,text,headers,email,url},
+}
+
+\tcbset{%
+	colframe=black!75!white!75,
+	coltitle=white,
+	colback=codebackground, % bottom/left side
+	colbacklower=white, % top/right side
+	fonttitle=\bfseries,
+	arc=0pt,outer arc=0pt,
+	top=1pt,bottom=1pt,left=1mm,right=1mm,middle=1mm,boxsep=1mm,
+	leftrule=0.3mm,rightrule=0.3mm,toprule=0.3mm,bottomrule=0.3mm,
+	listing options={style=siamlatex}
+}
+
+%\newtcblisting[use counter=example]{example}[2][]{%
+%	title={Example~\thetcbcounter: #2},#1}
+
+\newtcbinputlisting[use counter=example]{\examplefile}[3][]{%
+	title={Example~\thetcbcounter: #2},listing file={#3},#1}
+
+\DeclareTotalTCBox{\code}{ v O{} }
+{ %fontupper=\ttfamily\color{texemcolor},
+	fontupper=\ttfamily\color{black},
+	nobeforeafter,
+	tcbox raise base,
+	colback=codebackground,colframe=white,
+	top=0pt,bottom=0pt,left=0mm,right=0mm,
+	leftrule=0pt,rightrule=0pt,toprule=0mm,bottomrule=0mm,
+	boxsep=0.5mm,
+	#2}{#1}
+
+% Stretch the pages
+\patchcmd\newpage{\vfil}{}{}{}
+\flushbottom
+
+%% ------------------------------------------------------------------
+%% End of macros for in-document examples. 
+%% ------------------------------------------------------------------
+%% ------------------------------------------------------------------
+%%
+%% HEADING INFORMATION
+%% ------------------------------------------------------------------
+\begin{tcbverbatimwrite}{tmp_\jobname_header.tex}
+	\title{Coupled Hamilton-Jacobi-Bellman systems}
+			
+%	\title{Mixed finite element approximation for non-divergence form elliptic equations with random input data\thanks{ 27th November 2025.
+%		\funding{This work was supported by the European Research Council (ERC Project DAFNE, grant agreement No. 891734).}}}
+	
+	\author{\vspace*{5mm} }
+		
+%	\author{Amireh Mousavi\thanks{Institute of Mathematics, Friedrich-Schiller-Universität Jena, 07743, Jena, Germany (\email{amireh.mousavi@gmail.com}).}
+		
+	
+	% Custom SIAM macro to insert headers
+	\headers{Coupled HJB systems}{}
+\end{tcbverbatimwrite}
+\input{tmp_\jobname_header.tex}
+
+% Optional: Set up PDF title and authors
+\ifpdf
+\hypersetup{ pdftitle={Coupled HJB systems} }
+\fi
+
+%% ------------------------------------------------------------------
+%% END HEADING INFORMATION
+%% ------------------------------------------------------------------
+%\makeatletter
+%\renewcommand{\section}[1]{%
+%	\refstepcounter{section}% شماره را افزایش می‌دهد
+%	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}% اضافه به TOC
+%	\vspace{2ex}%
+%	\begin{center}
+%		\normalfont\footnotesize
+%		\scshape\MakeUppercase{\thesection.\ \,#1}%
+%	\end{center}
+%	\vspace{1ex}%
+%}
+%\makeatother
+\usepackage{lettrine}
+
+%\makeatletter
+%% macros to split first token and the rest (works for simple titles)
+%\def\GetFirst#1#2\relax{#1}
+%\def\GetRest#1#2\relax{#2}
+%
+%\renewcommand{\section}[1]{%
+%	\refstepcounter{section}%
+%	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+%	\vspace{2.5ex}%
+%	% split argument (works for simple plain-text titles)
+%	\edef\temp{#1}%
+%	\edef\FirstLetter{\expandafter\GetFirst\temp\relax}%
+%	\edef\RestOfTitle{\expandafter\GetRest\temp\relax}%
+%	\begin{center}
+%		{\Large\normalfont
+%			\thesection.\;
+%			\lettrine[lines=1,loversize=0.25]{\MakeUppercase{\FirstLetter}}{\MakeUppercase{\RestOfTitle}}%
+%		}
+%	\end{center}%
+%	\vspace{1.5ex}%
+%}
+%\makeatother
+
+
+\makeatletter
+
+% split first and rest (simple plain titles)
+\def\GetFirst#1#2\relax{#1}
+\def\GetRest#1#2\relax{#2}
+
+\renewcommand{\section}[1]{%
+	\refstepcounter{section}%
+	\addcontentsline{toc}{section}{\protect\numberline{\thesection}#1}%
+	\vspace{2ex}%
+	%
+	\edef\temp{#1}%
+	\edef\FirstLetter{\expandafter\GetFirst\temp\relax}%
+	\edef\RestOfTitle{\expandafter\GetRest\temp\relax}%
+	%
+	\begin{center}
+		{\footnotesize
+			\normalfont
+			%\thesection.\;
+			%{\fontsize{14}{14}\selectfont \MakeUppercase{\FirstLetter}}%
+			{\fontsize{10}{10}\selectfont \thesection.}\;
+			{\fontsize{10}{10}\selectfont \MakeUppercase{\FirstLetter}}%
+			\MakeUppercase{\RestOfTitle}%
+		}
+	\end{center}%
+	\vspace{1.5ex}%
+}
+\makeatother
+%
+%
+\makeatletter
+\renewcommand\subsection[1]{%
+	\refstepcounter{subsection}%
+	\addcontentsline{toc}{subsection}{\protect\numberline{\thesection.\arabic{subsection}}#1}%
+	\vspace{0.3ex plus 0.5ex minus 0.2ex}%
+	\noindent
+	{\normalfont\normalsize
+		\thesection.\arabic{subsection}.\kern0.4em % فاصله دقیق بعد از شماره
+		\bfseries #1.}%
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%   For Abstract   %%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{changepage} % برای تغییر عرض متن
+\usepackage{xcolor}
+
+\newcommand{\FancyAbstractTitle}[1]{%
+	{\fontsize{9pt}{1pt}\selectfont #1} % حرف اول بزرگتر
+}
+%%%%%%%%%%%%%%%%%%%%  Abstract  %%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%   Theorem, Lemma, Remark, Assumption  %%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%   Theorem, Lemma, Remark, Assumption  %%%%%%%%%%%%%%%%
+% ------------------------------------------------------------------
+%% MAIN Document
+%% ------------------------------------------------------------------
+\begin{document}
+	\maketitle
+	\renewcommand{\footnoterule}{%
+		\kern -3pt%-3pt
+		\hrule width 0.2\linewidth height 0.2pt
+		\kern 4pt
+	}
+	\begingroup
+	\renewcommand\thefootnote{}%
+	\footnote{}%
+	\addtocounter{footnote}{-1}%
+	\endgroup
+	
+	%% ------------------------------------------------------------------
+	%% ABSTRACT
+	%% ------------------------------------------------------------------
+	\begin{tcbverbatimwrite}{tmp_\jobname_abstract.tex}
+		%\begin{abstract}
+		\begin{center}
+			\begin{adjustwidth}{1cm}{1cm} % عرض کمتر از متن اصلی
+				\noindent
+				{\FancyAbstractTitle{A}{\hspace*{-.8mm}}\fontsize{6pt}{1pt}\selectfont{BSTRACT.}}\quad
+				\footnotesize
+				%{\fontsize{8pt}{1pt}\selectfont
+			
+		%}
+		\end{adjustwidth}
+	\end{center}
+		%\end{abstract}
+		
+%		\begin{keywords}
+%			elliptic PDEs with random data, non-divergence form, finite element method, stochastic collocation method, a priori error estimate
+%		\end{keywords}
+%		
+%		\begin{MSCcodes}
+%			65C20, 65N30, 65N35, 65N15
+%		\end{MSCcodes}
+	\end{tcbverbatimwrite}
+	\input{tmp_\jobname_abstract.tex}
+	%% ------------------------------------------------------------------
+	%% END HEADER
+	%% ------------------------------------------------------------------
+	%
+	\vspace*{6mm}
+	\section{Introduction}
+	\label{sec:intro}
+	
+	
+	
+	\vspace*{2mm}
+	\section{Problem setting}
+	\label{sec:Problem-setting}
+	
+	Let $\Omega \subset \mathbb{R}^d$, with $d \ge 2$, be an open, and bounded domain with $C^{1,1}$ boundary. 
+	Let $\sigma_1$ and $\sigma_2$ be constants such that 
+	\[0 < \sigma_1 < \sigma_2.\]
+	We define the Sobolev spaces
+	\[
+	W_q := W^{2}_q(\Omega) \cap  \mathring{W}^{1}_{q}(\Omega), \quad \text{for any } 1 < q < \infty,
+	\]
+	and
+	\[
+	W_p := W^{2}_p(\Omega) \cap \mathring{W}^{1}_p(\Omega),
+	\]
+	where throughout this paper the exponent $p$ is restricted to satisfy
+	\begin{equation}
+		\label{ineq:exponent-p}
+		 p \geq 2 \quad \text{and} \quad \frac{d}{2} < p < \infty.
+	\end{equation}
+{\color{red} 
+	The space $\mathring{W}^{1}_{q}(\Omega)$ is defined as the closure of $C_c^\infty(\Omega)$ in $W_q^1(\Omega)$, where $C_c^\infty(\Omega)$ denotes the space of infinitely differentiable functions with compact support in $\Omega$.
+}
+	\\
+	We denote by $\omega[v]$ the modulus of continuity of a function $v$, as defined in Definition~\ref{def:modulus-of-continuity}.
+	
+	We consider the fully coupled system of HJB equations, given by
+	\begin{equation}
+		\label{coupled-HJB-main}
+		\begin{cases}
+			\displaystyle
+			\sum_{i=1}^{d} a_i[u_i]\, \partial_{x_i x_i} u_j - c_j u_j = f_j,
+			& \text{in } \Omega, \\[0.5em]
+			u_j = 0,
+			& \text{on } \partial\Omega,
+		\end{cases}
+		\qquad j=1,\dots,d ,
+	\end{equation}
+	for any $\boldsymbol{f} = \left( f_1, \cdots, f_d \right)  \in (L_p(\Omega))^d$. Here, for any $v\in W^{2}_p(\Omega)$ and $i=1,\dots,d$, 
+	the nonlinear coefficients are defined by
+	\[
+	a_i[v](\boldsymbol{x})
+	\in
+	\left\lbrace \operatorname*{arg\,max}_{\alpha \in [\sigma_1,\sigma_2]}
+	\left[  \alpha \, \partial_{x_i x_i} v (\boldsymbol{x}) \right] \right\rbrace 
+	=
+	\begin{cases}
+		\left\lbrace \sigma_1\right\rbrace , & \partial_{x_i x_i} v(\boldsymbol{x}) < 0, \\
+		[\sigma_1, \sigma_2] & \partial_{x_i x_i} v(\boldsymbol{x}) = 0,
+		\\
+		\left\lbrace \sigma_2 \right\rbrace , & \partial_{x_i x_i} v(\boldsymbol{x}) > 0,
+	\end{cases} 
+	\quad \text{for a.e.\ } \boldsymbol{x}\in\Omega .
+	\]
+	The nonlinearity and the coupling in the system arise entirely through these coefficients. In particular, their dependence on the second derivatives of the unknown functions renders the system both \textit{fully nonlinear} and \textit{ strongly coupled}. 
+	{\color{red}
+		Moreover, the optimal choice is attained at the boundary of the interval $[\sigma_1, \sigma_2]$, depending on the sign of the curvature.
+	}
+	%
+	
+	Fixed point theory is a standard tool for establishing the existence of solutions to coupled systems of PDEs. However, in system~\eqref{coupled-HJB-main}, the coupling occurs through discontinuous and noncompact operators. This prevents a direct application of commonly used fixed point methods based on continuity and compactness, since the required assumptions are not satisfied. To overcome this difficulty, we first introduce and analyze a regularized version of the system, for which fixed point arguments can be applied to prove the existence of solutions.
+	
+	\vspace*{2mm}
+	\section{regularized coupled HJB system}
+	\label{sec:Regularized-system-of-equations}
+	
+	We now consider a regularized version of the system \eqref{coupled-HJB-main}, given by
+	\begin{equation}
+		\label{coupled-HJB-regularized}
+		\begin{cases}
+			\displaystyle
+			\sum_{i=1}^{d}
+			a_{i,\varepsilon}\!\left[u_{i,\varepsilon}\right]\,
+			\partial_{x_i x_i} u_{j,\varepsilon}
+			-
+			c_j\, u_{j,\varepsilon}
+			=
+			f_j,
+			& \text{in } \Omega, \\[0.5em]
+			u_{j,\varepsilon} = 0,
+			& \text{on } \partial\Omega,
+		\end{cases}
+		\qquad j=1,\dots,d .
+	\end{equation}
+	For $i=1,\dots,d$, the regularized coefficient operators
+	$a_{i,\varepsilon}\colon W_q \to C(\bar{\Omega})$ satisfy the following properties:
+	\begin{enumerate}
+		\item 
+		The operators $a_{i,\varepsilon}$ are continuous and compact.
+		\item 
+		For any $v\in W_q$,
+		\begin{equation}
+			\label{eq:pointwise-convergence-regularized-coefficients}
+			\lim_{\varepsilon \to 0}
+			\text{dist}\left( 
+			a_{i,\varepsilon}[v](\boldsymbol{x})
+			,
+			\left\lbrace  
+			\operatorname*{arg\,max}_{\alpha \in [\sigma_1,\sigma_2]}
+			\left[  \alpha\, \partial_{x_i x_i} v (\boldsymbol{x}) \right]  \right\rbrace \right)  = 0 
+			%=
+			%a_i[v](\boldsymbol{x})
+			\quad \text{for a.e.\ } \boldsymbol{x}\in\Omega .
+		\end{equation}
+		\item
+		For any $v\in W_q$,
+		\begin{equation}
+			\label{ineq:uniform-bound-regularized-coefficients}
+			\sigma_1 \le a_{i,\varepsilon}[v](\boldsymbol{x}) 
+			\le
+			\sigma_2
+			\quad \text{for a.e.\ } \boldsymbol{x}\in\Omega .
+		\end{equation}
+		\item
+		The family $\left\lbrace  a_{i, \varepsilon}[v] : v \in W_q \right\rbrace $ has a modulus of continuity independent of $v$ (in particular, independent of $\left| v \right|_{W^{2}_q(\Omega)} $), possibly depending on $\varepsilon$.
+	\end{enumerate}
+	%
+	%
+	The following example provides a standard regularization satisfying the above properties.
+	\begin{comment}
+	\begin{example}[Regularized coefficients]
+		For $i= 1, \cdots, d$ and any $v \in W_q$, we first extend $a_i[v]$ 
+		as
+		%to  $\mathbb{R}^d \setminus \Omega$ by zero
+		\[
+		\tilde{a}_i[v](\boldsymbol{x}):=
+		\begin{cases}
+			a_i[v](\boldsymbol{x}), ~~ &\text{if }\boldsymbol{x} \in \Omega,
+			\\
+			\frac{\left( \sigma_1 + \sigma_2\right)}{2}, ~~ &\text{if } \boldsymbol{x} \notin \Omega.
+		\end{cases}
+		\]
+		so that, 
+		\begin{equation}
+			\label{ineq:uniform-upper-bound-extension}
+			\left\| \tilde{a}_i\left[ v \right]  \right\|_{L_{\infty}(\mathbb{R}^d)}
+			\leq
+			\sigma_2. 
+		\end{equation}
+		%
+		We then define the regularized operator
+		\begin{equation}
+			\label{oper:convolution}
+			a_{i,\varepsilon}\left[ v \right](\boldsymbol{x}) := 
+			%		\frac{1}{\left\| v \right\|_{W^{2,p}(\Omega)} + C }
+			\bigl( \eta_{\varepsilon} \ast \tilde{a}_i\left[ v \right]) \big|_{\Omega} (\boldsymbol{x}),
+		\end{equation}
+		where $\eta_\varepsilon$ denotes the standard {\color{red}exponential} mollifier.
+		%The scaling factor $\left( \left\| v \right\|_{W^{2,p}(\Omega)} + C \right)^{-1}$ is used to ensure that	$a_{i, \varepsilon}[v]$ admits a modulus of continuity that is uniform with respect to $v$.
+		%
+		\paragraph{ Compactness of $a_{i,\varepsilon}$}  
+		We first show that the operator $a_{i,\varepsilon} : W_q \to C(\bar{\Omega})$ is compact. Indeed, using Young's convolution inequality and \eqref{ineq:uniform-upper-bound-extension}, we have
+		\begin{equation}
+			\label{ineq:uniform-boundedness-convolution}
+			\| a_{i,\varepsilon}[v] \|_{L_\infty(\Omega)}
+			\le 
+			\| \eta_\varepsilon \ast \tilde{a}_{i}\left[ v\right]  \|_{L_\infty(\mathbb{R}^d)}
+			%\\
+			\le 
+			\| \eta_\varepsilon \|_{L_1(\mathbb{R}^d)} \, \| \tilde{a}_i\left[ v \right] \|_{L_\infty(\mathbb{R}^d)}
+			\leq \sigma_2.
+		\end{equation}
+		Since the mollifier is normalized, we have $\left\| \eta_{\varepsilon} \right\|_{L_1(\mathbb{R}^d)} =1 $. 
+		\\
+		Moreover, for any multi-index $\boldsymbol{k} \in \mathbb{N}^d$,
+		\[
+		\partial^{\boldsymbol{k}} \bigl(\eta_\varepsilon \ast \tilde{a}_i\left[ v \right]\bigr)
+		= (\partial^{\boldsymbol{k}} \eta_\varepsilon) \ast \tilde{a}_i \left[ v \right],
+		\]
+		so that
+		\begin{equation}
+			\label{ineq:upper-bound-derivative-S}
+			\left\| \partial^{\boldsymbol{k}} \left( \eta_\varepsilon \ast \tilde{a}_i\left[ v \right] \right)  \right\|_{L_\infty(\mathbb{R}^d)} 
+			\le
+			\left\| \partial^{\boldsymbol{k}} \eta_\varepsilon \right\| _{L_1(\mathbb{R}^d)} \, \left\| \tilde{a}_i\left[ v \right]\right\| _{L_{\infty}(\mathbb{R}^d)}
+			\le
+			\varepsilon^{-|\boldsymbol{k}|}
+			\sigma_2
+			.
+		\end{equation}
+		%
+		{\color{red} with $|\boldsymbol{k}| = |\boldsymbol{k}|_{l_\infty}$.}
+		If $\{v_m\}_m \subset W_q$ is bounded, $\|v_m\|_{W^{2}_q(\Omega)} \le C$, then the sequence $\left\lbrace \eta_\varepsilon \ast \tilde{a}_i\left[ v_m \right] \right\rbrace_m  \subset C^\infty(\mathbb{R}^d)$ is
+		\begin{itemize}
+			\item uniformly bounded in $L_\infty(\mathbb{R}^d)$,
+			\item equicontinuous on compact subset $\bar{\Omega}$.
+		\end{itemize}
+		By the Arzelà–Ascoli theorem~\ref{the:Arzela-Ascoli}, $a_{i,\varepsilon}[v_m]$ has a uniformly convergent subsequence in $C(\bar{\Omega})$.
+		Therefore, 
+		for each fixed $\varepsilon>0$, $a_{i,\varepsilon}: W_q \to C(\bar{\Omega})$ is compact. 
+		%	Since $a_\varepsilon$ is smooth, the composition $a_{i,\varepsilon,\delta} = a_\varepsilon \circ S_{i,\delta}$ is compact.
+		%
+		\paragraph{Pointwise convergence}  
+		For any $v \in W_q$,
+		\begin{equation}
+			\label{limit:pointwise-S}
+			\lim_{\varepsilon \to 0} a_{i,\varepsilon}[v](\boldsymbol{x}) 
+			= 
+			\lim_{\varepsilon \to 0} (\eta_\varepsilon \ast \tilde{a}_i\left[ v \right])(\boldsymbol{x}) 
+			= 
+			a_i\left[ v \right](\boldsymbol{x})
+			\quad \text{a.e. in } \Omega.
+		\end{equation}
+		Hence,
+		\begin{equation}
+			\label{limit:pointwise-regularized}
+			\lim_{\varepsilon \to 0}
+			\text{dist}\left( 
+			a_{i,\varepsilon}[v](\boldsymbol{x})
+			,
+			\left\lbrace  
+			\operatorname*{arg\,max}_{\alpha \in [\sigma_1,\sigma_2]}
+			\left[  \alpha\, \partial_{x_i x_i} v (\boldsymbol{x}) \right] \right\rbrace 
+			\right) =0,
+			\quad \text{a.e. in } \Omega.
+		\end{equation}
+		%		At points where $\partial_{x_i x_i} v = 0$, the limit depends on the choice of $a_\varepsilon$, which matches the original $\arg\max$ set $[\sigma_1, \sigma_2]$. 
+		Therefore, pointwise a.e. convergence is guaranteed.
+		\paragraph{Uniform modulus of continuity}
+		%Since $a_{\varepsilon}(s)$ is smooth with derivative
+		%\[
+		%{a}^{\prime}_{\varepsilon}(s)
+		%=
+		%\frac{\sigma_2- \sigma_1}{2 \varepsilon} ~\mathrm{sech}^2(\frac{s}{\varepsilon}),
+		%\]  
+		%we have 
+		%\[
+		%\left| 
+		%{a}^{\prime}_{\varepsilon}(s)
+		%\right| 
+		%\le
+		%\frac{\sigma_2- \sigma_1}{2 \varepsilon}
+		%~~
+		%\forall s \in \mathbb{R}.
+		%\]
+		%On the other hand, by Young’s inequality and the extension property of $W^{2,d}(\Omega)$ we have
+		%\[
+		%\left\|  \nabla S_{i, \delta}[v] \right\|_{L^{\infty}(\Omega)}\le 
+		%\frac{C_{\delta}}{\delta^d}
+		%\quad
+		%\text{(similar to argument (\ref{ineq:upper-bound-derivative-S}))}.
+		%\]
+		%Therefore
+		%\[
+		%\left| \nabla a_{i, \varepsilon, \delta}[v](\boldsymbol{x}) \right| 
+		%= 
+		%\left| 
+		%a^{\prime}_{\varepsilon}\left(  
+		%S_{i, \delta}[v](\boldsymbol{x})
+		%\right) 
+		%\nabla S_{i, \delta}[v](\boldsymbol{x})
+		%\right| 
+		%\le
+		%\frac{\sigma_2 - \sigma_1}{2 \varepsilon} \frac{C_{\delta}}{\delta^d}.
+		%\]
+		%This bound is independent of $v$. 
+		The upper bound \eqref{ineq:upper-bound-derivative-S} implies that for any $\boldsymbol{x}, \boldsymbol{y} \in \bar{\Omega}$ we have
+		\begin{equation}
+			\label{ineq:uniform-modulus-of-continuity}
+			\left| 
+			a_{i, \varepsilon}\left[ v \right] (\boldsymbol{x})
+			-
+			a_{i, \varepsilon}\left[ v \right] (\boldsymbol{y})
+			\right| 
+			\le
+			\left\| 
+			\nabla a_{i, \varepsilon}\left[ v \right] 
+			\right\|_{L_{\infty}(\Omega)}\left| \boldsymbol{x} - \boldsymbol{y} \right| 
+			\le
+			\frac{\sigma_2}{\varepsilon}
+			\left| \boldsymbol{x} - \boldsymbol{y} \right| .
+		\end{equation}
+		Thus the modulus of continuity $\omega[a_{i, \varepsilon} \left[ v \right] ](r):= \frac{\sigma_2}{\varepsilon} r $ is uniform in $v$.
+		\paragraph{Preservation of the lower and upper bounds}
+		Since
+		\[
+		\sigma_1
+		\leq
+		\tilde{a}_i\left[ v \right](\boldsymbol{x})
+		\leq
+		\sigma_2, 
+		~~ \text{ for a.e. }
+		\boldsymbol{x} \in \Omega,
+		\]
+		it follows that
+		\[
+		\sigma_1 = \eta_\varepsilon \ast \sigma_1 
+		\leq
+		\eta_\varepsilon \ast \tilde{a}_i\left[ v \right] (\boldsymbol{x})
+		\leq
+		\eta_\varepsilon \ast \sigma_2 = \sigma_2,
+		~~ \text{ for a.e. }
+		\boldsymbol{x} \in \Omega.
+		\]	
+	\end{example}
+\end{comment}
+	%
+	%
+	\begin{example}[Regularized coefficients]
+			For any $v \in W_q$, let $\tilde{v}$ denote an extension of $v$ to $\mathbb{R}^d$ satisfying
+		\begin{equation}
+			\label{ineq:continuity-extension}
+			\|\tilde{v}\|_{W^{2}_q(\mathbb{R}^d)} \le C_{\ref{ineq:continuity-extension}} \|v\|_{W^{2}_q(\Omega)}.
+		\end{equation}
+		%
+		For $i= 1, \cdots, d$ and any $v \in W_q$, we define the scaled mollification operator
+		\begin{equation}
+			\label{oper:convolution-scaled}
+			\mathcal{S}_{i,\varepsilon}[v](\boldsymbol{x}) :=\frac{1}{\left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} } \bigl( \eta_{\varepsilon} \ast \partial_{x_i x_i} \tilde{v} \bigr) \big|_{\Omega} (\boldsymbol{x}),
+		\end{equation}
+		{\color{red} where $C_{\ref{oper:convolution-scaled}}>0$ is a fixed constant} and $\eta_{\varepsilon_1}$ denotes the standard mollifier.
+		The scaling factor $\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1}$ is used to ensure that	$\mathcal{S}_{i, \varepsilon}[v]$ admits a modulus of continuity that is uniform with respect to $v$.
+		Next, we define a smooth approximation of the $\operatorname{arg\,max}$ operator as
+		\begin{equation}
+			\label{oper:argmax-approximation}
+			a_{\varepsilon}(s) := \frac{\sigma_2 - \sigma_1}{2} \Bigl( 1 + \tanh \frac{s}{\varepsilon} \Bigr) 
+			+
+			\sigma_1.
+		\end{equation}
+			Finally, the regularized coefficient is defined by
+		\begin{equation}
+			\label{oper:regularized-coefficient-convolution}
+			a_{i,\varepsilon}[v](\boldsymbol{x}) := a_{\varepsilon}\bigl(\mathcal{S}_{i,\varepsilon}[v](\boldsymbol{x})\bigr), 
+			\quad \text{for a.e. } \boldsymbol{x} \in \Omega.
+		\end{equation}
+		%
+	{\color{red}
+		Hence,
+		\[
+		a_{i,\varepsilon}: W_q \rightarrow C(\overline{\Omega})
+		\]
+		defines a continuous operator.
+	}
+		%
+		\paragraph{ Compactness of $a_{i,\varepsilon}$}  
+		We first show that the operator $\mathcal{S}_{i,\varepsilon} : W_q \to C(\bar{\Omega})$ is compact. Indeed, using Young's convolution inequality \eqref{lem:Young's-convolution-inequality}, we have
+		\begin{multline}
+			\label{ineq:uniform-boundedness-convolution-scaled}
+			\| \mathcal{S}_{i,\varepsilon}[v] \|_{L_\infty(\Omega)}
+			\le 
+			\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1}
+			\| \eta_{\varepsilon} \ast \partial_{x_i x_i} \tilde{v} \|_{L_\infty(\mathbb{R}^d)}
+			\\
+			\le 
+			\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1}
+			\| \eta_{\varepsilon} \|_{L_{\frac{q}{q-1}}(\mathbb{R}^d)} \, \| \tilde{v} \|_{W^{2}_q(\mathbb{R}^d)}
+			\le C_{\varepsilon} 
+			\frac{ \| v
+				\|_{W^{2}_q(\Omega)}}{\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)}
+			\le
+			C_{\varepsilon} ,
+		\end{multline}
+		with $C_{\varepsilon} \sim {\varepsilon}^{-d/q}$.  
+		\\
+		Moreover, for any multi-index $\boldsymbol{k} \in \mathbb{N}^d$,
+		\[
+		\partial^{\boldsymbol{k}} \bigl(\eta_{\varepsilon} \ast \partial_{x_i x_i} \tilde{v} \bigr)
+		= (\partial^{\boldsymbol{k}} \eta_{\varepsilon}) \ast \partial_{x_i x_i} \tilde{v},
+		\]
+		so that
+		%\begin{multline}
+		\begin{equation}
+			\label{ineq:upper-bound-derivative-S-scaled}
+			\begin{aligned}
+			\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1}
+			&
+			\|\partial^{\boldsymbol{k}} (\eta_{\varepsilon} \ast \partial_{x_i x_i} \tilde{v})\|_{L_\infty(\mathbb{R}^d)} 
+			\\
+			& \hspace*{-2.5cm} \le
+			\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1} \|\partial^{\boldsymbol{k}} \eta_{\varepsilon}\|_{L_{\frac{q}{q-1}}(\mathbb{R}^d)} \, \|\tilde{v}\|_{W^{2}_q(\mathbb{R}^d)}
+			\\
+			& \hspace*{-2.5cm} \le
+			\frac{ C_{\varepsilon}}{{\varepsilon}^{|\boldsymbol{k}|}}
+			% C_\delta/(\delta^{|\boldsymbol{k}|})
+			\frac{\|v\|_{W^{2}_q(\Omega)}}{\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)}
+			\le
+			\frac{ C_{\varepsilon}}{{\varepsilon}^{|\boldsymbol{k}|}}
+			.
+		\end{aligned}
+		\end{equation}
+		%\end{multline}
+		%
+		{\color{red} with $|\boldsymbol{k}| = |\boldsymbol{k}|_{l_\infty}$.}
+		If $\{v_m\}_m \subset W_q$ is bounded, $\|v_m\|_{W^{2}_q(\Omega)} \le C$, then the sequence $\left\lbrace \eta_{\varepsilon} \ast \partial_{x_i x_i} \tilde{v}_m \right\rbrace_m  \subset C^\infty(\mathbb{R}^d)$ is
+		\begin{itemize}
+			\item uniformly bounded in $L_\infty(\mathbb{R}^d)$,
+			\item equicontinuous on compact subset $\bar{\Omega}$.
+		\end{itemize}
+		By the Arzelà–Ascoli theorem~\ref{the:Arzela-Ascoli}, $\mathcal{S}_{i,\varepsilon}[v_m]$ has a uniformly convergent subsequence in $C(\bar{\Omega})$.
+		Therefore, 
+		for each fixed $\varepsilon>0$, the operator $\mathcal{S}_{i,\varepsilon}: W_q \to C(\bar{\Omega})$ is compact. 
+		Since $a_{\varepsilon}$ is smooth, the composition $a_{i,\varepsilon} = a_{\varepsilon} \circ \mathcal{S}_{i,\varepsilon}$ is compact.
+		%
+		\paragraph{Pointwise convergence}  
+		For any $v \in W_q$,
+		\begin{equation}
+		\label{limit:pointwise-S-scaled}
+		\begin{aligned}
+			\lim_{\varepsilon \to 0} \mathcal{S}_{i,\varepsilon}[v](\boldsymbol{x}) 
+			&= 
+			\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)^{-1}
+			\lim_{\varepsilon \to 0} (\eta_\varepsilon \ast \partial_{x_i x_i} v)(\boldsymbol{x}) 
+			\\
+			&= 
+			\frac{\partial_{x_i x_i} v(\boldsymbol{x})}{\left( \left\| v \right\|_{W^{2}_q(\Omega)} + C_{\ref{oper:convolution-scaled}} \right)}
+			\quad \text{a.e. in } \Omega.
+		\end{aligned}
+	\end{equation}
+		Hence,
+		\begin{equation}
+			\label{limit:pointwise-regularized-scaled}
+			\lim_{\varepsilon \to 0}
+			\text{dist}\left( 
+			a_{i,\varepsilon}[v](\boldsymbol{x})
+			,
+			\left\lbrace  
+			\operatorname*{arg\,max}_{\alpha \in [\sigma_1,\sigma_2]}
+			\left[  \alpha\, \partial_{x_i x_i} v (\boldsymbol{x}) \right] \right\rbrace 
+			\right) =0,
+			\quad \text{a.e. in } \Omega.
+		\end{equation}
+		%		At points where $\partial_{x_i x_i} v = 0$, the limit depends on the choice of $a_\varepsilon$, which matches the original $\arg\max$ set $[\sigma_1, \sigma_2]$. 
+		Therefore, pointwise a.e. convergence is guaranteed.
+		\paragraph{Uniform modulus of continuity}
+		Since $a_{\varepsilon_2}(s)$ is smooth with derivative
+		\[
+		{a}^{\prime}_{\varepsilon}(s)
+		=
+		\frac{\sigma_2- \sigma_1}{2 \varepsilon} ~\mathrm{sech}^2(\frac{s}{\varepsilon}),
+		\]  
+		we have 
+		\begin{equation}
+			\label{ineq:upper-bound-derivative-a-smooth}
+		\left| 
+		{a}^{\prime}_{\varepsilon}(s)
+		\right| 
+		\le
+		\frac{\sigma_2- \sigma_1}{2 \varepsilon}
+		~~
+		\forall s \in \mathbb{R}.
+		\end{equation}
+		On the other hand, the upper bound \eqref{ineq:upper-bound-derivative-S-scaled} implies that for any $v \in W_q$,
+		\begin{equation}
+			\label{ineq:upper-bound-gradient-S}
+		\left\|  \nabla \mathcal{S}_{i, \varepsilon}[v] \right\|_{L_{\infty}(\Omega)}\le 
+		\frac{C_{\varepsilon}}{\varepsilon}.
+		\end{equation}
+		Therefore
+		\begin{equation}
+			\label{ineq:upper-bound-smooth-gradient-a}
+		\left| \nabla a_{i, \varepsilon}[v](\boldsymbol{x}) \right| 
+		= 
+		\left| 
+		a^{\prime}_{\varepsilon}\left(  
+		\mathcal{S}_{i, \varepsilon}[v](\boldsymbol{x})
+		\right) 
+		\nabla \mathcal{S}_{i, \varepsilon}[v](\boldsymbol{x})
+		\right| 
+		\le
+		\frac{ C_{\varepsilon} \left( \sigma_2 - \sigma_1\right) }{2 \varepsilon^2}
+		% \frac{C_{\varepsilon_1}}{\varepsilon_1}
+		\qquad
+		\text{a.e. in } \Omega.
+		\end{equation}
+		This bound is independent of $v$. Now, for any $\boldsymbol{x}, \boldsymbol{y} \in \Omega$, 
+		\begin{equation}
+			\label{ineq:uniform-modulus-of-continuity-scaled}
+		\left| 
+		a_{i, \varepsilon}[v](\boldsymbol{x})
+		-
+		a_{i, \varepsilon}[v](\boldsymbol{y})
+		\right| 
+		\le
+		\left\| 
+		\nabla a_{i, \varepsilon}[v]
+		\right\|_{L_{\infty}(\Omega)}\left| \boldsymbol{x} - \boldsymbol{y} \right| 
+		\le
+		\frac{C_{\varepsilon}\left( \sigma_2 - \sigma_1\right) }{2 \varepsilon^2} 
+		%\frac{C_{\varepsilon_1}}{\varepsilon_1}
+		\left| \boldsymbol{x} - \boldsymbol{y} \right| .
+		\end{equation}
+		Thus the modulus of continuity $\omega[a_{i, \varepsilon}[v]](r):=\dfrac{ C_{\varepsilon} \left( \sigma_2 - \sigma_1\right) }{2 \varepsilon^2} r $ is uniform in $v$.
+		\paragraph{Preservation of the lower and upper bounds}
+		Since 
+		\[
+		\sigma_1
+		\leq
+		a_{\varepsilon}(s)
+		\leq
+		\sigma_2, 
+		~~ \forall s \in \mathbb{R},
+		\]
+		it follows that for any $v \in W_q$
+		\begin{equation}
+			\label{ineq:lower-upper-bound-a-regularized}
+		\sigma_1 
+		\leq
+		a_{i, \varepsilon}\left[ v \right] (\boldsymbol{x})
+		\leq
+		 \sigma_2,
+		~~ \text{ for a.e. }
+		\boldsymbol{x} \in \Omega.
+		\end{equation}	
+	\end{example}
+	%
+	%
+	{\color{red}
+		We present below the key tools, in the form of the following theorems, required to establish the existence of solutions to the regularized system~\eqref{coupled-HJB-regularized}.
+	}
+	%
+	\begin{theorem}[well-posedness of a linear equation with continuous coefficients {\cite[Theorem 9.15 and Lemma 9.17]{gilbarg2001elliptic}} ]
+		\label{lem:well-posedness-linear-equation-smooth-coefficients}
+		Let the diffusion coefficients $\boldsymbol{a} := (a_1,\dots,a_d)$ belong to
+		$\bigl(C(\bar{\Omega})\bigr)^d$, and assume that 
+		\[
+		\sigma_1 \le a_i(\boldsymbol{x}) \le \sigma_2
+		\quad \text{for a.e.\ } \boldsymbol{x} \in \Omega,\quad i = 1,\dots,d.
+		\]
+		Let $c \in L_{\infty}(\Omega)$
+		with $c \ge 0$.
+		If $ f \in L_q(\Omega)$ and
+		$  g \in W^{2}_q(\Omega)$
+		with $1 < q < \infty$, then the equation
+		\begin{equation}
+			\label{eq:-linear-system-smooth-coefficients}
+			\sum_{i=1}^{d}
+			a_i\, \partial_{x_i x_i}  u
+			-
+			c \,  u
+			=
+			f
+			\quad \text{in } \Omega,
+			\qquad
+			u =  g
+			\quad \text{on } \partial\Omega,
+		\end{equation}
+		admits a unique solution
+		$ u \in W^{2}_q(\Omega)$.
+		Moreover, there exists {\color{blue}a constant}\\ $C_{\ref{ineq:stability-solution-continuous-coefficients}} \left( \Omega, q, \sigma_1, \sigma_2, \left\| c \right\|_{L_{\infty}(\Omega)},
+		\boldsymbol{\omega}[\boldsymbol{a}]	
+		\right) > 0$ such that the following estimate holds:
+		\begin{equation}
+			\label{ineq:stability-solution-continuous-coefficients}
+			\left\|  u \right\|_{W^{2}_q(\Omega)}
+			\le
+			C_{\ref{ineq:stability-solution-continuous-coefficients}}
+			\left(
+			\left\|  f \right\|_{L_q(\Omega)}
+			+
+			\left\|  g \right\|_{W^{2}_q(\Omega)}
+			\right).
+		\end{equation}
+	\end{theorem}
+	%
+	%
+	\begin{lemma}[Stability with respect to the diffusion coefficients]
+		\label{lemma:stability-coefficients}
+		Let 
+		$\bar{\boldsymbol{a}} = (\bar{a}_1,\dots,\bar{a}_d)$ and 
+		$\tilde{\boldsymbol{a}} = (\tilde{a}_1,\dots,\tilde{a}_d)$ belong to $\bigl(C(\overline{\Omega})\bigr)^d$. Let $c \in L_\infty(\Omega)$ with $c \ge 0$ a.e.\ in $\Omega$. Assume that
+		\[
+		\sigma_1 \le \bar{a}_i(\boldsymbol{x}),\ \tilde{a}_i(\boldsymbol{x}) \le \sigma_2
+		\quad \text{for a.e.\ } \boldsymbol{x} \in \Omega,\quad i = 1,\dots,d.
+		\]
+		Let $\bar u, \tilde u \in W_q$ with $1 < q < \infty$, satisfy
+		\begin{equation}
+			\label{eq:linear-b}
+			\sum_{i=1}^{d} \bar{a}_i\, \partial_{x_i x_i} \bar u - c \bar u = f,
+			\qquad
+			\sum_{i=1}^{d} \tilde{a}_i\, \partial_{x_i x_i} \tilde u - c \tilde u = f
+			\quad \text{in } \Omega,
+		\end{equation}
+		where $f \in L_q(\Omega)$. Then there exists {\color{blue}a constant}
+		\[
+		C_{\ref{ineq:stability-coefficients}}
+		\bigl(
+		\Omega, q, \sigma_1, \sigma_2, \|c\|_{L_\infty(\Omega)},
+		\|f\|_{L_q(\Omega)},
+		\boldsymbol{\omega}[\bar{\boldsymbol{a}}],
+		\boldsymbol{\omega}[\tilde{\boldsymbol{a}}]
+		\bigr)>0
+		\]
+		such that
+		\begin{equation}
+			\label{ineq:stability-coefficients}
+			\| \bar u - \tilde u \|_{W^{2}_q(\Omega)}
+			\le
+			C_{\ref{ineq:stability-coefficients}}
+			\| \bar{\boldsymbol{a}} - \tilde{\boldsymbol{a}} \|_{L_\infty(\Omega)}.
+		\end{equation}
+	\end{lemma}
+	%
+	\begin{proof}
+		Subtracting the two equations in \eqref{eq:linear-b}, we obtain
+		\[
+		\sum_{i=1}^{d}
+		\bar{a}_i \partial_{x_i x_i}(\bar u - \tilde u)
+		-
+		c(\bar u - \tilde u)
+		=
+		\sum_{i=1}^{d}
+		(\tilde{a}_i - \bar{a}_i)
+		\partial_{x_i x_i} \tilde u
+		\quad \text{in } \Omega.
+		\]
+		Applying the stability estimate from Lemma~\ref{lem:well-posedness-linear-equation-smooth-coefficients} gives
+		\[
+		\begin{aligned}
+			\| & \bar u  -  \tilde u \|_{W^{2}_q(\Omega)}
+			\\
+			&\le
+			C_{\ref{ineq:stability-solution-continuous-coefficients}} \left( \Omega, q, \sigma_1, \sigma_2, \left\| c \right\|_{L_{\infty}(\Omega)},
+			\boldsymbol{\omega}[\bar{\boldsymbol{a}}]	
+			\right)
+			\left\|
+			\sum_{i=1}^{d}
+			(\tilde{a}_i - \bar{a}_i)
+			\partial_{x_i x_i} \tilde u
+			\right\|_{L_q(\Omega)}
+			\\
+			&\le
+			C_{\ref{ineq:stability-solution-continuous-coefficients}} \left( \Omega, q, \sigma_1, \sigma_2, \left\| c \right\|_{L_{\infty}(\Omega)},
+			\boldsymbol{\omega}[\bar{\boldsymbol{a}}]	
+			\right)
+			\| \bar{\boldsymbol{a}} - \tilde{\boldsymbol{a}} \|_{L_\infty(\Omega)}
+			\| \tilde u \|_{W^{2}_q(\Omega)}
+			\\
+			&\le
+			C_{\ref{ineq:stability-solution-continuous-coefficients}} \left( \Omega, q, \sigma_1, \sigma_2, \left\| c \right\|_{L_{\infty}(\Omega)},
+			\boldsymbol{\omega}[\bar{\boldsymbol{a}}]	
+			\right)
+			%
+			C_{\ref{ineq:stability-solution-continuous-coefficients}} \left( \Omega, q, \sigma_1, \sigma_2, \left\| c \right\|_{L_{\infty}(\Omega)},
+			\boldsymbol{\omega}[\tilde{\boldsymbol{a}}]	
+			\right)
+			%
+			\| f \|_{L_q(\Omega)}
+			\| \bar{\boldsymbol{a}} - \tilde{\boldsymbol{a}} \|_{L_\infty(\Omega)}.
+		\end{aligned}
+		\]
+		The desired estimate follows by absorbing the dependence on the constants  $C_{\ref{ineq:stability-solution-continuous-coefficients}}$ and on $\| f \|_{L_q(\Omega)}$ into 
+		$C_{\ref{ineq:stability-coefficients}}$.
+	\end{proof}
+	%
+	%
+	\begin{theorem}[Schaefer's fixed point theorem {\cite[Section 9.2.2., Theorem 4]{evans2010partial}}]
+		\label{the:schauder-fixed-poin}
+		Let $X$ be a Banach space and $\Phi: X \rightarrow X$ be a continuous and compact operator, such that the set
+		\begin{equation}
+			\label{set:shauder-theorem}
+			\left\lbrace x \in X \big|~ x = \eta \Phi(x)
+			~ \text{for some } \eta \in [0,1]
+			\right\rbrace, 
+		\end{equation}
+		is bounded. Then $\Phi$ has a fixed point in $X$; \normalfont{($\exists x \in X:~ \Phi(x)=x$)}. 
+	\end{theorem}
+	%
+	\begin{lemma}[existence of strong solution for the regularized system]
+		\label{lem:well-posedness-regularized-system}
+		For any fixed $ \varepsilon > 0$, there exists a solution 
+		\[
+		\boldsymbol{u}_{\varepsilon} = (u_{1, \varepsilon}, \dots, u_{d, \varepsilon}) \in (W_q)^d
+		\]
+		to the regularized system \eqref{coupled-HJB-regularized}.
+	\end{lemma}
+	\begin{proof}
+		For any fixed $\varepsilon > 0$, define the operator 
+		$\Phi_{\varepsilon} : (W_q)^d \to (W_q)^d$ by
+		\begin{equation}
+			\label{ope:Phi-fixed-point}
+			\boldsymbol{v} := (v_1, \dots, v_d) 
+			\;\mapsto\;
+			\Phi_{\varepsilon}(v_1, \dots, v_d) := (u_1, \dots, u_d),
+		\end{equation}
+		where $(u_1, \dots, u_d) \in (W_q)^d$ is the unique solution of the linear decoupled equations
+		\begin{equation}
+			\label{sys:uncoupled-HJB-regularized}
+			\sum_{i=1}^{d} a_{i, \varepsilon}\left[ v_i \right] \, \partial_{x_i x_i} u_j
+			- c_j u_j
+			= f_j, 
+			~~ \text{in } \Omega, 
+			\quad
+			j= 1, \cdots, d.
+		\end{equation}
+		By Theorem~\ref{lem:well-posedness-linear-equation-smooth-coefficients}, for any $(v_1, \dots, v_d) \in (W_q)^d$, the decoupled system \eqref{sys:uncoupled-HJB-regularized} has a unique solution 
+		$\boldsymbol{u} := (u_1, \dots, u_d)$, and it satisfies the a priori estimate
+		\begin{equation}
+			\label{ineq:upper-bound-solution}
+			\|\boldsymbol{u}\|_{W^{2}_q(\Omega)} 
+			\le C_{\ref{ineq:upper-bound-solution}}(\Omega, q, \sigma_1, \sigma_2, \left\| \boldsymbol{c} \right\|_{L_\infty(\Omega)} , \left\|  \boldsymbol{f} \right\|_{L_q(\Omega)} ,
+			\boldsymbol{\omega}[\boldsymbol{a}_{\varepsilon}[\boldsymbol{v}]] ).
+		\end{equation}
+		Since the modulus of continuity $\boldsymbol{\omega}[\boldsymbol{a}_{\varepsilon}[\boldsymbol{v}]]$ is independent of $\boldsymbol{v}$, it follows that
+		\begin{equation}
+			\label{ineq:upper-bound-solution-indpendent-v}
+			\|\boldsymbol{u}\|_{W^{2}_q(\Omega)} 
+			\le C_{\ref{ineq:upper-bound-solution-indpendent-v}}(\Omega, q , \sigma_1, \sigma_2, \left\| \boldsymbol{c} \right\|_{L_\infty(\Omega)}, \left\| \boldsymbol{f} \right\|_{L_q(\Omega)}, 
+			\varepsilon).
+		\end{equation}
+		%
+		We now show that $\Phi_{\varepsilon}$ is compact.  
+		Let $\left\lbrace (v_{1,m}, \dots, v_{d,m})\right\rbrace _m \subset (W_q)^d$ be a bounded sequence ($\left\|  \boldsymbol{v}_m \right\|_{W^{2}_p(\Omega)} \le C  $), and denote
+		\[
+		(u_{1,m}, \dots, u_{d,m}) := \Phi_{\varepsilon}(v_{1,m}, \dots, v_{d,m}).
+		\]
+		Since the operators $a_{i,\varepsilon} : W_q \to C(\bar{\Omega})$ are compact, there exists a subsequence 
+		$\left\lbrace (v_{1,m_n}, \dots, v_{d,m_n})\right\rbrace_{m_n} $ and $(v_1, \dots, v_d) \in (W_q)^d$ such that
+		\begin{equation}
+			\label{lim:subsequence-a}
+			\lim_{n \to \infty} 
+			\Bigl\| (a_{1,\varepsilon}\left[ v_{1,m_n}\right] , \dots, a_{d,\varepsilon}\left[ v_{d,m_n}\right] )
+			- (a_{1,\varepsilon}\left[ v_1\right] , \dots, a_{d,\varepsilon}\left[ v_d \right] ) \Bigr\|_{L_\infty(\Omega)} = 0.
+		\end{equation}
+		%
+		Then, by the stability estimate~\eqref{ineq:stability-coefficients} there exits
+		\[
+		C_{\ref{ineq:stability-uncoupled-system}}(\Omega, q, \boldsymbol{f}, \left\| \boldsymbol{c} \right\|_{L_\infty(\Omega)} , \sigma_1, \sigma_2,
+		, \varepsilon)>0
+		\]
+		such that
+		\begin{multline}
+			\label{ineq:stability-uncoupled-system}
+			\| (u_{1,m_n}, \dots, u_{d,m_n}) - (u_1, \dots, u_d) \|_{W^{2}_q(\Omega)} \\
+			\le C_{\ref{ineq:stability-uncoupled-system}}
+			\Bigl\| (a_{1,\varepsilon}\left[ v_{1,m_n}\right] , \dots, a_{d,\varepsilon}\left[ v_{d,m_n}\right] )
+			- (a_{1,\varepsilon}\left[ v_1\right] , \dots, a_{d,\varepsilon}\left[ v_d\right] ) \Bigr\|_{L_\infty(\Omega)},
+		\end{multline}
+		where $(u_1, \dots, u_d) = \Phi_{\varepsilon}(v_1, \dots, v_d)$. 
+		This shows that $\left\lbrace (u_{1,m}, \dots, u_{d,m})\right\rbrace_m $ has a convergent subsequence in $(W_q)^d$, establishing the compactness of $\Phi_{\varepsilon}$.
+		\\
+		The estimate~\eqref{ineq:upper-bound-solution-indpendent-v} implies that the set (\ref{set:shauder-theorem}) is uniformly bounded (for fixed $\varepsilon$). 
+		\\
+		Finally, the Schaefer's fixed point theorem guarantees the existence of a fixed point
+		\[
+		(u_{1, \varepsilon}, \dots, u_{d, \varepsilon}) \in (W_q)^d \quad \text{such that} \quad 
+		\Phi_{\varepsilon}(u_{1, \varepsilon}, \dots, u_{d, \varepsilon}) = (u_{1, \varepsilon}, \dots, u_{d, \varepsilon}),
+		\]
+		i.e., $(u_{1, \varepsilon}, \dots, u_{d, \varepsilon})$ is a solution of the regularized system \eqref{coupled-HJB-regularized}. 
+	\end{proof}
+	%
+	We next analyze the behavior of the family of solutions to the regularized system and use this to define a solution to the original coupled HJB system \eqref{coupled-HJB-regularized}. This requires uniform estimates for the family of regularized solutions, which are obtained by imposing the Cordes condition on the diffusion coefficients.
+	\\
+	\begin{assumption}[Cordes condition]
+	We further suppose that the coefficients $a_{i}$ for $i=1, \cdots, d$ satisfy the Cordes condition: there exists $\lambda>0$ such that for any $\boldsymbol{v}:=(v_1, \cdots, v_d) \in ( W_q )^d $, 
+	\begin{equation}
+		\label{ineq:Cordes-condition}
+		\frac{\sum_{i=1}^{d}{\left( a_i\left[ v_i\right] (\boldsymbol{x})\right)^2} }{\left( \sum_{i=1}^{d}{a_i\left[ v_i\right] (\boldsymbol{x})} \right)^2 }
+		\leq
+		\frac{1}{d - 1 + \lambda}
+		\quad
+		\text{ for a.e. }
+		\boldsymbol{x} \in \Omega.
+	\end{equation}
+	Consequently, the regularized coefficients $a_{i,\varepsilon}\left[ v_i\right]$ satisfy the Cordes condition as well.
+	\end{assumption}
+	%
+	
+	{\color{red} Now that the diffusion coefficients satisfy the Cordes condition, the results of \cite{kuo2007new} apply with \(k=2\). In particular, the following a priori estimates for solutions to the regularized system~\eqref{coupled-HJB-regularized} in \((W_p)^d\) follow from the estimates collected in the Appendix~\ref{subsec:elliptic-setting}, some of which are taken from the literature and some established therein.}
+	\begin{remark}
+		We point out that, since 
+		\[
+		\boldsymbol{u}_{\varepsilon} \in (W_p)^d,
+		\]
+		is a solution to the regularized system~\eqref{coupled-HJB-regularized} with \(p > d/2\), the Sobolev embedding theorem~\cite[Section 5.6.3, Theorem 6]{evans2010partial} implies that
+		\[
+		\boldsymbol{u}_{\varepsilon} \in \bigl(C(\overline{\Omega})\bigr)^d.
+		\]
+	\end{remark}
+	%
+	\begin{lemma}[ABP estimate {\color{red}{\cite[Corollary 4.2]{kuo2007new}}}]
+		\label{rem:ABP-estimate}
+		Let 
+		\[
+		\boldsymbol{u}_{\varepsilon} = \left( u_{1,\varepsilon}, \dots, u_{d,\varepsilon} \right) \in (W_p)^d
+		\]
+		be the solution to the regularized system~\eqref{coupled-HJB-regularized}. Then
+		\begin{equation}
+			\label{ineq:ABP-estimate}
+			\left\| \boldsymbol{u}_{\varepsilon} \right\|_{L_{\infty}(\Omega)}
+			\le 
+			C_{\ref{ineq:ABP-estimate}}
+			\left\| \boldsymbol{f} \right\|_{L_p(\Omega)},
+			\quad \forall \varepsilon > 0,
+		\end{equation}
+		%
+		%
+		%	{\color{blue}
+			%	\begin{equation}
+				%		\label{ineq:ABP-estimate-1}
+				%		\left\| u_{j, \varepsilon} \right\|_{L^{\infty}(\Omega)}
+				%		\leq 
+				%		C_{\ref{ineq:ABP-estimate-1}}(\Omega, p, \sigma_1, \sigma_2, \lambda, \left\| c_j \right\|_{L^{\infty}(\Omega)} )
+				%		\left\| f_j \right\|_{L^p(\Omega)},
+				%		\quad \forall \varepsilon >0 , ~ j= 1, \cdots, d. 
+				%	\end{equation}	
+			%}
+		where $C_{\ref{ineq:ABP-estimate}}\bigl(\Omega, p, \sigma_1, \sigma_2, \lambda, \|\boldsymbol{c}\|_{L_{\infty}(\Omega)} \bigr)>0$ is independent of the modulus of continuity of the coefficients.
+	\end{lemma}
+	\begin{proof}
+		See Lemma~\ref{corollary:ABP-estimate-paper} in the Appendix~{}.
+	\end{proof}
+	%
+	\begin{lemma}[Hölder continuity]
+		\label{lem:Holder-continuity}
+		There exist
+		\[
+		\gamma(d, p, \sigma_2, \lambda),  C_{\ref{ineq:Holder-bound}}\bigl(\Omega, p, \sigma_1, \sigma_2, \lambda, \|\boldsymbol{c}\|_{L_\infty}, \|\boldsymbol{f}\|_{L_p}, \|\boldsymbol{u}_{\varepsilon}\|_{L_\infty} \bigr) > 0
+		\]
+		such that the solution $\boldsymbol{u}_{\varepsilon} = \left( u_{1,\varepsilon}, \dots, u_{d,\varepsilon} \right) \in (W_p)^d$ of the regularized system~\eqref{coupled-HJB-regularized} belongs to $\left( C^{0,\gamma}(\overline{\Omega}) \right)^d$ and satisfies
+		\begin{equation}
+			\label{ineq:Holder-bound}
+			\left\| \boldsymbol{u}_{\varepsilon} \right\|_{C^{0,\gamma}(\Omega)}
+			\le
+			C_{\ref{ineq:Holder-bound}},
+			\quad \forall \varepsilon > 0.
+		\end{equation}
+	\end{lemma}
+	%
+	%
+	\begin{proof}
+		The result follows from Lemma~\ref{lemm-Holder-continuity} proved in the Appendix.
+		%	Theorem 4.3, and in particular, the oscillation–decay estimate (4.10) in \cite{kuo2007new}, together with the remark therein that the result also applies to functions in $W_p$, imply the interior Hölder continuity of $\boldsymbol{u}_{\varepsilon}$ in $\Omega$, namely,
+		%	\[
+		%	\boldsymbol{u}_{\varepsilon} \in \bigl( C^{0,\alpha_1}_{\mathrm{loc}}(\Omega) \bigr)^d.
+		%	\]
+		%	A barrier argument near the boundary (see \ref{---}) yields the boundary Hölder estimate
+		%	\[
+		%		\left| \boldsymbol{u}_{\varepsilon}(\boldsymbol{x}) - \boldsymbol{u}_{\varepsilon}(\boldsymbol{x}_0) \right| 
+		%		\leq C \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^{\alpha_2}, 
+		%		\quad
+		%		\forall \boldsymbol{x}_0 \in \partial \Omega. 
+		%	\]
+		%	Combining the interior and boundary estimates, we conclude that
+		%	\[
+		%	\boldsymbol{u}_{\varepsilon} \in \bigl( C^{0,\alpha}(\overline{\Omega}) \bigr)^d.
+		%	\]
+		%	where 
+		%	\[
+		%		\alpha = \min \left\lbrace \alpha_1, \alpha_2 \right\rbrace .
+		%	\]
+		%	{\color{blue}
+			%	Since $\boldsymbol{u}_{\varepsilon} = \boldsymbol{0}$ on $\partial \Omega$ and $\partial \Omega$ is of class $C^{1,1}$, a barrier argument near the boundary (see \cite[Section 6.3]{gilbarg2001elliptic}), combined with the interior Hölder continuity, yields
+			%	\[
+			%	\boldsymbol{u}_{\varepsilon} \in \bigl( C^{0,\alpha}(\overline{\Omega}) \bigr)^d.
+			%	\]
+			%	}
+	\end{proof}
+	%
+	%
+	\begin{remark}
+		We emphasize that the Hölder constant $C_{\ref{ineq:Holder-bound}}$ is independent of the modulus of continuity of the diffusion coefficients, $\boldsymbol{\omega}\left[ \boldsymbol{a}_{ \varepsilon}[\boldsymbol{u}_{\varepsilon}] \right] $.   
+	\end{remark}
+	%
+	%
+	\begin{remark}
+		\label{ineq:Holder-bound-inpendent-u}
+		Combining Lemma~\ref{rem:ABP-estimate} and Lemma~\ref{lem:Holder-continuity}, we conclude that the Hölder continuity constant $C_{\ref{ineq:Holder-bound}}$ can be chosen independently of $\| \boldsymbol{u}_{\varepsilon} \|_{L_{\infty}(\Omega)}$. %{\color{red}and instead depending on $\| \boldsymbol{f} \|_{L_p(\Omega)}$}.
+	\end{remark}
+	%
+	\begin{remark}[equicontinuity]
+		\label{rem:equicontinuouity-regularized-solution}
+		The Hölder continuity estimate~\eqref{ineq:Holder-bound} implies that the family $\{\boldsymbol{u}_{\varepsilon}\}_{\varepsilon}$ of solutions to the system~\eqref{coupled-HJB-regularized} is equicontinuous.
+	\end{remark}
+	%
+	\begin{proof}
+		Lemma~\ref{lem:Holder-continuity} implies that there exist $\gamma, C_{\ref{ineq:Holder-bound}}>0$ such that
+		\begin{equation}
+			\label{ineq:Holder-continuiuty}
+			\left\| \boldsymbol{u}_{\varepsilon} \right\|_{C^{0, \gamma}(\bar{\Omega})}
+			:=
+			\left\| \boldsymbol{u}_{\varepsilon} \right\|_{L_\infty(\Omega)} 
+			+
+			\left[ \boldsymbol{u}_{\varepsilon} \right]_{C^{0,\gamma}(\Omega)}
+			\leq
+			C_{\ref{ineq:Holder-bound}},
+			\quad
+			\forall \varepsilon > 0.
+		\end{equation}
+		Since
+		\begin{equation}
+			\label{ineq:equicontinuouity}
+			\left| \boldsymbol{u}_{\varepsilon}(\boldsymbol{x}) 
+			- 
+			\boldsymbol{u}_{\varepsilon}(\boldsymbol{y}) \right|
+			\leq
+			\left[ \boldsymbol{u}_{\varepsilon} \right]_{C^{0,\gamma}(\Omega)}
+			\left| \boldsymbol{x} - \boldsymbol{y} \right|^{\gamma} 
+			\quad
+			\forall
+			\varepsilon > 0, (\boldsymbol{x}, \boldsymbol{y}) \in \bar{\Omega} \times \bar{\Omega},  
+		\end{equation}
+		for any $\zeta>0$, by choosing $\delta = \left( \frac{\zeta}{C_{\ref{ineq:Holder-bound}}} \right)^{\frac{1}{\gamma}} $, for all $\varepsilon > 0$ and all $\boldsymbol{x}, \boldsymbol{y}$ with $\left| \boldsymbol{x} - \boldsymbol{y} \right| < \delta$ we have
+		\begin{equation}
+			\left| \boldsymbol{u}_{\varepsilon}(\boldsymbol{x}) - \boldsymbol{u}_{\varepsilon}(\boldsymbol{y}) \right|
+			\leq
+			\zeta.
+		\end{equation}
+	\end{proof}
+	
+	%\vspace*{2mm}
+	\section{stationary coupled HJB system}
+	\label{sec:continuous-FEM}
+	
+	Now that the existence of solutions to the regularized system has been established, we aim to relate these solutions to a solution of the original coupled HJB system~\eqref{coupled-HJB-main}. 
+	
+	In the following, we adopt a notion of solution that was previously introduced for linear equations with measurable diffusion coefficients in \cite{safonov1994weak, cerutti1993uniqueness}. We extend this concept to the present fully nonlinear coupled system.
+	
+	\begin{definition}[{\color{blue}weak solution} or {\color{red} limit solution}]
+		\label{def:weak-solution-system}
+		A function $\boldsymbol{u} := (u_1,\dots,u_d) \in \left( C(\overline{\Omega})\right) ^d$ is called a weak solution of the HJB system \eqref{coupled-HJB-main} if there exists a subsequence $\left\lbrace \boldsymbol{u}_{\varepsilon}\right\rbrace_{\varepsilon} $ of solutions to the regularized system \eqref{coupled-HJB-regularized} such that
+		\[
+		\lim_{\varepsilon \to 0}
+		\left\| \boldsymbol{u}_{\varepsilon} - \boldsymbol{u} \right\|_{C(\bar{\Omega})}
+		= 0.
+		\]
+	\end{definition}
+	%
+	%
+	{\color{magenta} In the regularized fully nonlinear setting, one only has control of \(A_{\varepsilon}[\boldsymbol{v}]\) for a fixed (vector-valued) function \( \boldsymbol{v} \), and not of the full nonlinear coefficients \(A_{\varepsilon}[\boldsymbol{u}_{\varepsilon}]\). 
+	Consequently, the passage to the limit in the nonlinear coefficients, namely the convergence of \(A_{\varepsilon}[\boldsymbol{u}_{\varepsilon}]\) to \(A[\boldsymbol{u}]\), is delicate. 
+	For this reason, it is not clear a priori that every strong solution of the original system is a limit solution. Likewise, even when a limit solution enjoys sufficient regularity, it is not immediate that it is a strong solution of the original system.}
+	%
+	%
+	\begin{lemma}[existence of weak solution for the fully coupled HJB system]
+		\label{lem:existence-regularized-system}
+		The fully coupled system \eqref{coupled-HJB-main} has a weak solution.
+	\end{lemma}
+	%
+	\begin{proof}
+		Let $\left\lbrace  \boldsymbol{u}_{\varepsilon} \right\rbrace_{\varepsilon} $ be the family of solutions to the regularized system \eqref{coupled-HJB-regularized}.  
+		By the a priori estimate
+		\eqref{ineq:ABP-estimate}, this family is uniformly bounded.  
+		Moreover, Remark~\ref{rem:equicontinuouity-regularized-solution} guarantees equicontinuity.  
+		%
+		Therefore, by the Arzelà–Ascoli theorem~\ref{the:Arzela-Ascoli}, there exists a subsequence that converges uniformly in $\left( C(\overline{\Omega}) \right) ^d$ to a limit $\boldsymbol{u}$. Hence, $\boldsymbol{u}$ is a weak solution of the fully coupled system \eqref{coupled-HJB-main}.
+	\end{proof}
+	%
+	To obtain additional regularity of the solution, 
+	%we impose the further assumption $p\geq 2$. 
+	%In particular, we then have
+	%\begin{equation}
+	%	\label{ineq:exponent-p}
+	%	\frac{d}{2} < p < \infty, 
+	%	\quad
+	%	\text{and}
+	%	\quad
+	%	p \geq 2.
+	%\end{equation}
+	%}
+	we introduce the exponent $\hat{p}$ defined by
+	\begin{equation}
+	\label{eq:df-hat-p}
+	\hat{p} :=
+	\begin{cases}
+		2, & \text{if } p = 2, 
+		\\
+		2 + \varrho < p, & \text{if } p > 2,
+	\end{cases}
+	=
+	\begin{cases}
+		2, & \text{if } d = 2,3, 
+		\\
+		2 + \varrho < p, & \text{if } d \geq 4,
+	\end{cases}
+	\end{equation}
+	for some sufficiently small $\varrho>0$. With this choice, one can ensure that the following uniform a priori estimate holds.
+	%
+	%
+	\begin{lemma}[uniform a priori \(W^{2}_{\hat p}\) estimate for the regularized system]
+	\label{lem:a-priori-estimate-regularized-system}
+	Let
+	\[
+	\boldsymbol{u}_{\varepsilon} = (u_{1,\varepsilon}, \dots, u_{d,\varepsilon}) \in (W_p)^d
+	\]
+	be the solution to the regularized system~\eqref{coupled-HJB-regularized}. 
+	Assume that the diffusion coefficients satisfy the Cordes condition~\eqref{ineq:Cordes-condition} and that the domain $\Omega$ is convex. 
+	Then there exist $\varrho>0$ and, consequently, an exponent $\hat p$ defined by~\eqref{eq:df-hat-p}, such that there exists a constant
+	\[
+	C_{\ref{ineq:a-priori-bound-regularized-solution}}
+	\bigl(\Omega,\sigma_1,\sigma_2,\lambda,p,\|c\|_{L_\infty}\bigr)
+	>0
+	\]
+	with the property that the following uniform a priori estimate holds:
+	\begin{equation}
+		\label{ineq:a-priori-bound-regularized-solution}
+		\left\| u_{j,\varepsilon} \right\|_{W^{2}_{\hat{p}}(\Omega)}
+		\le 
+		C_{\ref{ineq:a-priori-bound-regularized-solution}}
+		\left\| f_j \right\|_{L_{p}(\Omega)},
+		\quad \forall \varepsilon > 0,\quad j = 1,\dots,d.
+	\end{equation}
+	\end{lemma}
+	
+	\begin{proof}
+	For each $j = 1,\dots,d$, the regularized equations read
+	\begin{equation}
+		\label{eq:laplacian}
+		\sum_{i=1}^{d}
+		a_{i,\varepsilon}[u_{i,\varepsilon}]\,
+		\partial_{x_i x_i} u_{j,\varepsilon}
+		=
+		f_j + c_j u_{j,\varepsilon}
+		\quad \text{in } \Omega.
+	\end{equation}
+	The Cordes condition yields
+	\begin{equation}
+		\label{ineq:upper-bound-Laplacian}
+		\left\| u_{j,\varepsilon} \right\|_{W^{2}_{\hat{p}}(\Omega)}
+		\le
+		C_{\ref{ineq:upper-bound-Laplacian}}
+		\left(
+		\left\| f_j \right\|_{L_{\hat{p}}(\Omega)}
+		+
+		\left\| c_j u_{j,\varepsilon} \right\|_{L_{\hat{p}}(\Omega)}
+		\right),
+	\end{equation}
+	where $C_{\ref{ineq:upper-bound-Laplacian}}(\Omega, \sigma_1,\sigma_2)>0$ (see \cite[Theorem~1.2.3]{maugeri2000elliptic}).
+	By Lemma~\ref{rem:ABP-estimate}, we have
+	\[
+	\left\| c_j u_{j,\varepsilon} \right\|_{L_{\hat{p}}(\Omega)}
+	\le
+	C(\Omega)\,
+	C_{\ref{ineq:ABP-estimate}}
+	\|c_j\|_{L_{\infty}(\Omega)}
+	\left\| f_j \right\|_{L_p(\Omega)}.
+	\]
+	Substituting this estimate into \eqref{ineq:upper-bound-Laplacian} yields the desired result.
+	\end{proof}
+	%
+	%
+	\begin{remark}[$W^{2}_{\hat{p}}$-regularity of a weak solution]
+	\label{rem:W2-regularity-weak-solution}
+	Lemma~\ref{lem:a-priori-estimate-regularized-system} implies that the family
+	\[
+	\{ \boldsymbol{u}_{\varepsilon} := (u_{1,\varepsilon}, \dots, u_{d,\varepsilon}) \}_{\varepsilon},
+	\]
+	of solutions to the regularized system~\eqref{coupled-HJB-regularized} is uniformly bounded in $W^{2}_{\hat{p}}(\Omega)$. Consequently, there exists a subsequence (not relabeled) and a function $\bar{\boldsymbol{u}} \in \bigl(W^{2}_{\hat{p}}(\Omega)\bigr)^d$ such that
+	\[
+	\boldsymbol{u}_{\varepsilon} \rightharpoonup \bar{\boldsymbol{u}}
+	\quad \text{weakly in } W^{2}_{\hat{p}}(\Omega).
+	\]
+	By uniqueness of the limit, we have $\bar{\boldsymbol{u}} = \boldsymbol{u}$, where $\boldsymbol{u}$ denotes the weak solution of~\eqref{coupled-HJB-main}. It follows that $\boldsymbol{u} \in \bigl(W^{2}_{\hat{p}}(\Omega)\bigr)^d$.
+	\end{remark}
+	%
+	%
+	In the following lemma, we provide a sufficient condition that allows passage to the limit in the equation, thereby ensuring that a weak solution is in fact a strong solution.
+	%
+	\begin{comment}
+	{\color{red}
+	\begin{lemma}[$W^{2}_2$ solutions are strong solutions]
+		\label{lem:strong-solution}
+		Let $\{\boldsymbol{u}_{\varepsilon}\}_{\varepsilon}$ be a sequence of solutions to the regularized system~\eqref{coupled-HJB-regularized}. 
+		Assume that, for each $i = 1, \dots, d$, 
+		\[
+		\partial_{x_i x_i} u_{i,\varepsilon} \to \partial_{x_i x_i} u_i
+		\quad \text{strongly in } L_2(\Omega).
+		\]
+		Then a weak solution $\boldsymbol{u} = (u_1, \dots, u_d)$ is a strong solution of~\eqref{coupled-HJB-main}.
+	\end{lemma}
+	}
+	%
+	%
+	\begin{proof}
+	Since, for each $i = 1, \dots, d$, 
+	\[
+	\partial_{x_i x_i} u_{i,\varepsilon} \to \partial_{x_i x_i} u_i 
+	\quad \text{strongly in } L_2(\Omega),
+	\]
+	there exists a subsequence (not relabeled) such that
+	\[
+	\partial_{x_i x_i} u_{i,\varepsilon}(\boldsymbol{x})
+	\to
+	\partial_{x_i x_i} u_i(\boldsymbol{x})
+	\quad \text{for a.e. } \boldsymbol{x} \in \Omega.
+	\]
+	We first show that, for each $i = 1, \dots, d$,
+	\begin{equation}
+		\label{eq:lim-coefficients}
+		\lim_{\varepsilon \to 0}
+		\left\| a_{i,\varepsilon}[u_{i,\varepsilon}] - a_i[u_i] \right\|_{L_2(\Omega)} = 0.
+	\end{equation}
+	By the triangle inequality,
+	\begin{equation}
+		\label{ineq:triangle-limit-coefficients}
+		\left\| a_{i,\varepsilon}[u_{i,\varepsilon}] - a_i[u_i] \right\|_{L_2(\Omega)}
+		\le
+		\left\| a_{i,\varepsilon}[u_{i,\varepsilon}] - a_{i,\varepsilon}[u_i] \right\|_{L_2(\Omega)} 
+		+
+		\left\| a_{i,\varepsilon}[u_i] - a_i[u_i] \right\|_{L_2(\Omega)}.
+	\end{equation}
+	By the properties  \eqref{eq:pointwise-convergence-regularized-coefficients} and 
+	\eqref{ineq:uniform-bound-regularized-coefficients}, together with the Lebesgue dominated convergence theorem, we have
+	\begin{equation}
+		\label{eq:lim-second-term}
+		\lim_{\varepsilon \to 0}
+		\left\| a_{i,\varepsilon}[u_i] - a_i[u_i] \right\|_{L_2(\Omega)} = 0.
+	\end{equation}
+	It remains to show that the first term in \eqref{ineq:triangle-limit-coefficients} converges to zero. Using Young’s convolution inequality,
+	\begin{multline}
+		\label{ineq:limit}
+		\lim_{\varepsilon \to 0}
+		\left\| a_{i,\varepsilon}[u_{i,\varepsilon}] - a_{i,\varepsilon}[u_i] \right\|_{L_2(\Omega)}
+		\\
+		\le
+		\lim_{\varepsilon \to 0}
+		\left\| \eta_\varepsilon * \tilde{a}_i[u_{i,\varepsilon}]
+		-
+		\eta_\varepsilon * \tilde{a}_i[u_i] \right\|_{L_2(\mathbb{R}^d)}
+		\\
+		\le
+		\lim_{\varepsilon \to 0}
+		\left\| \tilde{a}_i[u_{i,\varepsilon}] - \tilde{a}_i[u_i] \right\|_{L_2(\mathbb{R}^d)}
+		=
+		\lim_{\varepsilon \to 0}
+		\left\| a_i[u_{i,\varepsilon}] - a_i[u_i] \right\|_{L_2(\Omega)}.
+	\end{multline}
+	To analyze the latter limit, define
+	\[
+	\Omega_N := \{ \boldsymbol{x} \in \Omega : \partial_{x_i x_i} u_i(\boldsymbol{x}) \neq 0 \}, 
+	\quad
+	\Omega_Z := \{ \boldsymbol{x} \in \Omega : \partial_{x_i x_i} u_i(\boldsymbol{x}) = 0 \}.
+	\]
+	If $\boldsymbol{x} \in \Omega_N$, assume without loss of generality that 
+	$\partial_{x_i x_i} u_i(\boldsymbol{x}) > 0$. Then there exists $\zeta > 0$ such that
+	\[
+	\partial_{x_i x_i} u_i(\boldsymbol{x}) \ge 2\zeta.
+	\]
+	By pointwise convergence, for sufficiently small $\varepsilon$,
+	\[
+	\partial_{x_i x_i} u_{i,\varepsilon}(\boldsymbol{x}) \ge \zeta > 0,
+	\]
+	and hence
+	\[
+	a_i[u_{i,\varepsilon}](\boldsymbol{x}) = \sigma_2.
+	\]
+	Therefore,
+	\[
+	\lim_{\varepsilon \to 0}{a_i[u_{i, \varepsilon}](\boldsymbol{x})} = 
+	a_i[u_i](\boldsymbol{x}).
+	\]
+	The same argument applies if the limit is negative.
+	\\
+	If $\boldsymbol{x} \in \Omega_Z$, then
+	\[
+	a_i[u_{i,\varepsilon}](\boldsymbol{x}) \in [\sigma_1,\sigma_2],
+	\quad
+	a_i[u_i](\boldsymbol{x}) \in [\sigma_1,\sigma_2],
+	\]
+	and therefore
+	{\color{red}
+		\[
+		\lim_{\varepsilon \to 0}
+		\text{dist}\left( 
+		a_i\left[ u_{i, \varepsilon}\right] (\boldsymbol{x}) , 
+		\left\lbrace a_i[u_i] (\boldsymbol{x}) \right\rbrace 
+		\right) =0.
+		\]
+	}
+	Since $a_i[u_{i,\varepsilon}]$ is uniformly bounded, the dominated convergence theorem yields
+	\[
+	\lim_{\varepsilon \to 0}
+	\left\| a_i[u_{i,\varepsilon}] - a_i[u_i] \right\|_{L_2(\Omega)} = 0.
+	\]
+	Combining the above estimates proves \eqref{eq:lim-coefficients}.
+	\\
+	Finally, for any $\varepsilon>0$ and $\varphi \in C_c^\infty(\Omega)$,
+	\begin{equation}
+		\label{eq:strong-solution-regularized-integral}
+		\int_{\Omega}
+		\left(
+		\sum_{i=1}^{d}
+		a_{i,\varepsilon}[u_{i,\varepsilon}]
+		\, \partial_{x_i x_i} u_{j,\varepsilon}
+		-
+		c_j u_{j,\varepsilon}
+		-
+		f_j
+		\right) \varphi \, d\boldsymbol{x}
+		= 0,
+		\quad j = 1,\dots,d.
+	\end{equation}
+	Using Lemma~\ref{lem:weak-strong-coupling}, we obtain
+	\begin{multline}
+		\label{equ:limit-weak-solution-integral}
+		\lim_{\varepsilon \to 0}
+		\int_{\Omega}{\left(
+			\sum_{i=1}^{d}
+			a_{i,\varepsilon}\!\left[u_{i,\varepsilon}\right]\,
+			\partial_{x_i x_i} u_{j,\varepsilon}
+			-
+			c_j\, u_{j,\varepsilon}
+			-
+			f_j
+			\right) \varphi } d \boldsymbol{x}
+		\\
+		= 
+		\int_{\Omega}{\left(
+			\sum_{i=1}^{d}
+			a_{i}\!\left[u_{i}\right]\,
+			\partial_{x_i x_i} u_{j}
+			-
+			c_j\, u_{j}
+			-
+			f_j
+			\right) \varphi } d \boldsymbol{x}
+		= 0,
+		\quad
+		j= 1, \cdots, d.
+	\end{multline}
+	Hence, $\boldsymbol{u}$ is a strong solution of~\eqref{coupled-HJB-main}.
+	\end{proof}
+	\end{comment}
+	
+	\vspace*{2mm}
+	\subsection{A Cordes condition approach for $d \leq4$}
+	\label{sec:A-Cordes-condition-approach}
+	When considering the problem in dimensions $d \leq 4$ with vanishing zero-order term, i.e.\ $\boldsymbol{c} = \boldsymbol{0}$, one may alternatively assume that $\Omega \subset \mathbb{R}^d$ is a convex domain without requiring $C^{1,1}$ regularity.
+	%
+	%\vspace*{1cm}
+	%{\color{blue}
+		%When considering the problem in dimensions $d \leq 4$ with vanishing zero-order term, i.e.\ $\boldsymbol{c} = \boldsymbol{0}$, the assumptions on the data can be relaxed while still ensuring the existence of a weak solution. 
+		%
+		%First, it suffices to assume that the domain $\Omega$ is convex, without requiring $C^{1,1}$ regularity.  Second, the right-hand side can be weakened to $\boldsymbol{f} \in \bigl(L^{\tilde{p}}(\Omega)\bigr)^d$, where
+		%\[
+		%\tilde{p} :=
+		%\begin{cases}
+		%	2, & d = 2,3, \\[4pt]
+		%	2 + \delta, & d = 4,
+		%\end{cases}
+		%\]
+		%for some $\delta > 0$.
+		%}
+	In this setting, when dealing with the regularized system, one can employ the Cordes condition framework instead of Theorem~\ref{lem:well-posedness-linear-equation-smooth-coefficients}. This yields a uniform a priori estimate for the solution, independent of the regularization parameter.
+	
+	The Cordes condition framework is particularly well suited to the case \( d \leq 4 \). Indeed, the following theorem ensures the well-posedness of solutions in \( W^{2}_p(\Omega) \cap \mathring{W}^{1}_p(\Omega) \), for any exponent \( p \) satisfying the constraints in \eqref{ineq:exponent-p}. As a consequence, both the ABP estimate~\eqref{ineq:ABP-estimate} and the Hölder continuity estimate~\eqref{ineq:Holder-bound} remain valid. {\color{red}
+		The latter follows from the continuous embedding of \( W^{2}_{ \hat{p}}(\Omega) \) into \( C^{0,\alpha}(\overline{\Omega}) \) (see \cite[Section 5.6.3, Theorem 6]{evans2010partial}), together with the uniform estimate provided by Theorem~\ref{lem:well-posedness-linear-equation-cordes-coefficients}.
+	}
+	
+	%
+	In contrast, for dimensions \( d \geq 5 \), the same theorem no longer guarantees the existence of solutions in \( W^{2}_{p}(\Omega) \cap \mathring{W}^{1}_{p}(\Omega) \) for admissible exponents \( p \). This loss of regularity leads to significant difficulties in continuing the analysis.({\color{red} The point is that for $d\leq 4$, the exponents $p$ and $\hat p$, can be used interchangeably. In contrast, for higher dimensions, such an interchangeability is no longer valid.})
+	%
+	\begin{theorem}[well-posedness of a linear equation with coefficients satisfying Cordes condition and $d\leq4$ {\cite[Theorem 1.2.3]{maugeri2000elliptic}}]
+		\label{lem:well-posedness-linear-equation-cordes-coefficients}
+		Let $\Omega$ be a bounded, convex domain and let the coefficients $\boldsymbol{a} := (a_1, \dots, a_d)$ satisfy the Cordes condition. Assume further that 
+		\[
+		\sigma_1 \le a_i(\boldsymbol{x}) \le \sigma_2
+		\quad \text{for a.e.\ } \boldsymbol{x} \in \Omega,\quad i = 1,\dots,d.
+		\]
+		If $f \in L_{\hat p}(\Omega)$,
+		then the equation
+		\begin{equation}
+			\label{eq:-linear-system-cordes-coefficients}
+			\sum_{i=1}^{d}
+			a_i\, \partial_{x_i x_i} u
+			=
+			f
+			\quad \text{in } \Omega,
+			\qquad
+			u_j = 0
+			\quad \text{on } \partial\Omega,		
+		\end{equation}
+		admits a unique solution 
+		\[
+		u \in W^{2}_{\hat{p}}(\Omega) \cap \mathring{W}^{1}_{\hat{p}}(\Omega),
+		\]
+		{\color{red} 
+			where $\hat{p}$ is as defined in \eqref{eq:df-hat-p}.}
+		Moreover, there exists $C_{\ref{ineq:stability-solution-cordes-coefficients}}
+		\left( \Omega, d, \hat{p}, \sigma_1, \sigma_2, \lambda \right) >0 $ such that  the estimate
+		\begin{equation}
+			\label{ineq:stability-solution-cordes-coefficients}
+			\left\| u \right\|_{W^{2}_{\hat{p}}(\Omega)}
+			\le
+			C_{\ref{ineq:stability-solution-cordes-coefficients}}	
+			\left\| f \right\|_{L_{\hat{p}}(\Omega)},
+		\end{equation}
+		holds.
+	\end{theorem}
+	%
+	%
+	%\begin{remark}
+	%	There is no guarantee for the case $d\geq5$, because...
+	%\end{remark}
+	%%
+	%%
+	%{\color{blue}
+		%\begin{lemma}[Sobolev embedding and Hölder continuity {\normalfont (cf.\ Evans, Ch.~5, Thm.~6)}]
+		%	\label{lem:Holder-continuity-embedding}
+		%	Let $v \in W^{k,q}(\Omega)$ with $k > \frac{d}{q}$. Then $v \in C^{k - \left\lfloor \frac{d}{q} \right\rfloor - 1, \alpha}(\overline{\Omega})$, where
+		%	\[
+		%	\alpha :=
+		%	\begin{cases}
+			%		\left\lfloor \frac{d}{q} \right\rfloor + 1 - \frac{d}{q}, & \text{if } \frac{d}{q} \notin \mathbb{N}, \\[4pt]
+			%		\text{any number in } (0,1), & \text{if } \frac{d}{q} \in \mathbb{N}.
+			%	\end{cases}
+		%	\]
+		%\end{lemma}
+		%
+		%Since for $2 \le d \le 4$ we have
+		%\[
+		%2 > \frac{d}{\tilde{p}},
+		%\]
+		%it follows that any $v \in W^{2,\tilde{p}}(\Omega)$ is Hölder continuous. In particular, there exists a constant $C_{\ref{ineq:Holder-continuity-embedding}}(\Omega, d, \tilde{p}) > 0$ such that
+		%\begin{equation}
+		%	\label{ineq:Holder-continuity-embedding}
+		%	\left\| v \right\|_{C^{0,\alpha}(\overline{\Omega})}
+		%	\le
+		%	C_{\ref{ineq:Holder-continuity-embedding}}
+		%	\left\| v \right\|_{W^{2,\tilde{p}}(\Omega)}
+		%	\leq
+		%	C_{\ref{ineq:Holder-continuity-embedding}}
+		%	C_{\ref{ineq:stability-solution-cordes-coefficients}}
+		%	\left\| \boldsymbol{f} \right\|_{L^{\tilde{p}}(\Omega)}
+		%	.
+		%\end{equation}
+		%}
+	The existence of a weak solution in this setting then follows by the same argument as in the general case.
+	
+	
+	\vspace*{2mm}
+	\section{time-dependent coupled HJB system}
+	\label{sec:Time-dependent-HJB-systems}
+	
+	Here, we consider a time-dependent coupled HJB system and adapt the arguments developed above to this setting.
+	
+	Let $\Omega$ be as before, and fix a final time $T>0$.
+	Define the space–time cylinder
+	\[
+	Q_T:= \Omega \times (0,T),
+	\]
+	and denote its lateral boundary by
+	\[
+	S_T:= \partial \Omega \times (0,T).
+	\]
+	%
+	For $1 \leq q, r <\infty$, we define $L_{q, r}(Q_T)$ as the Banach space of all measurable functions $v$ on $Q_T$ such that the norm
+	\[
+	\left\|
+	v \right\|_{L_{q,r}(Q_T)}:=
+	\left( \int_{0}^{T}{\left( \int_{\Omega}{\left| v(\boldsymbol{x}, t) \right|^q }dx \right)^{\frac{r}{q}} }dt
+	\right)^{\frac{1}{r}}.  
+	\]
+	is finite. {\color{red} Define the space when $q$ or $r$ be $\infty$ as well.}
+	When $q=r$, we simply write
+	\[
+	L_q(Q_T):= L_{q,q}(Q_T),
+	\quad
+	\left\| v \right\|_{L_q(Q_T)}:= \left\| v \right\|_{L_{q,q}(Q_T)}.
+	\]
+	Furthermore, for integers $m, n \geq 0$, and $1\leq q < \infty$, we denote by $W^{m,n}_q(Q_T)$ the anisotropic Sobolev space consisting of functions on $Q_T$ whose weak derivatives up to order $m$ with respect to the spatial variables $\boldsymbol{x}$ and up to order $n$ with respect to the time variable $t$ belong to $L_{q}(Q_T)$. In particular, $v \in W^{2,1}_q(Q_T)$ if 
+%	\[
+%		v, \partial_t v, D_{\boldsymbol{x}}v , D^2_{\boldsymbol{x}}v \in L_q(Q_T).
+%	\]
+	%
+	\[
+		v, \partial_t v, \partial_{x_i}v , \partial_{x_i x_j}v \in L_q(Q_T)
+		\quad
+		\text{for }
+		i, j = 1, \cdots, d.
+	\]
+%	Furthermore, for integers $m, n \geq 0$, and $1\leq q < \infty$, we denote by $W^{m,n}_q(Q_T)$ the anisotropic Sobolev space consisting of all functions $v \in L_q(Q_T)$ such that 
+%	\[
+%	D^{\boldsymbol{k}}_{\boldsymbol{x}} \partial_t^{l} v \in L_q(Q_T) ~~ \text{for all } \left| \boldsymbol{k} \right| \leq m , ~ l \leq n,
+%	\]
+%	where $\boldsymbol{k}=\left( k_1, \cdots, k_d \right)  \in \mathbb{N}_0^d$ is a multi-index with
+%	\[
+%	\left| \boldsymbol{k} \right|:=\sum_{i=1}^{d}{k_{i}},
+%	\quad
+%	D_{\boldsymbol{x}}^{\boldsymbol{k}}:= \frac{\partial^{\left| \boldsymbol{k} \right| }}{\partial_{x_1}^{k_1} \cdots \partial_{x_d}^{k_d}}.
+%	\]
+%	In particular,
+%	\[
+%	W^{2,1}_q(Q_T) = \left\lbrace v \in L_q(Q_T) \big| D_{\boldsymbol{x}}^{\boldsymbol{k}}v, \partial_t v \in L_q(Q_T), ~ \text{for all } \left| \boldsymbol{k} \right| \leq 2  \right\rbrace.
+%	\]
+	%
+	\begin{remark}
+		In the theory of parabolic partial differential equations, it is customary to use the \emph{parabolic metric}
+		\[
+		\left| (\boldsymbol{x}, t) - (\boldsymbol{y}, s) \right|:= \left| \boldsymbol{x} - \boldsymbol{y} \right| + \left| t - s \right|^{1/2}, 
+		\]
+		instead of the Euclidean metric in $\mathbb{R}^{d+1}$.
+	\end{remark}
+	%
+	\begin{theorem}[well-posedness of a linear time-dependent equation with continuous coefficients {\cite[Chapter IV, Theorem 9.1]{ladyzhenskai1988linear}}]
+		\label{lem:well-posedness-linear-equation-smooth-coefficients-parabolic}
+		Let $\frac{3}{2}<q< \infty$. Suppose the coefficients $\boldsymbol{a} := (a_1,\dots, a_d)$ belong to
+		$\bigl(C(\bar{Q}_T)\bigr)^d$, and assume that 
+		%there exist constants $0 < \sigma_1 \le \sigma_2$ such that
+		\[
+		\sigma_1 \le a_i(\boldsymbol{x}, t) \le \sigma_2
+		\quad \text{for a.e.\ } (\boldsymbol{x}, t) \in Q_T,\quad i = 1,\dots,d.
+		\]
+		Let $ c \in L_{\infty}(Q_T)$
+		with $ c \ge 0$.
+		If $f \in L_q(Q_T)$, 
+		$ u_0 \in W^{2-2/q}_q(\Omega)$, and $g \in W^{2-1/q, 2-1/{2q}}_q(S_T) $, and the compatibility condition 
+		\[
+		u_{0} = g(\cdot, 0) \quad \text{on }
+		\partial \Omega,
+		\]
+		holds, then the equation
+		\begin{equation}
+			\label{eq:-linear-system-smooth-coefficients-parabolic}
+			\sum_{i=1}^{d}
+			\partial_t u -
+			a_i\, \partial_{x_i x_i} u
+			+
+			c\, u
+			=
+			f
+			~~ \text{in } Q_T,
+			\quad
+			u |_{t=0} = u_{0},
+			%~~ \text{in } \Omega,
+			\quad
+			u |_{S_T} = g ,
+			%~~ \text{in } S_T,
+		\end{equation}
+		admits a unique solution
+		$u \in W^{2,1}_q(Q_T)$.
+		Moreover, there exists a constant \\$	C_{\ref{ineq:stability-solution-continuous-coefficients-parabolic}}
+		\left( \Omega, T, q, \sigma_1, \sigma_2, \left\| \hat{c} \right\|_{L^{\infty}(Q_T)},
+		\boldsymbol{\omega}[\hat{\boldsymbol{a}}] \right) >0 $ such that the following estimate holds:
+		\begin{equation}
+			\label{ineq:stability-solution-continuous-coefficients-parabolic}
+			\left\| u \right\|_{W^{2,1}_q(Q_T)}
+			\le
+			C_{\ref{ineq:stability-solution-continuous-coefficients-parabolic}}
+			%		\left( \Omega, T, q, \sigma_1, \sigma_2, \left\| \hat{c} \right\|_{L^{\infty}(Q_T)},
+			%		\boldsymbol{\omega}[\hat{\boldsymbol{a}}] \right) 
+			\left(
+			\left\| f \right\|_{L_q(Q_T)}
+			+
+			\left\| g \right\|_{W^{2-\frac{1}{q},1- \frac{1}{2q}}_q(S_T)}
+			+
+			\left\| u_0 \right\|_{W^{2-\frac{2}{q}}_q(\Omega)} 
+			\right).
+		\end{equation}
+		%	where the positive constant $C_{\ref{ineq:stability-solution-continuous-coefficients-parabolic}}$ is independent of
+		%	$u$, $f$, $g$ and $u_0$, but depends on
+		%	$\sigma_1$, $\sigma_2$, $\|\hat{c}\|_{L^{\infty}(\Omega)}$, 
+		%	the modulus of continuity $\boldsymbol{\omega}[\hat{\boldsymbol{a}}]$, 
+		%	the domain $Q_T$, and the exponent $q$.
+	\end{theorem}
+	%
+	%
+	We define
+	\begin{equation}
+		\label{eq:space-time-dependent}
+		W_{T , \bar{p}}:= 
+		\left\lbrace 
+		v \in W^{2,1}_{\bar{p}}(Q_T): v(\boldsymbol{x}, t)= 0 \text{ on } S_T , ~~ v(\boldsymbol{x}, 0) = 0 \text{ on } \Omega 
+		\right\rbrace ,
+	\end{equation}
+	where the exponent $\bar{p}$ is assumed to satisfy 
+	\[
+	\dfrac{d+2}{2} < {\bar{p}} < \infty.
+	\]
+	%
+	We now consider the time dependent fully coupled system of HJB equations, given by
+	\begin{equation}
+		\label{coupled-HJB-main-parabolic}
+		\begin{cases}
+			\displaystyle
+			\sum_{i=1}^{d}
+			\partial_t u_j - 
+			a_i[u_i]\, \partial_{x_i x_i} u_j + c_j u_j = f_j,
+			& \text{in } Q_T, \\[0.5em]
+			u_j |_{t=0} = 0,
+			& \text{in } \Omega, \\[0.5em]
+			u_j =0, 
+			& \text{in } S_T,
+		\end{cases}
+		\qquad j=1,\dots,d ,
+	\end{equation}
+	for any $\boldsymbol{f} \in (L_{\bar{p}}(Q_T))^{d}$. Here, for any $v\in W^{2,1}_{\bar{p}}(Q_T)$ and $i=1,\dots,d$, the nonlinear coefficients are defined by
+	\[
+	a_i[v](\boldsymbol{x}, t)
+	\in
+	\left\lbrace 
+	\operatorname*{arg\,sup}_{\alpha \in [\sigma_1,\sigma_2]}
+	\left\{ \alpha \, \partial_{x_i x_i} v (\boldsymbol{x}, t) \right\}
+	\right\rbrace .
+	\]
+	For the same reasons as in the stationary fully coupled HJB system, we also consider, in the time-dependent setting, a corresponding regularized version. The time-dependent regularized diffusion coefficients $a_{i, \varepsilon}: W_{T, \bar{p}} \rightarrow C(Q_T)$ are introduced with analogous properties.
+	Applying an analysis similar to that of the stationary case, with  $\Omega$ replaced by $Q_T$, $p$ replaced by $\bar{p}$, and $W_p$ replaced by $W_{T, \bar{p}}$, yields the existence of a corresponding weak solution in the time-dependent setting. The regularity of this weak solution can be established by arguments similar to those used in the stationary case \cite{kuo2008maximum}.
+		
+	\appendix
+	\section{Preliminaries and Auxiliary Tools}
+	\label{sec:Preliminaries-Auxiliary-Tools}
+	\begin{definition}
+		\label{def:modulus-of-continuity}
+		Let $v : \Omega \to \mathbb{R}$. The modulus of continuity of $v$ is the function $\omega[v] : [0,\infty) \to [0,\infty)$ defined by
+		\[
+		\omega[v](r) := \sup_{\substack{\boldsymbol{x}, \boldsymbol{y} \in \Omega \\ |\boldsymbol{x} - \boldsymbol{y}| \le r}}
+		|v(\boldsymbol{x}) - v(\boldsymbol{y})|,
+		\quad r \ge 0.
+		\]
+		Note that $v$ is uniformly continuous in $\Omega$ if and only if $\omega[v](r) \to 0$ as $r \to 0$.
+		\\
+		For a vector-valued function $\boldsymbol{v} : \Omega \to \mathbb{R}^d$, with $\boldsymbol{v} = (v_1, \dots, v_d)$, the modulus of continuity is defined componentwise by
+		\[
+		\boldsymbol{\omega}[\boldsymbol{v}](r) := \bigl( \omega[v_1](r), \dots, \omega[v_d](r) \bigr).
+		\]
+	\end{definition}
+	%
+	%	
+	\begin{lemma}[Young's convolution inequality]
+		\label{lem:Young's-convolution-inequality}
+		Suppose $f$ is in the Lebesgue space $L_s(\mathbb{R}^d)$ and $g$ is in $L_q(\mathbb{R}^d)$ and
+		\[ \frac{1}{s}
+		+
+		\frac{1}{q}
+		= \frac{1}{r} + 1
+		\]
+		with $1 \leq s, q, r \leq \infty$. Then 
+		\begin{equation}
+			\label{ineq:Young's-convolution}
+			\left\| f \ast g \right\|_{L_r(\mathbb{R}^d)}
+			\leq 
+			\left\| f \right\|_{L_s(\mathbb{R}^d)}
+			\left\| g \right\|_{L_q(\mathbb{R}^d)}.
+		\end{equation}
+	\end{lemma}
+	%
+	%
+	\begin{theorem}[Arzelà–Ascoli theorem {\cite[Theorem~7.25]{rudin1976principles}}]
+		\label{the:Arzela-Ascoli}
+		Let $X$ be a compact metric space (we can take it
+		as a compact subset of $\mathbb{R}^d$), and also let $C(X)$ denote the space of all continuous functions on
+		$X$ with values in the $m
+		$-dimensional Euclidean space $\mathbb{R}^m$. 
+		If the sequence $\left\lbrace v_n \right\rbrace $ in $C(X)$ is uniformly bonded and uniformly equicontinuous then it has a uniformly convergent subsequence.
+	\end{theorem}
+	%
+	%
+{\color{blue}
+	\begin{lemma}[strong-weak continuity]
+		\label{lem:weak-strong-coupling}
+		If $\left\lbrace v_n \right\rbrace $ be a sequence converges strongly to $v$ ($v_n \rightarrow v$) and $\left\lbrace w_n \right\rbrace $ converges weakly to $w$ ($w_n \rightharpoonup w$) in $L_2(\Omega)$, then 
+		\[
+		\int_{\Omega}{v_n w_n} d \boldsymbol{x} \rightarrow \int_{\Omega}{v w} d\boldsymbol{x}.
+		\]
+	\end{lemma}
+}	
+	
+	\section{A priori estimates}
+	In the following, we assume that \(\partial\Omega\) satisfies a uniform exterior sphere condition. In particular, this assumption holds whenever \(\partial\Omega \in C^{1,1}\).
+	We first establish the global Hölder continuity in the elliptic setting using the results of \cite{kuo2007new}. We then turn to the parabolic case using the corresponding results of \cite{kuo2008maximum}.
+	
+	\subsection{Elliptic setting}
+	\label{subsec:elliptic-setting}
+	Let
+	\[
+	u \in W^2_p(\Omega) \cap C(\overline{\Omega}),
+	\]
+	where we recall that the exponent \(p\) satisfies
+	\[
+	p \geq 2,
+	\qquad
+	\frac{d}{2} < p < \infty.
+	\]
+	Assume that \(u\) satisfies
+	\begin{equation}
+		\label{eq:linear-lower-order}
+		\mathcal{L}u
+		:=
+		\sum_{i=1}^{d} a_i \partial_{x_i x_i} u
+		-
+		c u
+		\geq
+		-f
+		\quad \text{in } \Omega,
+		\qquad
+		u \leq 0
+		\quad \text{on } \partial\Omega,
+	\end{equation}
+	where
+	\[
+	f \in L_p(\Omega),
+	\qquad
+	c \in L_{\infty}(\Omega),
+	\qquad
+	c \geq 0,
+	\]
+	and
+	\[
+	\boldsymbol{A}
+	=
+	\operatorname*{diag}(a_1,\dots,a_d)
+	\]
+	satisfies the ellipticity condition
+	\begin{equation}
+		\label{ineq:ellipticity-condition-A}
+		\sigma_1
+		\leq
+		a_i(\boldsymbol{x})
+		\leq
+		\sigma_2,
+		\quad
+		\text{for a.e. } \boldsymbol{x}\in\Omega,
+		\quad
+		i=1,\dots,d,
+	\end{equation}
+	together with the Cordes condition: there exists $\lambda>0$ such that
+	\begin{equation}
+		\label{ineq:Cordes-condition-A}
+		\frac{
+			\sum_{i=1}^{d} a_i(\boldsymbol{x})^2
+		}{
+			\left(
+			\sum_{i=1}^{d} a_i(\boldsymbol{x})
+			\right)^2
+		}
+		\leq
+		\frac{1}{d-1+\lambda}
+		\quad
+		\text{for a.e. } \boldsymbol{x}\in\Omega.
+	\end{equation}
+	
+	{\color{red}
+		By definition,
+		\[
+		\rho_m^{\ast}(\boldsymbol{A}):= \inf
+		\left\lbrace \dfrac{\boldsymbol{A}. \boldsymbol{\mu}}{d} : \boldsymbol{\mu} \in \Gamma_m , \, \rho_m(\boldsymbol{\mu}) \geq1 \right\rbrace  . 
+		\]
+		The cones satisfy $\Gamma_k \subset \Gamma_l$ for $k > l$ (this is mentioned in the paper, the line after (1.9)). While Maclaurin inequality gives $\rho_k \leq \rho_l$. Hence
+		\[
+		\left\lbrace \boldsymbol{\mu} \in \Gamma_k : \rho_k(\boldsymbol{\mu}) \geq1 \right\rbrace 
+		\subset
+		\left\lbrace \boldsymbol{\mu} \in \Gamma_l : \rho_l(\boldsymbol{\mu}) \geq1 \right\rbrace. 
+		\]
+		Since $\rho_k^{\ast}$ is an infimum of $\dfrac{\boldsymbol{A}. \boldsymbol{\mu}}{d}$ over the left set, and $\rho_l^{\ast}$ over the larger right set, the infimum over the smaller set is larger. So the monotonicity is:
+		\[
+		\rho_1^{\ast}(\boldsymbol{A})
+		\leq
+		\rho_2^{\ast}(\boldsymbol{A})
+		\leq
+		\cdots
+		\leq
+		\rho_d^{\ast}(\boldsymbol{A}).
+		\]
+	}
+	
+	In accordance with the notation in \cite{kuo2007new}, we define
+	\begin{equation}
+		\label{eq:def-rho-2-ast}
+		\rho_2^{\ast}(\boldsymbol{A})
+		:=
+		\frac{1}{\sqrt{d}}
+		\left(
+		\left(\sum_{i=1}^{d} a_i\right)^2
+		-
+		(d-1)\sum_{i=1}^{d} a_i^2
+		\right)^{1/2}.
+	\end{equation} 
+	The ellipticity assumption together with the Cordes condition~\eqref{ineq:Cordes-condition-A} satisfied by $\boldsymbol{A}$ implies
+	\begin{equation}
+		\label{ineq:lower-bound-rho-2}
+		\rho_2^{\ast}(\boldsymbol{A}) \geq \lambda \sigma_1.
+	\end{equation}
+	Therefore, if the diffusion matrix \(\boldsymbol{A}\) satisfies the ellipticity condition together with the Cordes condition~\eqref{ineq:Cordes-condition-A}, then the results of \cite{kuo2007new} apply with \(k=2\). In particular, the function \(u\) satisfies the following estimates.
+	\begin{lemma}[ABP estimate {\cite[Corollary~4.2]{kuo2007new}}]
+		\label{corollary:ABP-estimate-paper}
+		Let $u \in W^2_p(\Omega) \cap C(\overline{\Omega})$ satisfy \eqref{eq:linear-lower-order}. Then
+		we have the estimate 
+		\begin{equation}
+			\label{ineq:ABP-estimate-paper}
+			\left\|  u \right\|_{L_{\infty}(\Omega)}  
+			\leq
+			C \left| \Omega \right|^{2/d - 1/p} \left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L_p(\Omega)} , 
+		\end{equation}
+		for some $C(d, p, \sigma_1, \sigma_2, \lambda) >0$.
+	\end{lemma}
+	%
+	\begin{remark}
+		The estimate is originally stated for the supremum value of $u$. For continuous solutions, this is equivalent to an $L_{\infty}$ upper bound. A full $L_{\infty}$ bound on $u$ requires applying the result to both $u$ and $-u$. Therefore, {\cite[Corollary~4.2]{kuo2007new}}] provides an $L_{\infty}$ estimate for the positive part of $u$; applying it to $u$ and $-u$ yields a full $L_{\infty}$ bound.
+	\end{remark}
+	%	
+	%
+	\begin{lemma}[interior Hölder continuity {\cite[Theorem~4.3]{kuo2007new}}]
+		\label{lem:interior-Holder-continuity}
+		Let $u \in W^2_p(\Omega)$ satisfy $\mathcal{L}u = f$ in $B_R(\boldsymbol{y}) \subset \Omega$. Then, for any concentric subball $B_{\sigma R}(\boldsymbol{y})$ with $0 < \sigma < 1$, the following oscillation estimate holds:
+		\begin{equation}
+			\label{ineq:oscillation-bound}
+			\operatorname*{osc}_{B_{\sigma R}(\boldsymbol{y})} u
+			\le
+			C \sigma^{\alpha}
+			\left(
+			\operatorname*{osc}_{B_R(\boldsymbol{y})} u
+			+
+			R^{2-d/p}
+			\left\|
+			\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}
+			\right\|_{L_p(B_R(\boldsymbol{y}))}
+			\right),
+		\end{equation}
+		for some $\alpha(d, \sigma_1, \sigma_2, \lambda), C(R,d, p, \sigma_1, \sigma_2, \lambda, \left\| c\right\|_{L_{\infty}} ) > 0$.
+		%
+		Consequently,
+		\[
+		u \in C^{0,\alpha}(B_{\sigma R}(\boldsymbol{y})),
+		\]
+		and
+		\begin{equation}
+			\label{ineq:interior-Holder-continuity}
+			[u]_{C^{0,\alpha}(B_{\sigma R}(\boldsymbol{y}))}
+			\le
+			C R^{-\alpha}
+			\left(
+			\operatorname*{osc}_{B_R(\boldsymbol{y})} u
+			+
+			R^{2-d/p}
+			\left\|
+			\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}
+			\right\|_{L_p(B_R(\boldsymbol{y}))}
+			\right).
+		\end{equation}
+	\end{lemma}
+	%
+	%{\color{blue}
+		%\begin{proof}
+		%	Take any two points $x, z \in B_{R/2}(y)$. Set
+		%	\[
+		%	m = \dfrac{x+z}{2}, \quad  r = \left| x - z \right|. 
+		%	\]
+		%	Then $x, z \in B_r(m)$.
+		%	%\\
+		%	Because $x, z \in B_{R/2}(y)$, their midpoint $m$ also lies in $B_{R/2}(y)$. Hence, if $r \leq R/2$, we have
+		%	\[
+		%	B_r(m) \subset B_R(y).
+		%	\]
+		%	Also, 
+		%	\begin{equation}
+			%		\label{ineq:distance-oscillation-r-m}
+			%		\left| u(x) - u(z) \right| 
+			%		\leq
+			%		\operatorname*{osc}_{B_r(m)} u.
+			%	\end{equation}
+		%	Now apply the oscillation estimate with outer ball $B_R(y)$ and inner radius $r = \sigma R$, that is 
+		%	\[
+		%	\sigma = \dfrac{r}{R} = \dfrac{\left| x - z \right|}{R}.
+		%	\]
+		%	Since, $0 < r \leq R/2$, we have $0 < \sigma \leq 1/2 < 1$, so the estimate applies. Therefore
+		%	\begin{equation}
+			%		\label{ineq:oscillation-r-m}
+			%		 \operatorname*{osc}_{B_{r}(m)} u 
+			%	 	\leq
+			%	 	C \left( \dfrac{r}{R} \right)^{\alpha}
+			%	 	\left( 
+			%	 	\operatorname*{osc}_{B_{ R}(y)} u 
+			%	 	+
+			%	 	R^{2-d/p} \left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(B_{R}(y))}
+			%	 	\right).  		
+			%	\end{equation}
+		%	Combining \eqref{ineq:distance-oscillation-r-m} with \eqref{ineq:oscillation-r-m} gives
+		%	\begin{equation}
+			%		\label{ineq:distance-oscillation}
+			%		\left| u(x) - u(z) \right|
+			%		\leq
+			%		C \left( \dfrac{\left| x - z \right|}{R} \right)^{\alpha}
+			%		\left( 
+			%		\operatorname*{osc}_{B_{ R}(y)} u 
+			%		+
+			%		R^{2-d/p} \left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(B_{R}(y))}
+			%		\right). 
+			%	\end{equation}
+		%	Equivalently,
+		%	\begin{equation}
+			%		\label{ineq:distance-Holder-continuity}
+			%		\left| u(x) - u(z) \right|
+			%		\leq
+			%		C R^{- \alpha}
+			%		\left( 
+			%		\operatorname*{osc}_{B_{ R}(y)} u 
+			%		+
+			%		R^{2-d/p} \left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(B_{R}(y))}
+			%		\right) \left| x - z \right|^{\alpha}. 
+			%	\end{equation}
+		%	Since \eqref{ineq:distance-Holder-continuity} holds for all $x, z \in B_{R/2}(y)$, it follows that $u$ is Hölder continuous in $B_{R/2}(y)$ with exponent $\alpha$.
+		%\end{proof}
+		%}
+	%
+	\begin{remark}[interior Hölder continuity]
+		\label{rem:interior-Hölder-continuity}
+		Lemma~\ref{lem:interior-Holder-continuity} is an interior estimate: it assumes $B_{R}(\boldsymbol{y}) \subset \Omega$, and concludes Hölder continuity only on smaller concentric balls $B_{\sigma R}(\boldsymbol{y})$. Hence, it implies only local Hölder regularity:
+		\begin{equation}
+			\label{inc:interior-Hölder-continuity}
+			u \in C^{0, \alpha}_{\text{loc}}(\Omega).
+		\end{equation}
+	\end{remark}
+	%
+	%
+	Now, by constructing a suitable boundary barrier and combining it with the interior Hölder estimate, we obtain global Hölder continuity $u \in C^{0, \gamma}(\overline{\Omega})$, as stated in the following lemma.
+	%
+	%
+	\begin{lemma}[global Hölder continuity]
+		\label{lemm-Holder-continuity}
+		Let $u \in W^2_p(\Omega) \cap C(\overline{\Omega})$ satisfy
+		\[
+		\mathcal{L} u = f \quad \text{in } \Omega, 
+		\qquad 
+		u = 0 \quad \text{on } \partial \Omega.
+		\]
+		Then there exist  $\gamma(d, p, \sigma_1, \sigma_2, \lambda), C(\Omega, p, \sigma_1, \sigma_2, \lambda, \left\| c\right\|_{L_{\infty}} ) > 0$ such that
+		\begin{equation}
+			\label{ineq:Holder-bound-global}
+			\|u\|_{C^{0,\gamma}(\overline{\Omega})}
+			\le
+			C\left(
+			\|u\|_{L^\infty(\Omega)}
+			+
+			\left\|\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}\right\|_{L^p(\Omega)}
+			\right).
+		\end{equation}
+	\end{lemma}
+	
+	\begin{proof}
+		The interior Hölder regularity of $u$ is already available from Lemma~\ref{lem:interior-Holder-continuity}, which ensures that
+		\[
+		u \in C^{0,\alpha}_{\mathrm{loc}}(\Omega)
+		\]
+		for some $\alpha>0$.
+		Thus, it remains to establish Hölder continuity up to the boundary.
+		Let $\boldsymbol{x}_0 \in \partial\Omega$. Since $\partial\Omega$ satisfies a uniform exterior sphere condition, there exists $R_0>0$ and a ball
+		\[
+		B_{R_0}(\boldsymbol{z}) \subset \mathbb{R}^d \setminus \Omega,
+		\qquad
+		\overline{B_{R_0}(\boldsymbol{z})}\cap \overline{\Omega}=\{\boldsymbol{x}_0\}.
+		\]
+		Set $r(\boldsymbol{x}) := |\boldsymbol{x}-\boldsymbol{z}|$, so that $r(\boldsymbol{x}) \ge R_0$ for $\boldsymbol{x}\in\Omega$.
+		For $\mu>0$ large, define the barrier
+		\begin{equation}
+			\label{eq:barrier}
+			\psi(\boldsymbol{x}) := R_0^{-\mu} - |\boldsymbol{x}-\boldsymbol{z}|^{-\mu}.
+		\end{equation}
+		As in the standard computation, choosing $\mu$ sufficiently large yields
+		\begin{equation}
+			\label{ineq:negative-operator-value}
+			\mathcal{L} \psi \le - C_{\ref{ineq:negative-operator-value}} \quad \text{in } \Omega \cap B_{R_1}(\boldsymbol{x}_0),
+		\end{equation}
+		for some $C_{\ref{ineq:negative-operator-value}}>0$. 
+		Now define
+		\[
+		\Psi(\boldsymbol{x}) := \psi(\boldsymbol{x}) + \tau |\boldsymbol{x}-\boldsymbol{x}_0|^2,
+		\]
+		with $\tau>0$ small enough so that
+		\[
+		\mathcal{L} \Psi \le -\frac{C_{\ref{ineq:negative-operator-value}}}{2}.
+		\]
+		Fix $0<R<R_1$ and set $D_R := \Omega \cap B_R(\boldsymbol{x}_0)$. Define
+		\[
+		v := u - M_R \Psi,
+		\qquad
+		M_R := \frac{\|u\|_{L_\infty(\Omega)}}{\tau R^2}.
+		\]
+		By construction,
+		\[
+		\mathcal{L} v \ge -|f| \quad \text{in } D_R,
+		\qquad
+		v \le 0 \quad \text{on } \partial D_R.
+		\]
+		Hence, the ABP estimate applies and yields
+		\[
+		\sup_{D_R} |v|
+		\le
+		C R^{2-d/p}
+		\left\|\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}\right\|_{L_p(D_R)}.
+		\]
+		Therefore,
+		\[
+		|u(\boldsymbol{x})|
+		\le
+		M_R \Psi(\boldsymbol{x})
+		+
+		C R^{2-d/p}
+		\left\|\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}\right\|_{L_p(D_R)}.
+		\]
+		Using the barrier estimate $\Psi(\boldsymbol{x}) \le C|\boldsymbol{x}-\boldsymbol{x}_0|$, we obtain
+		\[
+		|u(\boldsymbol{x})|
+		\le
+		C\|u\|_{L_\infty(\Omega)} \frac{|\boldsymbol{x}-\boldsymbol{x}_0|}{R^2}
+		+
+		C R^{2-d/p}
+		\left\|\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}\right\|_{L_p(D_R)}.
+		\]
+		Let $\delta := |\boldsymbol{x}-\boldsymbol{x}_0|$ and choose $R=\delta^\theta$ with $\theta \in (0,1/2)$. Optimizing as usual gives
+		\[
+		|u(\boldsymbol{x})-u(\boldsymbol{x}_0)|
+		\le
+		C \delta^\beta
+		\left(
+		\|u\|_{L_\infty(\Omega)}
+		+
+		\left\|\frac{f}{\rho_2^{\ast}(\boldsymbol{A})}\right\|_{L_p(\Omega)}
+		\right),
+		\]
+		for some $\beta>0$. Thus $u$ is Hölder continuous at every boundary point. Combining this boundary estimate with the interior Hölder regularity yields
+		\[
+		u \in C^{0,\gamma}(\overline{\Omega}),
+		\qquad
+		\gamma := \min\{\alpha,\beta\}.
+		\]
+		This proves the claim.
+	\end{proof}
+	
+	
+	\subsection{Parabolic setting}
+	Next, we turn to the parabolic setting. Let $\Omega$, as before, satisfy the uniform exterior sphere condition, and define
+	\[
+	Q_T := \Omega \times (0,T).
+	\]
+	We decompose the parabolic boundary into the lateral, initial, and corner parts:
+	\[
+	S_T := \partial \Omega \times (0,T), 
+	\qquad
+	B_0 := \Omega \times \{0\}, 
+	\qquad
+	S_0 := \partial \Omega \times \{0\}.
+	\]
+	Let
+	\[
+	u \in W^{2,1}_{\bar{p}}(Q_T) \cap C(\overline{Q_T}),
+	\]
+	where we recall that the exponent $\bar{p}$ satisfies
+	\[
+	\frac{d+2}{2} < \bar{p} < \infty.
+	\]
+	Assume that $u$ satisfies
+	\begin{equation}
+		\label{eq:linear-lower-order-parabolic}
+		\mathcal{P} u := \partial_t u 
+		-
+		\sum_{i=1}^{d} a_i \partial_{x_i x_i} u 
+		-
+		c u
+		\leq f
+		\quad \text{in } Q_T,
+	\end{equation}
+	together with the boundary and initial conditions
+	\begin{equation}
+		\label{ineq:boundary-parabolic}
+		u \leq 0
+		\quad \text{on } \partial_p Q_T := S_T \cup B_0 \cup S_0.
+	\end{equation}
+	The space–time dependent diffusion matrix $\boldsymbol{A}:= \operatorname{diag}(a_1,\dots,a_d)$ satisfies the same ellipticity and Cordes conditions as in the elliptic case, namely \eqref{ineq:ellipticity-condition-A} and \eqref{ineq:Cordes-condition-A}, interpreted in the time-dependent setting. Moreover, we use the same notation as in \eqref{eq:def-rho-2-ast} for the corresponding space–time dependent quantity.
+	\begin{lemma}[ABP estimate {\cite[Theorem~1]{kuo2008maximum}}]
+		\label{corollary:ABP-estimate-paper-parabolic}
+		Let $u \in W^{2,1}_{\bar{p}}(Q_T) \cap C(\overline{Q_T})$ satisfy \eqref{eq:linear-lower-order-parabolic} and \eqref{ineq:boundary-parabolic}. Then
+		we have the estimate 
+		\begin{equation}
+			\label{ineq:ABP-estimate-paper-parabolic}
+			\left\|  u \right\|_{L_{\infty}(\Omega)}  
+			\leq
+			C_{\ref{ineq:ABP-estimate-paper-parabolic}} \left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A}) \right)^{(\bar{p} - 1)/ \bar{p}} } \right\|_{L_{\bar{p}}(Q_T)} , 
+		\end{equation}
+		for some $C_{\ref{ineq:ABP-estimate-paper-parabolic}}(Q_T, \bar{p}) >0$.
+	\end{lemma}
+	%%%%%%%
+	%%%%%%%
+	\begin{lemma}[ABP estimate {\cite{kuo2008maximum}}]
+		\label{corollary:ABP-estimate-paper-lower-order-parabolic}
+		Let $u \in W^{2,1}_{\bar{p}}(Q_T) \cap C(\overline{Q_T})$ satisfy \eqref{eq:linear-lower-order-parabolic} and \eqref{ineq:boundary-parabolic}. Then
+		we have the estimate 
+		\begin{equation}
+			\label{ineq:ABP-estimate-paper-lowe-order-parabolic}
+			\left\|  u \right\|_{L_{\infty}(\Omega)}  
+			\leq
+			C_{\ref{ineq:ABP-estimate-paper-lowe-order-parabolic}}
+			\left| Q_T \right|^{2/(d+2) - 1/{\bar{p}}} 
+			\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A}) \right)^{(\bar{p} - 1)/ \bar{p}} } \right\|_{L_{\bar{p}}(Q_T)} , 
+		\end{equation}
+		for some $C_{\ref{ineq:ABP-estimate-paper-lowe-order-parabolic}}(d, \bar{p}, \sigma_1, \sigma_2, \lambda) >0$.
+	\end{lemma}
+	%%%%%%%
+	%%%%%%%
+	\begin{lemma}[interior Hölder continuity for parabolic equations~{\cite{kuo2008maximum}}]
+		\label{lem:parabolic-interior-Holder-continuity}
+		Let
+		\[
+		Q_R(\boldsymbol{y}, s)
+		:=
+		B_R(\boldsymbol{y})\times (s-R^2,s]
+		\subset Q_T,
+		\]
+		%where $z_0=(x_0,t_0)$, 
+		and let
+		\[
+		u \in W^{2,1}_{\bar{p}}(Q_R(\boldsymbol{y}, s)),
+		%\qquad \bar{p} > \frac{d+2}{2},
+		\]
+		satisfy $\mathcal{P}u = f$ in $Q_R(\boldsymbol{y}, s)$.
+		%	Assume that the coefficient matrix
+		%	$\boldsymbol{A}=\operatorname*{diag}(a_1, \cdots, a_d)$
+		%	is uniformly parabolic and satisfies the Cordes condition.
+		%	\\
+		Then, for every concentric subcylinder
+		\[
+		Q_{\sigma R}(\boldsymbol{y}, s)
+		=
+		B_{\sigma R}(\boldsymbol{y})
+		\times
+		(s-\sigma^2R^2,s],
+		\qquad 0<\sigma<1,
+		\]
+		the following oscillation estimate holds:
+		\begin{equation}
+			\label{ineq:parabolic-oscillation-bound}
+			\operatorname*{osc}_{Q_{\sigma R}(\boldsymbol{y}, s)} u
+			\le
+			C \sigma^\alpha
+			\left(
+			\operatorname*{osc}_{Q_R(\boldsymbol{y}, s)} u
+			+
+			R^{2-(d+2)/{\bar{p}}}
+			\left\|
+			\frac{f}{\rho_2^\ast(\boldsymbol{A})}
+			\right\|_{L_{\bar{p}}(Q_R(\boldsymbol{y}, s))}
+			\right),
+		\end{equation}
+		for some
+		$\alpha(d,\sigma_1, \sigma_2,\lambda),C(R, d, \bar{p},\sigma_1,\sigma_2, \lambda, \left\| c \right\|_{L_{\infty}} )>0$.
+		Consequently,
+		\[
+		u\in C^{0,\alpha} (Q_{\sigma R}(\boldsymbol{y}, s)),
+		\]
+		and
+		\begin{equation}
+			\label{ineq:parabolic-interior-Holder}
+			[u]_{C^{0,\alpha}(Q_{\sigma R}(\boldsymbol{y}, s))}
+			\le
+			C R^{-\alpha}
+			\left(
+			\operatorname*{osc}_{Q_R(\boldsymbol{y}, s)} u
+			+
+			R^{2-(d+2)/{\bar{p}}}
+			\left\|
+			\frac{f}{\rho_2^\ast(\boldsymbol{A})}
+			\right\|_{L_{\bar{p}}(Q_R(\boldsymbol{y}, s))}
+			\right),
+		\end{equation}
+		where the parabolic Hölder seminorm is defined by
+		\[
+		[u]_{C^{0,\alpha}(Q)}
+		:=
+		\sup_{\substack{(\boldsymbol{x},t),(\bar{ \boldsymbol{x}},\bar{t})\in Q\\(\boldsymbol{x},t)\neq(\bar{ \boldsymbol{x}},\bar{t})}}
+		\frac{|u(\boldsymbol{x},t)-u(\bar{\boldsymbol{x}},\bar{t})|}
+		{
+			\bigl(|\boldsymbol{x} - \bar{\boldsymbol{x}}|
+			+
+			\sqrt{|t-\bar{t}|}\bigr)^\alpha
+		}.
+		\]
+	\end{lemma}
+	%%%%%%%
+	%%%%%%%
+	In the parabolic setting, we again construct suitable barrier functions near the lateral, initial, and corner parts of the boundary. Combining these boundary and initial barriers with the interior Hölder estimate, we obtain the global Hölder continuity \(u \in C^{0,\gamma}(\overline{Q_T})\), as stated in the following lemma.
+	%
+	\begin{lemma}[global Hölder continuity]
+		\label{lemm-Holder-continuity-parabolic}
+		Let $ u \in W^{2,1}_{\bar p}(Q_T)\cap C(\overline{Q_T})$
+		satisfy
+		\[
+		\mathcal{P}u=f
+		\quad \text{in } Q_T,
+		\qquad
+		u=0
+		\quad \text{on } S_T\cup B_0\cup S_0 .
+		\]
+		Then there exist $
+		\gamma(d,\bar p,\sigma_1,\sigma_2,\lambda),
+		C_{\ref{ineq:Holder-bound-global-parabolic}}(Q_T,\bar p,\sigma_1,\sigma_2,\lambda,\|c\|_{L_\infty})>0$
+		such that
+		\begin{equation}
+			\label{ineq:Holder-bound-global-parabolic}
+			\|u\|_{C^{0,\gamma}(\overline{Q_T})}
+			\le
+			C
+			\left(
+			\|u\|_{L_\infty(Q_T)}
+			+
+			\left\|
+			\frac{f}
+			{
+				\left(
+				\rho_2^\ast(\boldsymbol A)
+				\right)^{(\bar p-1)/\bar p}
+			}
+			\right\|_{L_{\bar p}(Q_T)}
+			\right).
+		\end{equation}
+	\end{lemma}
+	
+	
+	\begin{proof}
+		The interior Hölder continuity of $u$ is already available from Lemma~\ref{lem:parabolic-interior-Holder-continuity}, which ensures that
+		\[
+		u \in C^{0, \alpha}_{\text{loc}}(Q_T,)
+		\]
+		for some $\alpha>0$.
+		Therefore, it remains to establish Hölder continuity up to the boundary. We treat separately the three components of
+		\[
+		\partial_p Q_T
+		=
+		S_T \cup B_0 \cup S_0.
+		\]
+		Throughout the proof, the auxiliary parameters
+		\[
+		\mu,\ \tau,\ R_1,\ R,
+		\]
+		and the associated constants may vary from one step to another. For simplicity, we keep the same notation, although these quantities are chosen locally according to the barrier construction used in each part of the argument.
+		
+		\noindent
+		{\bf Step 1: Hölder decay near the lateral boundary \(S_T\).}
+		
+		Fix a point
+		\[
+		(\boldsymbol{x}_0,t_0)\in \partial\Omega\times(0,T].
+		\]
+		Since \(\partial\Omega\) satisfies the exterior sphere condition, there exist \(R_0>0\) and
+		\[
+		B_{R_0}(\boldsymbol{z})\subset \mathbb{R}^d\setminus\Omega
+		\]
+		such that
+		\[
+		\overline{B_{R_0}(\boldsymbol{z})}\cap\overline{\Omega}
+		=
+		\{\boldsymbol{x}_0\}.
+		\]
+		For $\mu>0$ large, define
+		\[
+		r(\boldsymbol{x}) = |\boldsymbol{x}-\boldsymbol{z}|,
+		\qquad
+		\psi(\boldsymbol{x})
+		=
+		R_0^{-\mu}-r(\boldsymbol{x})^{-\mu}.
+		\]
+		A direct computation and choosing $\mu$ sufficiently large yield that there exist \(R_1>0\) and \(C_0>0\) such that
+		\begin{equation}
+			\label{ineq:positive-operator-value-clean}
+			\mathcal{P}\psi\ge C_0
+			\qquad
+			\text{in } B_{R_1}(\boldsymbol{x}_0)\cap\Omega.
+		\end{equation}
+		Now define
+		\[
+		\Psi(\boldsymbol{x},t)
+		=
+		\psi(\boldsymbol{x})
+		+
+		\tau |\boldsymbol{x}-\boldsymbol{x}_0|^2
+		+
+		\tau (t_0-t),
+		\]
+		with \(\tau>0\) small enough so that
+		\[
+		\mathcal{P} \Psi \ge \frac{C_0}{2}.
+		\]
+		Fix \(0<R<R_1\) and define
+		\[
+		Q_{1,R}
+		=
+		(\Omega\cap B_R(\boldsymbol{x}_0))
+		\times
+		(t_0-R^2,t_0).
+		\]
+		Define
+		\[
+		v:=u-M_R\Psi,
+		\qquad
+		M_R
+		:=
+		\frac{\|u\|_{L_\infty(Q_T)}}{\tau R^2}.
+		\]
+		By construction,
+		\[
+		\mathcal{P} v \leq \left| f \right| 
+		\quad
+		\text{in }Q_{1,R},
+		\qquad
+		v \leq 0
+		\quad
+		\text{on } \partial_{p}Q_{1,R}.
+		\]
+		Hence the parabolic ABP estimate gives
+		\[
+		\sup_{Q_{1,R}} \left| v \right| 
+		\le
+		C R^{2-(d+2)/\bar p}
+		\left\|
+		\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+		\right\|_{L_{\bar p}(Q_{1,R})}.
+		\]
+		Therefore,
+		\begin{equation}
+			\label{ineq:barrier-estimate-parabolic-clean}
+			|u(\boldsymbol{x},t)|
+			\le
+			M_R\Psi(\boldsymbol{x},t)
+			+
+			C R^{2-(d+2)/\bar p}
+			\left\|
+			\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+			\right\|_{L_{\bar p}(Q_{1,R})}.
+		\end{equation}
+		Substituting the barrier estimate
+		\[
+		\Psi(\boldsymbol{x},t)
+		\le
+		C\Bigl(
+		|\boldsymbol{x}-\boldsymbol{x}_0|
+		+
+		|t-t_0|^{1/2}
+		\Bigr).
+		\]
+		this into \eqref{ineq:barrier-estimate-parabolic-clean} yields
+		\[
+		|u(\boldsymbol{x},t)|
+		\le
+		C
+		\|u\|_{L_\infty(Q_T)}
+		\frac{
+			|\boldsymbol{x}-\boldsymbol{x}_0|
+			+
+			|t-t_0|^{1/2}
+		}{R^2}
+		+
+		C
+		R^{2-(d+2)/\bar p}
+		\left\|
+		\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+		\right\|_{L_{\bar p}(Q_{1,R})}.
+		\]
+		Let
+		\[
+		\delta
+		=
+		|\boldsymbol{x}-\boldsymbol{x}_0|
+		+
+		|t-t_0|^{1/2},
+		\qquad
+		R=\delta^\theta,
+		\]
+		with \(0<\theta<1/2\). Hence there exist \(\beta_1>0\) and \(C_1>0\) such that
+		\begin{equation}
+			\label{ineq:lateral-holder}
+			|u(\boldsymbol{x},t)-u(\boldsymbol{x}_0,t_0)|
+			\le
+			C_1
+			\left(
+			\|u\|_{L_\infty(Q_T)}
+			+
+			\left\|
+			\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+			\right\|_{L_{\bar p}(Q_T)}
+			\right)
+			\delta^{\beta_1}.
+		\end{equation}
+		
+		\medskip
+		
+		\noindent
+		{\bf Step 2: Hölder decay near the initial boundary \(B_0\).}
+		
+		Fix
+		\[
+		(\boldsymbol{x}_0,0),
+		\qquad
+		\boldsymbol{x}_0\in\Omega.
+		\]
+		Choose \(R>0\) such that
+		\[
+		B_R(\boldsymbol{x}_0)\subset\Omega,
+		\]
+		and define
+		\[
+		Q_{2,R}
+		=
+		B_R(\boldsymbol{x}_0)\times(0,R^2).
+		\]
+		Consider the barrier
+		\[
+		\Psi_2(\boldsymbol{x},t)
+		=
+		t + \tau |\boldsymbol{x}-\boldsymbol{x}_0|^2.
+		\]
+		For sufficiently small \(\tau>0\),
+		\[
+		\mathcal{P} \Psi_2\ge C_2>0.
+		\]
+		Define
+		\[
+		v=u-M_R\Psi_2,
+		\qquad
+		M_R
+		=
+		\frac{\|u\|_{L_\infty(Q_T)}}{\tau R^2}.
+		\]
+		Arguing exactly as before, we have
+		\[
+		\mathcal{P} v\le |f|
+		\quad \text{in } Q_{2,R},
+		\qquad
+		v\le0
+		\quad \text{on } \partial_p Q_{2,R}.
+		\]
+		Applying the parabolic ABP estimate and repeating the previous optimization argument yields
+		\begin{equation}
+			\label{ineq:initial-holder}
+			|u(\boldsymbol{x},t)-u(\boldsymbol{x}_0,0)|
+			\le
+			C_3
+			\left(
+			\|u\|_{L_\infty(Q_T)}
+			+
+			\left\|
+			\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+			\right\|_{L_{\bar p}(Q_T)}
+			\right)
+			\Bigl(
+			|\boldsymbol{x}-\boldsymbol{x}_0|
+			+
+			t^{1/2}
+			\Bigr)^{\beta_2}.
+		\end{equation}
+		
+		\medskip
+		
+		\noindent
+		{\bf Step 3: Hölder decay near the corner boundary \(S_0\).}
+		
+		Fix
+		\[
+		(\boldsymbol{x}_0,0),
+		\qquad
+		\boldsymbol{x}_0\in\partial\Omega.
+		\]
+		Using again the exterior sphere condition, define
+		\[
+		\psi_3(\boldsymbol{x})
+		=
+		R_0^{-\mu}-|\boldsymbol{x}-\boldsymbol{z}|^{-\mu},
+		\]
+		and consider the barrier
+		\[
+		\Psi_3(\boldsymbol{x},t)
+		=
+		\psi_3(\boldsymbol{x})
+		+
+		\tau |\boldsymbol{x}-\boldsymbol{x}_0|^2
+		+
+		t.
+		\]
+		As before, for suitable choices of \(\mu\) and \( \tau \),
+		\[
+		\mathcal{P} \Psi_3\ge C_4>0.
+		\]
+		Setting
+		\[
+		v:=u-M_R\Psi_3,
+		\qquad
+		M_R
+		:=
+		\frac{\|u\|_{L_\infty(Q_T)}}{\tau R^2},
+		\]
+		and applying the parabolic ABP estimate in
+		\[
+		Q_{3,R}
+		=
+		(\Omega\cap B_R(\boldsymbol{x}_0))
+		\times
+		(0,R^2),
+		\]
+		we obtain
+		\[
+		|u(\boldsymbol{x},t)|
+		\le
+		C
+		\|u\|_{L_\infty(Q_T)}
+		\frac{
+			|\boldsymbol{x}-\boldsymbol{x}_0|
+			+
+			t^{1/2}
+		}{R^2}
+		+
+		C
+		R^{2-(d+2)/\bar p}
+		\left\|
+		\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+		\right\|_{L_{\bar p}(Q_{3,R})}.
+		\]
+		Optimizing again with
+		\[
+		R=\delta^\theta,
+		\qquad
+		\delta
+		=
+		|\boldsymbol{x}-\boldsymbol{x}_0|
+		+
+		t^{1/2},
+		\]
+		gives
+		\begin{equation}
+			\label{ineq:corner-holder}
+			|u(\boldsymbol{x},t)-u(\boldsymbol{x}_0,0)|
+			\le
+			C_5
+			\left(
+			\|u\|_{L_\infty(Q_T)}
+			+
+			\left\|
+			\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+			\right\|_{L_{\bar p}(Q_T)}
+			\right)
+			\delta^{\beta_3}.
+		\end{equation}
+		\medskip
+		Finally, combining the interior Hölder continuity with the boundary estimates
+		\eqref{ineq:lateral-holder},
+		\eqref{ineq:initial-holder},
+		and
+		\eqref{ineq:corner-holder},
+		we conclude that
+		\[
+		u\in C^{0,\gamma}(\overline{Q_T}),
+		\]
+		for some
+		\[
+		\gamma
+		=
+		\min\{\alpha,\beta_1,\beta_2,\beta_3\}>0.
+		\]
+		Moreover,
+		\[
+		\|u\|_{C^{0,\gamma}(\overline{Q_T})}
+		\le
+		C
+		\left(
+		\|u\|_{L_\infty(Q_T)}
+		+
+		\left\|
+		\frac{f}{(\rho_2^\ast(\boldsymbol{A}))^{(\bar p-1)/\bar p}}
+		\right\|_{L_{\bar p}(Q_T)}
+		\right).
+		\]
+		This completes the proof.
+	\end{proof}
+	%%%%%%%%%
+	%%%%%%%%%
+	%\begin{comment}
+	%\begin{lemma}
+	%	\label{lemm-Holder-continuity-1}
+	%	 Let $u \in W^2_p(\Omega) \cap C(\overline{\Omega})${\color{red}, with $p\geq 2$ and $d/2 < p < \infty $,} satisfy 
+	%	\[
+	%		\mathcal{L} u = f \quad \text{in } \Omega, 
+	%		\qquad
+	%		u = 0 \quad \text{on } \partial \Omega.
+	%	\]
+	%	Then there exist $\alpha(),  C()>0$ such that 
+	%	\begin{equation}
+		%		\label{ineq:Holder-bound-global-1}
+		%		\left\| u \right\|_{C^{0, \alpha}(\bar{\Omega})}
+		%		\leq
+		%		C \left( 
+		%			\left\| u \right\|_{L^{\infty}(\Omega)} 
+		%			+
+		%			\left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L_p(\Omega)}  
+		%		\right) . 
+		%	\end{equation}
+	%\end{lemma}	
+	%%
+	%%
+	%\begin{proof}
+	%%	{\color{blue}
+		%%	Let $\Omega$ satisfies a uniform exterior sphere condition. (Since $\partial \Omega \in C^{1,1}$, $\Omega$ satisfies a uniform exterior sphere condition.) Consider the elliptic problem 
+		%%	\begin{equation}
+			%%		\label{eq:elliptic-simple-2}
+			%%	Lu:= a^{i j}(\boldsymbol{x}) : D_{i j}u \geq- f \quad \text{in } \Omega,
+			%%	\qquad u \leq 0 \quad \text{on }\partial \Omega.
+			%%	\end{equation}
+		%%}
+	%	The interior Hölder regularity of $u$ is already available from Theorem~\ref{lem:interior-Holder-continuity}. which ensures that
+	%	\[
+	%	u \in C^{0,\alpha}_{\mathrm{loc}}(\Omega)
+	%	\]
+	%	for some $\alpha >0$.
+	%	Thus, it remains to establish Hölder continuity up to the boundary.
+	%	The boundary part comes from a barrier plus the ABP estimate~\eqref{ineq:ABP-estimate-paper}. In this regard, we aim to show Hölder continuity of $u$ in a tubular neighborhood of $\partial \Omega$.
+	%	\\
+	%	Since $\partial\Omega$ satisfies a uniform exterior sphere condition, there exists $R_0 > 0$ such that, for every $\boldsymbol{x}_0 \in \partial\Omega$, one can find a ball
+	%	\[
+	%	B_{R_0}(\boldsymbol{z}) \subset \mathbb{R}^d \setminus \Omega
+	%	\]
+	%	satisfying
+	%	\[
+	%	\overline{B_{R_0}(\boldsymbol{z})} \cap \overline{\Omega}
+	%	=
+	%	\{\boldsymbol{x}_0\}.
+	%	\]
+	%	{\color{blue}So $B_{R_0}(\boldsymbol{z})$ touches $\Omega$ from outside at $\boldsymbol{x}_0$.}
+	%	\\
+	%	In particular,
+	%	\[
+	%		R_0 := \left| \boldsymbol{x}_0 - \boldsymbol{z} \right|,
+	%		\qquad
+	%		r(\boldsymbol{x})  := \left| \boldsymbol{x} - \boldsymbol{z} \right| \geq R_0
+	%		\quad
+	%		\text{for } \boldsymbol{x} \in \Omega.
+	%	\]
+	%	{\color{blue} $R_0$ is uniform and independent of $\boldsymbol{x}_0$ and depends only on the geometry of $\Omega$ ($\partial \Omega$).}
+	%	\\
+	%	For $\mu>0$ large enough (to be chosen later), define
+	%	\begin{equation}
+		%		\label{eq:barrier-1}
+		%		\psi(\boldsymbol{x}):= R_0^{-\mu} - \left| \boldsymbol{x} - \boldsymbol{z} \right|^{-\mu}.  
+		%	\end{equation}
+	%	{\color{blue}Inside $\Omega$ near $\boldsymbol{x}_0$, we have $\left| \boldsymbol{x} - \boldsymbol{z}\right| > R_0$, so 
+		%	\begin{equation*}
+			%		\label{ineq-eq barrier}
+			%		\psi(\boldsymbol{x}) >0, 
+			%		\quad 
+			%		\psi(\boldsymbol{x}_0) = 0.
+			%	\end{equation*}
+		%}
+	%	Thus $\psi$ vanishes exactly at the boundary point $\boldsymbol{x}_0$ and positive inside.
+	%	Next, we aim to compute $L \psi$. To do so, set 
+	%	\[
+	%	r = \left| \boldsymbol{x} - \boldsymbol{z} \right| .
+	%	\]
+	%	Then
+	%	\[
+	%		\partial_{x_i x_j} \psi = \mu r^{-\mu - 2} \delta_{ij}
+	%		-
+	%		\mu (\mu +2) r^{-\mu -4}(x_i - z_i)(x_j - z_j)
+	%	\]
+	%	%
+	%{\color{red}
+		%	\[
+		%	\partial_{x_i x_i} \psi = \mu r^{-\mu - 2} 
+		%	-
+		%	\mu (\mu +2) r^{-\mu -4}(x_i - z_i)^2
+		%	\]
+		%}
+	%	%
+	%{\color{blue}
+		%	\[
+		%	D^2 \psi = \mu r^{-\mu - 2} \boldsymbol{I}
+		%	-
+		%	\mu (\mu +2) r^{-\mu -4} \left( \boldsymbol{x} - \boldsymbol{z} \right) \cdot \left( \boldsymbol{x} - \boldsymbol{z} \right)^T.
+		%	\]
+		%}
+	%	Therefore
+	%	\[
+	%		\mathcal{L} \psi = a^{i j} \partial_{x_i x_j} \psi - c\psi.
+	%	\]
+	%	%
+	%{\color{red}
+		%	\[
+		%	\mathcal{L} \psi = \sum_{i=1}^{d} a_i \partial_{x_i x_i} \psi - c\psi.
+		%	\]
+		%}
+	%	%
+	%	Using uniform ellipticity,
+	%	\[
+	%		\sigma_1 \left| \boldsymbol{\xi} \right|^2  \leq a^{i j} \xi_i \xi_j \leq \sigma_2 \left| \boldsymbol{\xi}\right| ^2,
+	%	\]
+	%{\color{red}
+		%	\[
+		%	\sigma_1   \leq a_i   \leq \sigma_2,
+		%	\]
+		%}
+	%	we get
+	%	\[
+	%		\mathcal{L} \psi 
+	%		\leq
+	%		\mu r^{-\mu - 2}(d \sigma_2 - (\mu +2) \sigma_1).
+	%	\]
+	%	Choose $\mu$ large enough so that 
+	%	\[
+	%	d  \sigma_2 - (\mu +2) \sigma_1 <0
+	%	\quad
+	%	\Rightarrow
+	%	\quad
+	%	\mu > d \, \dfrac{\sigma_2}{\sigma_1}-2
+	%	.
+	%	\]
+	%	 Then in a fixed neighborhood of $\boldsymbol{x}_0$, $B_{R_1}(\boldsymbol{x}_0)$, {\color{blue}( the radius $R_1$ is determined here.)},
+	%	\\
+	%	{\color{blue} As $R_0 \leq r(\boldsymbol{x}) \leq \operatorname*{diam}(\Omega) + R_0$, the upper bound $-C_0$ is uniform (independent of $\boldsymbol{x}_0$). In other words,  $R_1$ is uniform and independent of $\boldsymbol{x}_0$.}
+	%	\begin{equation}
+		%		\label{ineq:negative-operator-value-1}
+		%		\mathcal{L} \psi \leq - C_0 ,
+		%	\end{equation}
+	%	for some $C_0>0$.
+	%	\\
+	%	Now define the full barrier
+	%	\[
+	%		\Psi (\boldsymbol{x}) = \psi(\boldsymbol{x}) +
+	%		\tau \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2, 
+	%	\]
+	%	where $\tau>0$ is small enough.
+	%	\\
+	%	Indeed, since
+	%	\[
+	%		\mathcal{L} \left( \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2  \right) 	= 2 {\color{red} \, \operatorname*{tr} \boldsymbol{A}} \leq 2d \sigma_2,
+	%	\]
+	%	choosing $\tau > 0$ small gives
+	%	\[
+	%		\mathcal{L} \Psi = \mathcal{L} \psi + \tau \mathcal{L} \left( \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2  \right) 
+	%		\leq
+	%		-\dfrac{C_0}{2}.
+	%	\]
+	%	Thus $\Psi$ is a strict {\color{red}supersolution} barrier.
+	%	\\
+	%	{\color{blue} $ \tau $ is also independent of $\boldsymbol{x}_0$ and it is uniform as well (as it only depends on $C_0$).}
+	%	%\\
+	%	%{\bf s 4: Local comparison domain}
+	%	\\
+	%	We now introduce a suitable tubular neighborhood of $\partial\Omega$ in order to apply the ABP estimate in this region.
+	%	Fix $0 < R < R_1$ {\color{blue} (small enough such that some part of $D_R \subset \Omega$) or fix $R_1$ small enough}, and set 
+	%	\[
+	%		D_R := \Omega \cap B_R(\boldsymbol{x}_0).
+	%	\]
+	%	The boundary of $D_R$ has two pieces:
+	%	\[
+	%		\partial D_R = 
+	%		\left( \partial \Omega \cap B_R(\boldsymbol{x}_0) \right) 
+	%		\cup
+	%		\left( \Omega \cap \partial  B_R(\boldsymbol{x}_0) \right). 
+	%	\]
+	%	On the true boundary piece $\partial \Omega \cap B_R(\boldsymbol{x}_0)$, we have
+	%	\[
+	%		u = 0, 
+	%		\quad
+	%		\Psi \geq 0.
+	%	\]
+	%	On the artificial boundary $\Omega \cap \partial  B_R(\boldsymbol{x}_0)$, we have
+	%	\[
+	%		\left| \boldsymbol{x} - \boldsymbol{x}_0 \right| = R.
+	%	\]
+	%	Since $\psi \geq 0$, we get
+	%	\[
+	%		\Psi(\boldsymbol{x}) \geq
+	%		\tau R^2.
+	%	\]
+	%	Choose 
+	%	\begin{equation}
+		%		\label{ineq:coefficient-barrier}
+		%		M_R =
+		%		\dfrac{\left\| u \right\|_{L^{\infty}(\Omega)} }{ \tau R^2}. 
+		%	\end{equation}
+	%	Then 
+	%	\[
+	%		M_R \Psi \geq \left\| u \right\|_{L^{\infty}(\Omega)}
+	%		\qquad \text{on } \Omega \cap \partial B_R(\boldsymbol{x}_0).
+	%	\]
+	%	Hence
+	%	\begin{equation}
+		%	 \label{ineq:v-boundary-sign}
+		%		u - M_R \Psi \leq 0 \quad \text{on } \partial D_R
+		%	\end{equation}
+	%	%\\
+	%	%{\bf S 5: Apply ABP to $u - M_R \Psi$}
+	%	%\\
+	%	We next investigate the application of the ABP estimate to the function $u - M_R \Psi$ in the region $D_R$. 
+	%	In this regard, let 
+	%	\[
+	%		v = u - M_R \Psi.
+	%	\] 
+	%	Then 
+	%	\[
+	%		\mathcal{L} v = f - M_R \mathcal{L} \Psi.
+	%	\]
+	%	Since $\mathcal{L} \Psi \leq - C_0$, we have
+	%	\[
+	%		\mathcal{L} v \geq f.
+	%	\]
+	%	Hence
+	%	\begin{equation}
+		%		\label{ineq:operator-sign}
+		%		\mathcal{L} v \geq - | f |.
+		%	\end{equation}
+	%	Relations~\eqref{ineq:v-boundary-sign} and~\eqref{ineq:operator-sign} provide the conditions required to apply the ABP estimate of Lemma~\ref{corollary:ABP-estimate-paper} in $D_R$. {\color{blue}(Here is the place that $C^{1,1}$ property of domain is used. Because we need $v \in W^{2,p}(\Omega) \cap C(\bar{\Omega})$ to apply ABP estimate. To show that $v \in C(\bar{\Omega})$, we use the embedding $W^{2,p}(\Omega) \subset C(\bar{\Omega})$, which holds in $C^{1,1}$ domain.)}, 
+	%	\[
+	%		\sup_{\boldsymbol{x} \in D_R} \left| v(\boldsymbol{x}) \right| 
+	%		\leq
+	%		C_3 R^{2-d/p}
+	%		\left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(D_R)}.
+	%		{\color{blue} \quad \text{the constant }C_3 \text{ depends on } d, p, \frac{\sigma_2}{\lambda}. }
+	%	\]
+	%	Therefore, for almost every $\boldsymbol{x} \in D_R$,
+	%%	\begin{equation}
+		%%		\label{ineq:upper-bound-on-barrier-positive}
+		%%		\left| u(\boldsymbol{x}) \right| 
+		%%		\leq
+		%%		M_R \Psi(\boldsymbol{x})
+		%%		+
+		%%		C_3 R^{2-d/p}
+		%%		\left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(D_R)}.
+		%%	\end{equation}
+	%	%Applying the same argument to $-u$, we get
+	%		\begin{equation}
+		%		\label{ineq:upper-bound-on-barrier}
+		%		\left|  u(\boldsymbol{x}) \right| 
+		%		\leq
+		%		M_R \Psi(\boldsymbol{x})
+		%		+
+		%		C_3 R^{2-d/p}
+		%		\left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(D_R)}.
+		%	\end{equation}
+	%	%\\
+	%	%{\bf S 6: Estimate the barrier} %near $\boldsymbol{x}_0$}
+	%	We now estimate the barrier function and extract the required bound. We claim that near $\boldsymbol{x}_0$:
+	%		\[
+	%			\psi(\boldsymbol{x})
+	%			\leq \mu R_0^{-\mu -1} \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| .
+	%		\]
+	%	{\color{blue}	
+	%	 To show this, recall,
+	%	\[
+	%		r(\boldsymbol{x}) = \left| \boldsymbol{x} - \boldsymbol{z} \right| ,
+	%	\]
+	%	and
+	%	\[
+	%		\psi(\boldsymbol{x}):= R_0^{-\mu} -  r(\boldsymbol{x})^{-\mu}.  
+	%	\]
+	%}
+	%	Using the mean value theorem implies that
+	%	\[
+	%		r(\boldsymbol{x})^{- \mu} - R_0^{-\mu} 
+	%		=
+	%		- \mu \xi^{-\mu -1}\left( r(\boldsymbol{x}) - R_0 \right),  
+	%	\]
+	%	for some $\xi \in [R_0 , r(\boldsymbol{x})]$.
+	%	So
+	%	\[
+	%		\psi(\boldsymbol{x}) = \mu \xi^{-\mu -1}\left( r(\boldsymbol{x}) - R_0 \right).
+	%	\]
+	%	Using the standard triangle inequality for $r(\boldsymbol{x}) - R_0 $ implies that
+	%%	
+	%%	Near $\boldsymbol{x}_0$:
+	%%	\[
+	%%		\xi^{-\mu -1} \leq C_1:=R_0^{-\mu - 1}.
+	%%		{\color{red} \quad C_1 \text{ is uniform and depends only on the geometry of } \partial \Omega.} 
+	%%	\]
+	%%	Because, standard triangle inequality gives:
+	%%	\[
+	%%		r(\boldsymbol{x}) - R_0 
+	%%		\leq
+	%%		\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|. 
+	%%	\] 
+	%%	So:
+	%	\[
+	%		\psi(\boldsymbol{x}) 
+	%		\leq
+	%		\mu R_0^{-\mu -1}
+	%		\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|.
+	%	\]
+	%	Also,
+	%{\color{blue}
+	%	\[
+	%		\tau \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2
+	%		\leq
+	%		\tau R \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|
+	%		\quad \text{for } \boldsymbol{x} \in B_R(\boldsymbol{x}_0).
+	%	\]
+	%}
+	%	\[
+	%		\tau \left| \boldsymbol{x} - \boldsymbol{x}_0 	\right|^2
+	%		\leq
+	%		\tau \operatorname*{diam} (\Omega) \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|
+	%		\quad \text{for } \boldsymbol{x} \in B_R(\boldsymbol{x}_0).
+	%	\]
+	%	Therefore
+	%	\begin{equation}
+	%		\label{ineq:upper-bound-barrier-elliptic}
+	%		\Psi(\boldsymbol{x}) \leq C_2\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|,
+	%		 \quad C_2= \max \left\lbrace  \mu R_0^{-\mu -1}, \tau \operatorname*{diam} (\Omega)\right\rbrace .
+	%	\end{equation}
+	%	Using \eqref{ineq:coefficient-barrier} and \eqref{ineq:upper-bound-barrier-elliptic}, we get
+	%	\[
+	%		M_R \Psi(\boldsymbol{x})
+	%		\leq
+	%	\frac{C_2}{\tau} \, 
+	%		\left\| u \right\|_{L^{\infty}(\Omega)} \dfrac{ \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| }{ R^2 }.
+	%	\]
+	%	Hence
+	%	\[
+	%		\left| u( \boldsymbol{x} ) \right| 
+	%		\leq
+	%		\frac{C_2}{\tau} \, 
+	%		\left\| u \right\|_{L^{\infty}(\Omega)} \dfrac{ \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| }{ R^2 }
+	%		+
+	%		C_3
+	%		R^{2-d/p} 
+	%		\left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(D_R)}.
+	%	\]
+	%	%
+	%	We now optimize the choice of \( R \) within the admissible range to derive the desired estimate.
+	%	Let 
+	%	\[
+	%		\delta = \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|.
+	%		 \quad (\delta <1)
+	%	\]
+	%	Choose
+	%	\[
+	%		R = \delta^{\theta},
+	%	\]
+	%	where $0 < \theta <1/2$. This implies that $ \delta < R$  thus  $\boldsymbol{x} \in B_R(\boldsymbol{x}_0)$ and $\boldsymbol{x} \in D_R$.
+	%	For having $R < R_1$, we require 
+	%	\[
+	%		\delta^{\theta} < R_1
+	%		\quad 
+	%		\Rightarrow
+	%		\delta < R_1^{1/{\theta}}
+	%	\] 
+	%	Therefore
+	%	\[
+	%		\dfrac{\delta}{R^2} = \delta^{1-2 \theta}, 
+	%	\]
+	%	and 
+	%	\[
+	%		R^{2-d/p} = \delta^{\theta(2-d/p)},
+	%	\]
+	%	where we know that $2- d/p>0$ and $1-2\theta>0$. 
+	%	Set 
+	%	\[
+	%		\beta:= \min\left\lbrace 1- 2 \theta , \theta \left(  2 - \frac{d}{p} \right)  \right\rbrace > 0 ,
+	%		\quad
+	%		C_4:= \max \left\lbrace \frac{C_2}{\tau}, C_3\right\rbrace . 
+	%	\]
+	%	Thus
+	%	\begin{equation}
+	%		\label{ineq:Holder-continuity-boundary}
+	%		\left| u(\boldsymbol{x}) - u(\boldsymbol{x}_0) \right| 
+	%		\leq
+	%		C_4
+	%		\left( \left\| u \right\|_{L^{\infty}(\Omega) } + \left\| \dfrac{f}{\rho_2^{\ast}(\boldsymbol{A})} \right\|_{L^p(\Omega)}  \right) 
+	%		\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^{\beta}. 
+	%	\end{equation}
+	%	So $u$ is Hölder continuous at every boundary point.
+	%	\\
+	%		 For points sufficiently close to the boundary ($\delta$ small),
+	%			the choice $R = \delta^{\theta}$ is valid.
+	%			For points not too close, we don’t need the boundary argument,
+	%			interior Hölder continuity already applies.
+	%\\
+	%Finally, we combine:
+	%\begin{enumerate}
+	%	\item the interior Hölder continuity as in \eqref{ineq:interior-Holder-continuity}, and
+	%	\item the boundary Hölder decay as in \eqref{ineq:Holder-continuity-boundary}.
+	%\end{enumerate}
+	%Since $u$ is Hölder continuous in the interior of $\Omega$ and satisfies a Hölder decay estimate up to the boundary, it follows that
+	%\[
+	%u \in C^{0,\gamma}(\overline{\Omega}),
+	%\]
+	%where
+	%\[
+	%\gamma = \min\{\alpha, \beta\}.
+	%\]
+	%
+	%This completes the proof of global Hölder continuity of $u$.
+	%	\\
+	%	{\color{blue} 
+	%	Indeed, we establish Hölder continuity of $u$ in a tubular neighborhood of $\partial \Omega$. Combined with the local Hölder continuity in the interior, this yields global Hölder continuity of $u$ in $\bar{\Omega}$.
+	%	 }			
+	%\end{proof}
+	%%%%%%%
+	%
+	%
+	%
+	%
+	%\begin{proof}
+	%	The interior Hölder continuity follows from Theorem~\ref{lem:interior-Holder-continuity-parabolic}. 
+	%	Therefore, it remains to establish Hölder continuity near the parabolic boundary.
+	%	
+	%	We split the parabolic boundary into three parts:
+	%	\[
+	%	S_T=\partial\Omega\times(0,T],
+	%	\qquad
+	%	B_0=\Omega\times\{0\},
+	%	\qquad
+	%	C_0=\partial\Omega\times\{0\}.
+	%	\]
+	%	We treat each part separately.
+	%	
+	%	\medskip
+	%	
+	%	\noindent
+	%	{\bf Step 1: Hölder continuity near the lateral boundary \(S_T\).}
+	%	
+	%	Fix
+	%	\[
+	%	(\boldsymbol x_0,t_0)\in \partial\Omega\times(0,T].
+	%	\]
+	%	Since \(\partial\Omega\) satisfies the exterior sphere condition, there exist
+	%	\[
+	%	R_0>0,
+	%	\qquad
+	%	\boldsymbol z\in\mathbb R^d\setminus\Omega,
+	%	\]
+	%	such that
+	%	\[
+	%	B_{R_0}(\boldsymbol z)\subset\mathbb R^d\setminus\Omega,
+	%	\qquad
+	%	\overline{B_{R_0}(\boldsymbol z)}
+	%	\cap
+	%	\overline\Omega
+	%	=
+	%	\{\boldsymbol x_0\}.
+	%	\]
+	%	For \(R>0\), define
+	%	\[
+	%	Q_R(\boldsymbol x_0,t_0)
+	%	:=
+	%	\bigl(
+	%	\Omega\cap B_R(\boldsymbol x_0)
+	%	\bigr)
+	%	\times
+	%	(t_0-R^2,t_0).
+	%	\]
+	%	For \(\mu>0\) large enough, define
+	%	\[
+	%	\psi(\boldsymbol x)
+	%	:=
+	%	R_0^{-\mu}
+	%	-
+	%	|\boldsymbol x-\boldsymbol z|^{-\mu}.
+	%	\]
+	%	Then
+	%	\[
+	%	\psi(\boldsymbol x_0)=0,
+	%	\qquad
+	%	\psi>0
+	%	\quad \text{in } \Omega .
+	%	\]
+	%	Set
+	%	\[
+	%	r=|\boldsymbol x-\boldsymbol z|.
+	%	\]
+	%	A direct computation gives
+	%	\[
+	%	\psi
+	%	=
+	%	\mu r^{-\mu-2}\delta_{ij}
+	%	-
+	%	\mu(\mu+2)
+	%	r^{-\mu-4}
+	%	(x_i-z_i)(x_j-z_j).
+	%	\]
+	%	Since \(\partial_t\psi=0\),
+	%	\[
+	%	\mathcal{P}\psi
+	%	=
+	%	-a^{ij}D_{ij}\psi.
+	%	\]
+	%	
+	%	Using the ellipticity condition,
+	%	\[
+	%	\sigma_1|\xi|^2
+	%	\le
+	%	a^{ij}\xi_i\xi_j
+	%	\le
+	%	\sigma_2|\xi|^2,
+	%	\]
+	%	we obtain
+	%	\[
+	%	\mathcal{P} \psi
+	%	\ge
+	%	\mu r^{-\mu-2}
+	%	\bigl(
+	%	-(d\sigma_2)
+	%	+
+	%	(\mu+2)\sigma_1
+	%	\bigr).
+	%	\]
+	%	Choosing
+	%	\[
+	%	\mu
+	%	>
+	%	d\frac{\sigma_2}{\sigma_1}-2,
+	%	\]
+	%	there exist \(R_1>0\) and \(C_1>0\) such that
+	%	\begin{equation}
+	%		\label{ineq:positive-operator-value-edited}
+	%		\mathcal{P} \psi
+	%		\ge
+	%		C_1
+	%		\qquad
+	%		\text{in }
+	%		B_{R_1}(\boldsymbol x_0)\cap\Omega.
+	%	\end{equation}
+	%	Define
+	%	\[
+	%	\Psi(\boldsymbol x,t)
+	%	=
+	%	\psi(\boldsymbol x)
+	%	+
+	%	\tau |\boldsymbol x-\boldsymbol x_0|^2
+	%	+
+	%	\tau(t_0-t),
+	%	\]
+	%	where \(\tau >0\) is chosen later.
+	%	\\
+	%	Since
+	%	\[
+	%	\mathcal{P} \bigl(
+	%	|\boldsymbol x-\boldsymbol x_0|^2
+	%	\bigr)
+	%	=
+	%	-2\operatorname{tr}\boldsymbol A,
+	%	\]
+	%	and
+	%	\[
+	%	\mathcal{P} (t_0-t)=-1,
+	%	\]
+	%	we obtain
+	%	\[
+	%	\mathcal{P} \Psi
+	%	=
+	%	\mathcal{P} \psi
+	%	-
+	%	2 \tau \operatorname{tr}\boldsymbol A
+	%	-
+	%	\tau.
+	%	\]
+	%	Using
+	%	\[
+	%	\operatorname{tr}\boldsymbol A
+	%	\le
+	%	d\sigma_2,
+	%	\]
+	%	and taking \(\tau>0\) sufficiently small, it follows from
+	%	\eqref{ineq:positive-operator-value-edited} that
+	%	\[
+	%	\mathcal{P} \Psi
+	%	\ge
+	%	\frac{C_1}{2}.
+	%	\]
+	%	Now define
+	%	\[
+	%	M_R
+	%	=
+	%	\frac{\|u\|_{L^\infty(Q_T)}}{\tau R^2},
+	%	\]
+	%	and let
+	%	\[
+	%	v=u-M_R\Psi.
+	%	\]
+	%	Then
+	%	\[
+	%	\mathcal{P} v
+	%	=
+	%	f-M_R \mathcal{P} \Psi
+	%	\le
+	%	f.
+	%	\]
+	%	Hence
+	%	\[
+	%	\mathcal{P} v\le |f|.
+	%	\]
+	%	We next verify that
+	%	\[
+	%	v\le0
+	%	\qquad
+	%	\text{on }
+	%	\partial_p Q_R(\boldsymbol x_0,t_0).
+	%	\]
+	%	On
+	%	\[
+	%	(\partial\Omega\cap B_R(\boldsymbol x_0))
+	%	\times
+	%	(t_0-R^2,t_0),
+	%	\]
+	%	we have
+	%	\[
+	%	u=0,
+	%	\qquad
+	%	\Psi\ge0,
+	%	\]
+	%	thus
+	%	\[
+	%	v\le0.
+	%	\]
+	%	
+	%	On
+	%	\[
+	%	(\Omega\cap\partial B_R(\boldsymbol x_0))
+	%	\times
+	%	(t_0-R^2,t_0),
+	%	\]
+	%	we have
+	%	\[
+	%	|\boldsymbol x-\boldsymbol x_0|=R,
+	%	\]
+	%	and therefore
+	%	\[
+	%	\Psi(\boldsymbol x,t)
+	%	\ge
+	%	\tau R^2.
+	%	\]
+	%	Consequently,
+	%	\[
+	%	M_R\Psi
+	%	\ge
+	%	\|u\|_{L^\infty(Q_T)},
+	%	\]
+	%	which implies
+	%	\[
+	%	v\le0.
+	%	\]
+	%	
+	%	Finally, on the bottom boundary
+	%	\[
+	%	\overline\Omega
+	%	\cap
+	%	\overline{B_R(\boldsymbol x_0)}
+	%	\times
+	%	\{t_0-R^2\},
+	%	\]
+	%	we also have
+	%	\[
+	%	\Psi\ge \tau R^2,
+	%	\]
+	%	hence again
+	%	\[
+	%	v\le0.
+	%	\]
+	%	Therefore,
+	%	\[
+	%	\mathcal{P} v\le |f|
+	%	\quad \text{in } Q_R,
+	%	\qquad
+	%	v\le0
+	%	\quad \text{on } \partial_pQ_R.
+	%	\]
+	%	Applying the parabolic ABP estimate yields
+	%	\[
+	%	\sup_{Q_R}v
+	%	\le
+	%	C_2
+	%	R^{2-(d+2)/\bar p}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\left(
+	%		\rho_2^\ast(\boldsymbol A)
+	%		\right)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R)}.
+	%	\]
+	%	Hence,
+	%	\begin{equation}
+	%		\label{ineq:upper-bound-lateral}
+	%		u(\boldsymbol x,t)
+	%		\le
+	%		M_R\Psi(\boldsymbol x,t)
+	%		+
+	%		C_2
+	%		R^{2-(d+2)/\bar p}
+	%		\left\|
+	%		\frac{f}
+	%		{
+		%			\left(
+		%			\rho_2^\ast(\boldsymbol A)
+		%			\right)^{(\bar p-1)/\bar p}
+		%		}
+	%		\right\|_{L^{\bar p}(Q_R)}.
+	%	\end{equation}
+	%	Applying the same argument to \(-u\), we obtain
+	%	\[
+	%	|u(\boldsymbol x,t)|
+	%	\le
+	%	M_R\Psi(\boldsymbol x,t)
+	%	+
+	%	C_2
+	%	R^{2-(d+2)/\bar p}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\left(
+	%		\rho_2^\ast(\boldsymbol A)
+	%		\right)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R)}.
+	%	\]
+	%	Using the mean value theorem,
+	%	\[
+	%	\psi(\boldsymbol x)
+	%	\le
+	%	C_3
+	%	|\boldsymbol x-\boldsymbol x_0|,
+	%	\]
+	%	where \(C_3>0\) depends only on \(R_0\) and \(\mu\).
+	%	Moreover,
+	%	\[
+	%	\tau
+	%	|\boldsymbol x-\boldsymbol x_0|^2
+	%	\le
+	%	\tau R
+	%	|\boldsymbol x-\boldsymbol x_0|,
+	%	\]
+	%	and
+	%	\[
+	%	\tau(t_0-t)
+	%	\le
+	%	\tau\sqrt T
+	%	|t_0-t|^{1/2}.
+	%	\]
+	%	Thus
+	%	\[
+	%	\Psi(\boldsymbol x,t)
+	%	\le
+	%	C_4
+	%	\bigl(
+	%	|\boldsymbol x-\boldsymbol x_0|
+	%	+
+	%	|t-t_0|^{1/2}
+	%	\bigr).
+	%	\]
+	%	Let
+	%	\[
+	%	\delta
+	%	=
+	%	|\boldsymbol x-\boldsymbol x_0|
+	%	+
+	%	|t-t_0|^{1/2}.
+	%	\]
+	%	Choose
+	%	\[
+	%	R=\delta^\theta,
+	%	\qquad
+	%	0<\theta<\frac12.
+	%	\]
+	%	Then
+	%	\[
+	%	\frac{\delta}{R^2}
+	%	=
+	%	\delta^{1-2\theta},
+	%	\]
+	%	and
+	%	\[
+	%	R^{2-(d+2)/\bar p}
+	%	=
+	%	\delta^{\theta(2-(d+2)/\bar p)}.
+	%	\]
+	%	Since
+	%	\[
+	%	2-\frac{d+2}{\bar p}>0,
+	%	\]
+	%	there exists \(\beta_1>0\) such that
+	%	\[
+	%	|u(\boldsymbol x,t)-u(\boldsymbol x_0,t_0)|
+	%	\le
+	%	C_5
+	%	\left(
+	%	\|u\|_{L^\infty(Q_T)}
+	%	+
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\left(
+	%		\rho_2^\ast(\boldsymbol A)
+	%		\right)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_T)}
+	%	\right)
+	%	\delta^{\beta_1}.
+	%	\]
+	%	Hence \(u\) is Hölder continuous near \(S_T\).
+	%	
+	%	\medskip
+	%	
+	%	\noindent
+	%	{\bf Step 2: Hölder continuity near the initial boundary \(B_0\).}
+	%	
+	%	Fix
+	%	\[
+	%	(\boldsymbol x_0,0),
+	%	\qquad
+	%	\boldsymbol x_0\in\Omega.
+	%	\]
+	%	Choose \(R>0\) such that
+	%	\[
+	%	B_R(\boldsymbol x_0)\Subset\Omega,
+	%	\]
+	%	and define
+	%	\[
+	%	Q_R^+
+	%	=
+	%	B_R(\boldsymbol x_0)\times(0,R^2).
+	%	\]
+	%	Consider the barrier
+	%	\[
+	%	\Psi_2(\boldsymbol x,t)
+	%	=
+	%	t + \tau_2|\boldsymbol x-\boldsymbol x_0|^2.
+	%	\]
+	%	A direct computation gives
+	%	\[
+	%	\mathcal{P} \Psi_2
+	%	=
+	%	1
+	%	-
+	%	2\tau_2\operatorname{tr}\boldsymbol A.
+	%	\]
+	%	Choosing \(\tau_2>0\) sufficiently small, we obtain
+	%	\[
+	%	\mathcal{P} \Psi_2\ge C_6>0.
+	%	\]
+	%	Define
+	%	\[
+	%	M_R
+	%	=
+	%	\frac{\|u\|_{L^\infty(Q_T)}}{\tau_2R^2},
+	%	\qquad
+	%	v=u-M_R\Psi_2.
+	%	\]
+	%	Then
+	%	\[
+	%	\mathcal{P} v
+	%	=
+	%	\mathcal{P} u - M_R \mathcal{P} \Psi_2
+	%	\le
+	%	f
+	%	\le
+	%	|f|.
+	%	\]
+	%	Using the boundary condition \(u=0\) on \(t=0\), together with the choice of \(M_R\), we obtain
+	%	\[
+	%	v\le0
+	%	\qquad
+	%	\text{on }
+	%	\partial_pQ_R^+.
+	%	\]
+	%	Applying the parabolic ABP estimate yields
+	%	\[
+	%	|u(\boldsymbol x,t)|
+	%	\le
+	%	M_R\Psi_2(\boldsymbol x,t)
+	%	+
+	%	C_7
+	%	R^{2-(d+2)/\bar p}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\left(
+	%		\rho_2^\ast(\boldsymbol A)
+	%		\right)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R^+)}.
+	%	\]
+	%	Since
+	%	\[
+	%	\Psi_2(\boldsymbol x,t)
+	%	\le
+	%	C
+	%	\bigl(
+	%	|\boldsymbol x-\boldsymbol x_0|
+	%	+
+	%	t^{1/2}
+	%	\bigr),
+	%	\]
+	%	the same optimization argument as above gives Hölder continuity near \(B_0\).
+	%	
+	%	\medskip
+	%	
+	%	\noindent
+	%	{\bf Step 3: Hölder continuity near the corner boundary \(C_0\).}
+	%	
+	%	Fix
+	%	\[
+	%	(\boldsymbol x_0,0),
+	%	\qquad
+	%	\boldsymbol x_0\in\partial\Omega.
+	%	\]
+	%	Using again the exterior sphere condition, define
+	%	\[
+	%	\psi_3(\boldsymbol x)
+	%	=
+	%	R_0^{-\mu_3}
+	%	-
+	%	|\boldsymbol x-\boldsymbol z|^{-\mu_3},
+	%	\]
+	%	and set
+	%	\[
+	%	\Psi_3(\boldsymbol x,t)
+	%	=
+	%	\psi_3(\boldsymbol x)
+	%	+
+	%	\tau_3
+	%	|\boldsymbol x-\boldsymbol x_0|^2
+	%	+
+	%	t.
+	%	\]
+	%	As in Step~1, choosing \(\mu_3\) sufficiently large and \(\tau_3>0\) sufficiently small yields
+	%	\[
+	%	\mathcal{P} \Psi_3\ge C_8>0.
+	%	\]
+	%	Defining
+	%	\[
+	%	M_R
+	%	=
+	%	\frac{\|u\|_{L^\infty(Q_T)}}{\tau_3R^2},
+	%	\qquad
+	%	v=u-M_R\Psi_3,
+	%	\]
+	%	we obtain
+	%	\[
+	%	\mathcal{P} v\le |f|
+	%	\]
+	%	in the local cylinder
+	%	\[
+	%	Q_R
+	%	=
+	%	(\Omega\cap B_R(\boldsymbol x_0))
+	%	\times
+	%	(0,R^2),
+	%	\]
+	%	together with
+	%	\[
+	%	v\le0
+	%	\qquad
+	%	\text{on }
+	%	\partial_pQ_R.
+	%	\]
+	%	Applying the parabolic ABP estimate and arguing exactly as before gives
+	%	\[
+	%	|u(\boldsymbol x,t)-u(\boldsymbol x_0,0)|
+	%	\le
+	%	C_9
+	%	\left(
+	%	\|u\|_{L^\infty(Q_T)}
+	%	+
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\left(
+	%		\rho_2^\ast(\boldsymbol A)
+	%		\right)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_T)}
+	%	\right)
+	%	\bigl(
+	%	|\boldsymbol x-\boldsymbol x_0|
+	%	+
+	%	t^{1/2}
+	%	\bigr)^{\beta_2},
+	%	\]
+	%	for some \(\beta_2>0\).
+	%	
+	%	Combining the interior Hölder continuity with the boundary Hölder estimates obtained near \(S_T\), \(B_0\), and \(C_0\), we conclude that
+	%	\[
+	%	u\in C^{0,\alpha}(\overline{Q_T}),
+	%	\]
+	%	for some
+	%	\[
+	%	\alpha>0.
+	%	\]
+	%	This completes the proof.
+	%\end{proof}
+	%%%%%%%%%
+	%\begin{lemma}[global Hölder continuity]
+	%	\label{lemm-Holder-continuity-parabolic}
+	%	Let $u \in W^{2,1}_{\bar{p}}(Q_T) \cap C(\overline{Q_T})$ satisfy
+	%	\[
+	%	\mathcal{P} u = f \quad \text{in } Q_T, 
+	%	\qquad 
+	%	u = 0 \quad \text{on } S_T \cup B_0 \cup S_0.
+	%	\]
+	%	Then there exist  $\alpha(d, \bar{p}, \sigma_1, \sigma_2, \lambda), C(Q_T, \bar{p}, \sigma_1, \sigma_2, \lambda, \left\| c\right\|_{L_{\infty}} ) > 0$ such that
+	%	\begin{equation}
+	%		\label{ineq:Holder-bound-global-parabolic}
+	%		\|u\|_{C^{0,\alpha}(\overline{Q_T})}
+	%		\le
+	%		C_{\ref{ineq:Holder-bound-global-parabolic}}
+	%		\left(
+	%		\|u\|_{L^\infty(Q_T)}
+	%		+
+	%		\left\| \frac{f}{ \left(  \rho_2^{\ast}(\boldsymbol{A}) \right)^{ (\bar{p} - 1)/\bar{p} } }  \right\|_{L^{\bar{p}}(Q_T)}
+	%		\right).
+	%	\end{equation}
+	%\end{lemma}
+	%
+	%\begin{proof}
+	%	Consider 
+	%	\[
+	%		\mathcal{P} u := \partial_t u - a^{i,j}(\boldsymbol{x}, t) D_{i,j}u = f
+	%		\quad \text{in } Q_T,
+	%	\]
+	%	with 
+	%	\[
+	%		u = 0 \quad \text{ on } \partial_p Q_T.
+	%	\]
+	%	where, 
+	%	\[
+	%	Q_T = \Omega \times (0, T), 
+	%	\quad
+	%	\partial_{p}Q_T
+	%	= (\partial \Omega \times (0,T]) \cup (\Omega \times \lbrace 0 \rbrace) \cup (\partial \Omega \times \lbrace 0 \rbrace).
+	%	\]
+	%	Indeed, we split the boundary into three parts:
+	%	\begin{itemize}
+	%		\item [(A)]
+	%		Lateral boundary $S_T$
+	%		\[
+	%			\partial \Omega \times (0,T]
+	%		\]
+	%		\item [(B)]
+	%		Initial boundary $B_0$
+	%		\[
+	%			\Omega \times \lbrace 0 \rbrace
+	%		\]
+	%	\item [(C)]
+	%	Corner boundary $S_O$
+	%	\[
+	%		\partial \Omega \times \lbrace 0 \rbrace
+	%	\]
+	%	\end{itemize}
+	%	which each requires a different barrier.
+	%	\\
+	%	We first fix a boundary point:
+	%	\[
+	%		(\boldsymbol{x}_0, t_0) \in \partial \Omega \times (0,T].
+	%	\] 
+	%	 Because of the exterior sphere property of the boundary, there is a ball
+	%	\[
+	%	B_{R_0}(\boldsymbol{z}) \subset \mathbb{R}^d \setminus \Omega,
+	%	\qquad
+	%	\overline{ {B}_{R_0}(\boldsymbol{z}) } \cap \overline{\Omega} = \left\lbrace \boldsymbol{x}_0 \right\rbrace. 
+	%	\]
+	%	So $B_{R_0}(\boldsymbol{z})$ touches $\Omega$ from outside at $\boldsymbol{x}_0$.
+	%	For $R>0$ (to be chosen later), define: 
+	%	\[
+	%		Q_R(\boldsymbol{x}_0, t_0):= \left( \Omega \cap B_R(\boldsymbol{x}_0) \right)  \times \left( t_0 -R^2, t_0 \right) .
+	%	\]
+	%	The boundary of $Q_R$ consists of three parts:
+	%	\begin{itemize}
+	%		\item [(i)]
+	%		Lateral boundary from $\partial \Omega$:
+	%		\[
+	%			(\partial \Omega \cap B_R(\boldsymbol{x}_0))
+	%			\times \left( t_0 -R^2, t_0 \right)
+	%		\]
+	%		\item [(ii)]
+	%		Artificial special boundary:
+	%		\[
+	%		( \Omega \cap \partial B_R(\boldsymbol{x}_0))
+	%		\times \left( t_0 -R^2, t_0 \right)
+	%		\]
+	%		\item [(iii)]
+	%		bottom time boundary:
+	%		\[
+	%		 \overline{\Omega} \cap \overline{ B_R(\boldsymbol{x}_0) }
+	%		\times \lbrace t_0 -R^2 \rbrace.
+	%		\]
+	%	\end{itemize}
+	%	For $\mu >0 $ large enough, define 
+	%	\[
+	%		\psi(\boldsymbol{x}):= R_0^{-\mu} - \left| \boldsymbol{x} - \boldsymbol{z} \right|^{-\mu}. 
+	%	\]
+	%	Inside $\Omega$ near $\boldsymbol{x}_0$, we have $ \left| \boldsymbol{x} - \boldsymbol{z} \right|  > R_0 $, so
+	%	\[
+	%		\psi(\boldsymbol{x}) >0, 
+	%		\quad
+	%		\psi(\boldsymbol{x}_0) =0.
+	%	\]
+	%		Set 
+	%	\[
+	%	r = \left| \boldsymbol{x} - \boldsymbol{z} \right| .
+	%	\]
+	%	Then
+	%	\[
+	%	D_{ij} \psi = \mu r^{-\mu - 2} \delta_{ij}
+	%	-
+	%	\mu (\mu +2) r^{-\mu -4}(x_i - z_i)(x_j - z_j),
+	%	\]
+	%	and
+	%	\[
+	%	\partial_t \psi = 0.
+	%	\]
+	%	Therefore
+	%	\[
+	%	\mathcal{P} \psi = -a^{i j} D_{i j} \psi.
+	%	\]
+	%	Using uniform ellipticity,
+	%	\[
+	%	\sigma_1 \left| \boldsymbol{\xi} \right|^2  \leq a^{i j} \xi_i \xi_j \leq \sigma_2 \left| \boldsymbol{\xi}\right| ^2,
+	%	\]
+	%	we get
+	%	\[
+	%	\mathcal{P} \psi 
+	%	\geq
+	%	\mu r^{-\mu - 2}(- d \sigma_2 + (\mu +2) \sigma_1)
+	%	.
+	%	\]
+	%	Choose $\mu$ large enough so that 
+	%	\[
+	%	-d  \sigma_2 + (\mu +2) \sigma_1 > 0
+	%	\quad
+	%	\Rightarrow
+	%	\quad
+	%	\mu > d \, \dfrac{\sigma_2}{\sigma_1}-2
+	%	.
+	%	\]
+	%		{\bf Then in a fixed neighborhood of $\boldsymbol{x}_0$} {\color{red}($B_{R_1}(\boldsymbol{x}_0)$, the radius $R_1$ is determined here.)},
+	%	\\
+	%	{\color{red} As $R_0 \leq r(\boldsymbol{x}) \leq \operatorname*{diam}(\Omega) + R_0$, the lower bound $C_0$ is uniform (independent of $\boldsymbol{x}_0$). In other words,  $R_1$ is uniform and independent of $\boldsymbol{x}_0$.}
+	%	\begin{equation}
+	%		\label{ineq:positive-operator-value}
+	%		\mathcal{P} \psi \geq  C_0 
+	%	\end{equation}
+	%	for some $C_0>0$.
+	%	\\
+	%	Now define the full barrier
+	%	\[
+	%	\Psi (\boldsymbol{x},t) = \psi(\boldsymbol{x}) +
+	%	\tau \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2 + \tau (t_0 - t), 
+	%	\]
+	%	where $\tau >0$ is small enough.
+	%	Indeed, since
+	%	\[
+	%	\mathcal{P} ( \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2 + (t_0 - t)) = -2 \operatorname*{tr } \boldsymbol{A} - 1
+	%	\geq
+	%	- 2 d \sigma_2 - 1.
+	%	\]
+	%		choosing $\tau > 0$ small gives
+	%	\[
+	%	\mathcal{P} \Psi = P \psi + \tau P \left( \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2 + (t - t_0) \right) 
+	%	\geq
+	%	\dfrac{C_0}{2}.
+	%	\]
+	%	\\
+	%	Thus $\Psi$ is a strict {\color{red}supersolution} barrier.
+	%	\\
+	%	{\color{red} $\tau $ is also independent of $\boldsymbol{x}_0$ and it is uniform as well (as it only depends on $C_0$).} 
+	%	\\
+	%		Choose 
+	%	\begin{equation}
+	%		\label{ineq:coefficient-barrier-parabolic}
+	%		M_R =
+	%		\dfrac{\left\| u \right\|_{L^{\infty}(Q_T)} }{\tau R^2}. 
+	%	\end{equation}
+	%	Let 
+	%	\[
+	%	v = u - M_R \Psi.
+	%	\] 
+	%	Then 
+	%	\[
+	%	\mathcal{P} v = f - M_R P \Psi.
+	%	\]
+	%	Since $\mathcal{P} \Psi \geq  C_0/2$, we have
+	%	\[
+	%	\mathcal{P} v \leq f.
+	%	\]
+	%	Hence
+	%	\[
+	%	\mathcal{P} v \leq  | f |.
+	%	\]
+	%	We want to apply the parabolic maximum principle (ABP estimate), which requires:
+	%	\[
+	%		v\leq 0
+	%		\quad
+	%		\partial_p Q_R.
+	%	\]
+	%	So now, we check this on each part of the boundary.
+	%	\\
+	%	{\bf Boundary part (i)}
+	%	\\
+	%	on 
+	%	\[
+	%	(\partial \Omega \cap B_R(\boldsymbol{x}_0))
+	%	\times \left( t_0 -R^2, t_0 \right),
+	%	\]
+	%	we have
+	%	\[
+	%		u = 0, 
+	%		\quad
+	%		\Psi \geq 0,
+	%	\]
+	%	so
+	%	\[
+	%		u - M_R \Psi \leq 0.
+	%	\]
+	%	{\bf Boundary part (ii)}
+	%	on
+	%	\[
+	%	( \Omega \cap \partial B_R(\boldsymbol{x}_0))
+	%	\times \left( t_0 -R^2, t_0 \right),
+	%	\]
+	%	we use 
+	%	\[
+	%	\Psi (\boldsymbol{x},t) = \psi(\boldsymbol{x}) +
+	%	\tau R^2 + \tau (t_0 - t).
+	%	\]
+	%	Since
+	%	\[
+	%		\psi(\boldsymbol{x}) \geq 0, 
+	%		\quad
+	%		\text{and}
+	%		\quad
+	%		(t_0 - t) \geq 0,
+	%	\]
+	%	we get
+	%	\[
+	%		\Psi(\boldsymbol{x}, t) \geq \tau R^2.
+	%	\]
+	%	Then
+	%	\[
+	%		M_R \Psi \geq \left\|  u \right\|_{L^{\infty}(Q_T)}, 
+	%	\]
+	%	so
+	%	\[
+	%		v \leq 0 \quad \text{on this boundary part}.
+	%	\]
+	%	{\bf Boundary part (iii): bottom time boundary $t = t_0 - R^2$}
+	%	\\
+	%	on 
+	%	\[
+	%		\overline{\Omega} \cap \overline{ 	B_R(\boldsymbol{x}_0) }
+	%		\times \lbrace t_0 -R^2 \rbrace,
+	%	\]
+	%	again, since 
+	%	\[
+	%		\Psi(\boldsymbol{x}, t) \geq \tau R^2.
+	%	\]
+	%	we have
+	%	\[
+	%	v \leq 0 \quad \text{on this boundary part}.
+	%	\]
+	%	Therefore, we have
+	%	\[
+	%		\mathcal{P} v \leq \left| f \right| \quad \text{in } Q_R,
+	%		\qquad
+	%		v \leq 0 \quad  \text{on }  \partial_p Q_R.
+	%	\]
+	%	By the parabolic ABP estimate applied in $Q_R$ {\color{red}(Here is the place that $C^{1,1}$ property of domain is used. Because we need $v \in W^{2,p}(\Omega) \cap C(\bar{\Omega})$ to apply ABP estimate. To show that $v \in C(\bar{\Omega})$, we use the embedding $W^{2,p}(\Omega) \subset C(\bar{\Omega})$, which holds in $C^{1,1}$ domain.}, 
+	%	\[
+	%	\sup_{\boldsymbol{(x,t)} \in Q_R} v(\boldsymbol{x}, t)
+	%	\leq
+	%	C_3 R^{2-(d+2)/p}
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p /(p+1)} } \right\|_{L^{p+1}(Q_R)}.
+	%	{\color{red} \quad \text{the constant }C_3 \text{ depends on } d, p, \frac{\sigma_2}{\lambda}. }
+	%	\]
+	%	Therefore {\color{red} (for almost every $(\boldsymbol{x}, t) \in Q_R$)},
+	%	\begin{equation}
+	%		\label{ineq:upper-bound-on-barrier-positive-parabolic}
+	%		u(\boldsymbol{x}, t) 
+	%		\leq
+	%		M_R \Psi(\boldsymbol{x}, t)
+	%		+
+	%		C_3 R^{2-(d+2)/p}
+	%		\left\| \dfrac{f}{\left(  \rho_2^{\ast}(\boldsymbol{A}) \right)^{p /(p+1)}  } \right\|_{L^{p+1}(Q_R)}.
+	%	\end{equation}
+	%	Applying the same argument to $-u$, we get
+	%	\begin{equation}
+	%		\label{ineq:upper-bound-on-barrier-parabolic}
+	%		\left|  u(\boldsymbol{x}, t) \right| 
+	%		\leq
+	%		M_R \Psi(\boldsymbol{x}, t)
+	%		+
+	%		C_3 R^{2-(d+2)/p}
+	%		\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p /(p+1)} } \right\|_{L^{p+1}(Q_R)}.
+	%	\end{equation}
+	%	The mean value theorem implies that there is a uniform $C_1:= R_0^{-\mu - 1}${\color{red}, which only depends on the geometry of $\partial \Omega$,} such that 
+	%	\[
+	%		\psi(\boldsymbol{x}) \leq 
+	%		C_1 \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|.
+	%	\]
+	%	Also for each $(\boldsymbol{x}, t) \in Q_R(\boldsymbol{x}_0, t_0)$, we have
+	%	\[
+	%	\tau
+	%	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2
+	%	\leq
+	%	\tau R
+	%	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|,
+	%	\quad
+	%	\tau (t_0 - t)
+	%	\leq
+	%	\tau \sqrt{T} (t_0 - t)^{1/2}. 
+	%	\]
+	%	Therefore
+	%	\[
+	%		\Psi(\boldsymbol{x}, t) \leq
+	%		C_2\left( 	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t_0 - t\right| ^{1/2} \right) .
+	%		{\color{red} \quad C_2:= \max\left\lbrace C_1, \tau \operatorname*{diam}(\Omega), \tau \sqrt{T} \right\rbrace. }
+	%	\]
+	%	Using 
+	%	\[
+	%	M_R =
+	%	\dfrac{\left\| u \right\|_{L^{\infty}(Q_T)} }{\tau R^2},
+	%	\]
+	%	we get
+	%	\[
+	%	M_R \Psi(\boldsymbol{x}, t)
+	%	\leq
+	%	\frac{C_2}{\tau} \, 
+	%	\left\| u \right\|_{L^{\infty}(Q_T)} \dfrac{\left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t - t_0 \right|^{1/2}  \right)  }{ R^2 }.
+	%	\]
+	%	Hence
+	%	\[
+	%	\left| u( \boldsymbol{x}, t ) \right| 
+	%	\leq
+	%	\frac{C_2}{\tau} \, 
+	%	\left\| u \right\|_{L^{\infty}(Q_T)} \dfrac{ \left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t - t_0 \right|^{1/2}  \right) }{ R^2 }
+	%	+
+	%	C_3
+	%	R^{2-(d+2)/p} 
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p/(p+1)}} \right\|_{L^{p+1}(Q_R)}.
+	%	\]
+	%	Let 
+	%	\[
+	%	\delta = \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t - t_0 \right|^{1/2} .
+	%	{\color{red} \quad (\delta <1)}
+	%	\]
+	%	Choose
+	%	\[
+	%	R = \delta^{\theta},
+	%	\]
+	%	where $0 < \theta <1/2$. {\color{red} This implies that $ \delta < R$  thus  $\boldsymbol{x} \in B_R(\boldsymbol{x}_0)$ and $\boldsymbol{x} \in D_R$.}
+	%	\\
+	%	For having $R < R_1$, we require 
+	%	\[
+	%	\delta^{\theta} < R_1
+	%	\quad 
+	%	\Rightarrow
+	%	\delta < R_1^{1/{\theta}}
+	%	\] 
+	%	\\
+	%	{\color{red} Indeed, we optimize $R$ within allowed scales. }
+	%	\\
+	%	Therefore
+	%	\[
+	%	\dfrac{\delta}{R^2} = \delta^{1-2 \theta}, 
+	%	\]
+	%	and 
+	%	\[
+	%	R^{2-(d+2)/p} = \delta^{\theta(2-(d+2)/p)},
+	%	\]
+	%	where we know that $ 2- (d+2)/p >0$ and $1-2\theta>0$. 
+	%	Set 
+	%	\[
+	%	\beta:= \min\left\lbrace 1- 2 \theta , \theta \left(  2 - \frac{d + 2}{p} \right)  \right\rbrace > 0 ,
+	%	\quad
+	%	C_4:= \max \left\lbrace \frac{C_2}{\tau}, C_3\right\rbrace . 
+	%	\]
+	%	Thus
+	%	\[
+	%	\left| u( \boldsymbol{x}, t ) - u(\boldsymbol{x}_0, t) \right| 
+	%	\leq 
+	%	C_4
+	%	\left( 
+	%	\left\| u \right\|_{L^{\infty}(Q_T)}
+	%	+
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p/(p+1)}} \right\|_{L^{p+1}(Q_R)}
+	%	\right) 
+	%	\left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t - t_0 \right|^{1/2}  \right)^{\beta}
+	%	.
+	%	\]
+	%	Now, we consider {\bf the second boundary part}:
+	%	\[
+	%		\Omega \times \left\lbrace 0\right\rbrace 
+	%		\quad \text{(the initial boundary)}
+	%	\]
+	%	We want to prove Hölder continuity near a point:
+	%	\[
+	%		(\boldsymbol{x}_0, 0), 
+	%		\quad
+	%		\boldsymbol{x}_0 \in \Omega.
+	%	\]
+	%	Since
+	%	\[
+	%		u(\boldsymbol{x}, 0) = 0,
+	%	\]
+	%	we want:
+	%	\[
+	%		\left|  u(\boldsymbol{x}, t) \right| 
+	%		\leq C \delta^{\beta_2}
+	%	\]
+	%	near $t = 0$, where now:
+	%	\[
+	%		\delta:= \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + t^{1/2}.
+	%	\]
+	%	Fix $\boldsymbol{x}_0 \in \Omega$ and take $R>0$ (to be chosen later) such that 
+	%	\[
+	%		B_R(\boldsymbol{x}_0) \Subset \Omega.
+	%	\]
+	%	Define
+	%	\[
+	%		Q_R^+ := B_R(\boldsymbol{x}_0) \times (0, R^2).
+	%	\]
+	%	Define
+	%	\[
+	%		\Psi_2(\boldsymbol{x}, t):= 
+	%		t + \tau_2 \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2. 
+	%	\]
+	%	Recall
+	%	\[
+	%		\mathcal{P} u = \partial_t u - a^{i,j}D_{i,j}u.
+	%	\]
+	%	We have
+	%	\[
+	%	\partial_t \Psi_2 = 1, 
+	%	\quad
+	%	D_{i,j} \Psi_2 = 2 \tau_2 \delta_{i,j}.
+	%	\]
+	%	So
+	%	\[
+	%		\mathcal{P} \Psi_2 = 1 - 2 \tau_2 \operatorname*{tr} \boldsymbol{A}
+	%		\geq
+	%		1 - 2 \tau_2 d \sigma_2
+	%		.
+	%	\]
+	%	Choose $\tau_2$ small enough such that there is $C_5>0$ such that 
+	%	\[
+	%		\mathcal{P} \Psi_2 \geq C_5>0.
+	%	\]
+	%	Define a gain
+	%\[
+	%M_R =
+	%\dfrac{\left\| u \right\|_{L^{\infty}(Q_T)} }{\tau_2 R^2},
+	%\]
+	%and let
+	%\[
+	%v = u - M_R \Psi_2.
+	%\]
+	%Then
+	%\[
+	%	\mathcal{P} v = \mathcal{P} u - M_R P\Psi_2 .
+	%\]
+	%Since $P \Psi_2 \geq C_5>0$, we have
+	%\[
+	%	P\mathcal{P} v \leq f \leq \left| f \right|.
+	%\]
+	%Now, we check $v\leq 0$ on the parabolic boundary of $Q_R^+$.
+	%\\
+	%{\bf Bottom $t = 0$}
+	%\\
+	%Since 
+	%\[
+	%u(\boldsymbol{x}, 0) = 0,
+	%\]
+	%So
+	%\[
+	%v= -M_R \Psi_2\leq 0.
+	%\]
+	%{\bf Lateral spatial boundary}
+	%\\
+	%On 
+	%\[
+	%	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right| = R,
+	%\]
+	%we have 
+	%\[
+	%	\Psi_2 \geq \tau_2 R^2.
+	%\]
+	%Thus
+	%\[
+	%M_R \Psi_2(\boldsymbol{x}, t) \geq \left\| u \right\|_{L^{\infty}(Q_T)}, 
+	%\]
+	%and again
+	%\[
+	%v\leq 0.
+	%\]
+	%By the parabolic ABP from applied in $Q_R^+$, we get
+	%\[
+	%\sup_{\boldsymbol{(x,t)} \in Q_R^+} v(\boldsymbol{x}, t)
+	%\leq
+	%C_6 R^{2-(d+2)/p}
+	%\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p /(p+1)} } \right\|_{L^{p+1}(Q_R^+)}.
+	%{\color{red} \quad \text{the constant }C_6 \text{ depends on } d, p, \frac{\sigma_2}{\lambda}. }
+	%\]
+	%Therefore {\color{red} (for almost every $(\boldsymbol{x}, t) \in Q_R^+$)},
+	%\begin{equation}
+	%	\label{ineq:upper-bound-on-barrier-positive-parabolic-2}
+	%	u(\boldsymbol{x}, t) 
+	%	\leq
+	%	M_R \Psi_2(\boldsymbol{x}, t)
+	%	+
+	%	C_6 R^{2-(d+2)/p}
+	%	\left\| \dfrac{f}{\left(  \rho_2^{\ast}(\boldsymbol{A}) \right)^{p /(p+1)}  } \right\|_{L^{p+1}(Q_R^+)}.
+	%\end{equation}
+	%Applying the same argument to $-u$, we get
+	%\begin{equation}
+	%	\label{ineq:upper-bound-on-barrier-parabolic-2}
+	%	\left|  u(\boldsymbol{x}, t) \right| 
+	%	\leq
+	%	M_R \Psi_2(\boldsymbol{x}, t)
+	%	+
+	%	C_6 R^{2-(d+2)/p}
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p /(p+1)} } \right\|_{L^{p+1}(Q_R^+)}.
+	%\end{equation}
+	%Thus
+	%\[
+	%\left|  u(\boldsymbol{x}, t) \right| 
+	%\leq
+	%\dfrac{\left\| u \right\|_{L^{\infty}(Q_T)} \left( \tau_2 \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2 + t \right)  }{\tau_2 R^2}
+	%+
+	%C_6 R^{2-(d+2)/p}
+	%\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p /(p+1)} } \right\|_{L^{p+1}(Q_R^+)}.
+	%\]
+	%Let 
+	%\[
+	%	\delta:= \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + t^{1/2}. {\color{red} \quad(\delta<1).}
+	%\]
+	%Choose 
+	%\[
+	%	R = \delta^{\theta_2},
+	%\]
+	%where $0< \theta_2< 1$. Therefore
+	%\[
+	% \dfrac{\delta_2^2}{R^2} = \delta_2^{2(1- \theta_2)},
+	%\]
+	%and
+	%\[
+	%	R^{2-(d+2)/p} = \delta^{\theta(2-(d+2)/p)}.
+	%\]
+	%Set 
+	%\[
+	%\beta_2:= \min\left\lbrace 1-  \theta_2 , \theta_2 \left(  2 - \frac{d + 2}{p} \right)  \right\rbrace > 0 ,
+	%\quad
+	%C_7:= \max \left\lbrace \frac{1}{\tau_2}, C_6\right\rbrace . 
+	%\]
+	%Thus
+	%\[
+	%\left| u( \boldsymbol{x}, t ) - u(\boldsymbol{x}_0, t) \right| 
+	%\leq 
+	%C_7
+	%\left( 
+	%\left\| u \right\|_{L^{\infty}(Q_T)}
+	%+
+	%\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p/(p+1)}} \right\|_{L^{p+1}(Q_R^+)}
+	%\right) 
+	%\left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| +  t^{1/2}  \right)^{\beta_2}
+	%.
+	%\]
+	%%
+	%%
+	%Now, we consider {\bf the third boundary part}:
+	%\[
+	%\partial \Omega \times \left\lbrace 0\right\rbrace 
+	%\quad \text{(the corner boundary)}.
+	%\]
+	%Fix
+	%\[
+	%	\left( \boldsymbol{x}_0, t \right) , 
+	%	\quad
+	%	\boldsymbol{x}_0 \in \partial \Omega. 
+	%\] 
+	%As before, by the exterior sphere condition
+	%\[
+	%	B_{R_0}(\boldsymbol{z}) \subset \mathbb{R}^d \setminus \Omega, 
+	%	\quad
+	%	 \left| \boldsymbol{x}_0 - \boldsymbol{z} \right| = R_0.
+	%\]
+	%Define the local cylinder
+	%\[
+	%	Q_R = (\Omega \cap B_R(\boldsymbol{x}_0)) \times (0, R^2).
+	%\]
+	%Define the spatial part of barrier
+	%\[
+	%\psi_3(\boldsymbol{x})+ R_0^{-\mu_3} -  \left| \boldsymbol{x} - \boldsymbol{z} \right|^{-\mu_3}.
+	%\]
+	%Then define
+	%\[
+	%	\Psi_3(\boldsymbol{x}, t)
+	%	= 
+	%	\psi_3(\boldsymbol{x}) 
+	%	+
+	%	 \tau_3  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|
+	%	  +
+	%	  t
+	%\]
+	%Again as before, there are a large enough $\mu_3>0$, a small enough $\tau_3>0$, and $C_7>0$ such that for each $(\boldsymbol{x}_0, t) \in Q_R$
+	%\[
+	%	P \Psi_3(\boldsymbol{x}, t) \geq C_7.
+	%\]
+	%Choose again
+	%\[
+	%M_R =
+	%	\dfrac{\left\| u \right\|_{L^{\infty}(Q_T)} }{\tau_3 R^2},
+	%\]
+	%and let
+	%\[
+	%	v = u - M_R \Psi_3.
+	%\]
+	%Then
+	%\[
+	%	\mathcal{P} v = \mathcal{P} u - M_R \mathcal{P} \Psi_3 .
+	%\]
+	%Since $\mathcal{P} \Psi_3 \geq C_7>0$, we have
+	%\[
+	%	\mathcal{P} v \leq f \leq \left| f \right|.
+	%\]
+	%Now, we check $v\leq 0$ on the three pieces of the parabolic boundary of $Q_R$.
+	%\\
+	%{\bf Lateral boundary - boundary part (i)}
+	%\\
+	%On 
+	%\[
+	%	\left( \partial \Omega \cap B_R \right) \times (0, R^2),
+	%\]
+	%where we have
+	%\[
+	%	u = 0, 
+	%	\quad
+	%	\Psi_3\geq0.
+	%\]
+	%Thus
+	%\[
+	%	v\leq 0.
+	%\]
+	%\\
+	%{\bf Bottom boundary - boundary part (ii)}
+	%\\
+	%On
+	%\[
+	%	\left( \Omega \cap B_R \right) \times \lbrace 0 \rbrace.
+	%\]
+	%we have
+	%\[
+	%	u(\boldsymbol{x}, 0) = 0, \quad
+	%	\Psi_3(\boldsymbol{x}, 0) = 
+	%	\psi_3(\boldsymbol{x}) + \tau_3 \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2 \geq 0. 
+	%\]
+	%So again
+	%\[
+	%	v\leq 0.
+	%\]
+	%\\
+	%{\bf Artificial lateral boundary - boundary part (iii)}
+	%\\
+	%On
+	%\[
+	%	\left( \Omega \cap \partial B_R \right) \times (0, R^2), 
+	%\]
+	%we obtain
+	%\[
+	%	M_R \Psi_3 (\boldsymbol{x}, t)  \geq \left\| u \right\|_{L^{\infty}(Q_T)} \geq u(\boldsymbol{x}, t) ,
+	%\]
+	%thus
+	%\[
+	%	v \leq 0.
+	%\]
+	%By the parabolic ABP estimate applied in $Q_R$, we get
+	%\[
+	%	\left| u(\boldsymbol{x}, t) \right| 
+	%	\leq
+	%	M_R \Psi_3(\boldsymbol{x}, t)
+	%	+
+	%	C_8 R^{2-(d+2)/p}
+	%	\left\| \dfrac{f}{\left(  \rho_2^{\ast}(\boldsymbol{A}) \right)^{p /(p+1)}  } \right\|_{L^{p+1}(Q_R)}.
+	%\]
+	%	The mean value theorem implies that there is a uniform $C_9:= R_0^{-\mu - 1}${\color{red}, which only depends on the geometry of $\partial \Omega$,} such that 
+	%\[
+	%	\psi_3(\boldsymbol{x}) \leq 
+	%	C_9 \left| \boldsymbol{x} - \boldsymbol{x}_0 \right|.
+	%\]
+	%Also for each $(\boldsymbol{x}, t) \in Q_R$, we have
+	%\[
+	%	\tau_3
+	%	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|^2
+	%	\leq
+	%	\tau_3 R
+	%	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right|,
+	%	\quad
+	%	  t
+	%	\leq
+	%	\sqrt{T} t^{1/2}. 
+	%\]
+	%Therefore
+	%\[
+	%	\Psi_3(\boldsymbol{x}, t) \leq
+	%	C_{10}\left( 	\left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left|  t\right| ^{1/2} \right) .
+	%	{\color{red} \quad C_{10}:= \max\left\lbrace C_9, \tau_3 \operatorname*{diam}(\Omega), \sqrt{T} \right\rbrace. }
+	%\]
+	%Hence
+	%\[
+	%	\left| u( \boldsymbol{x}, t ) \right| 
+	%	\leq
+	%	\frac{C_{10}}{\tau_3} \, 
+	%	\left\| u \right\|_{L^{\infty}(Q_T)} \dfrac{ \left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t  \right|^{1/2}  \right) }{ R^2 }
+	%	+
+	%	C_8
+	%	R^{2-(d+2)/p} 
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p/(p+1)}} \right\|_{L^{p+1}(Q_R)}.
+	%\]
+	%Let 
+	%\[
+	%	\delta = \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t - t_0 \right|^{1/2} .
+	%	{\color{red} \quad (\delta <1)}
+	%\]
+	%Choose
+	%\[
+	%	R = \delta^{\theta},
+	%\]
+	%where $0 < \theta <1/2$. {\color{red} This implies that $ \delta < R$  thus  $\boldsymbol{x} \in B_R(\boldsymbol{x}_0)$ and $\boldsymbol{x} \in D_R$.}
+	%\\
+	%For having $R < R_1$, we require 
+	%\[
+	%	\delta^{\theta} < R_1
+	%	\quad 
+	%	\Rightarrow
+	%	\delta < R_1^{1/{\theta}}
+	%\] 
+	%\\
+	%{\color{red} Indeed, we optimize $R$ within allowed scales. }
+	%\\
+	%Therefore
+	%\[
+	%	\dfrac{\delta}{R^2} = \delta^{1-2 \theta}, 
+	%\]
+	%and 
+	%\[
+	%	R^{2-(d+2)/p} = \delta^{\theta(2-(d+2)/p)},
+	%\]
+	%where we know that $ 2- (d+2)/p >0$ and $1-2\theta>0$. 
+	%Set 
+	%\[
+	%	\beta:= \min\left\lbrace 1- 2 \theta , \theta \left(  2 - \frac{d + 2}{p} \right)  \right\rbrace > 0 ,
+	%	\quad
+	%	C_{11}:= \max \left\lbrace \frac{C_{10}}{\tau_3}, C_{8}\right\rbrace . 
+	%\]
+	%Thus
+	%\[
+	%	\left| u( \boldsymbol{x}, t ) - u(\boldsymbol{x}_0, 0) \right| 
+	%	\leq 
+	%	C_{11}
+	%	\left( 
+	%	\left\| u \right\|_{L^{\infty}(Q_T)}
+	%	+
+	%	\left\| \dfrac{f}{\left( \rho_2^{\ast}(\boldsymbol{A})\right)^{p/(p+1)}} \right\|_{L^{p+1}(Q_R)}
+	%	\right) 
+	%	\left(  \left| \boldsymbol{x} - \boldsymbol{x}_0 \right| + \left| t \right|^{1/2}  \right)^{\beta}
+	%	.
+	%\]
+	%\end{proof}
+	%%
+	%%
+	%\begin{lemma}[Global Hölder continuity]
+	%	\label{lemm-Holder-continuity-parabolic}
+	%	Let
+	%	\[
+	%	Q_T:=\Omega\times(0,T],
+	%	\]
+	%	where $\Omega\subset\mathbb{R}^d$ is a bounded domain satisfying the
+	%	exterior sphere condition.
+	%	
+	%	Assume that
+	%	\[
+	%	u\in W^{2,1}_{\bar p}(Q_T)\cap C(\overline{Q_T})
+	%	\]
+	%	satisfies
+	%	\[
+	%	\mathcal{P} u=f
+	%	\quad \text{in }Q_T,
+	%	\qquad
+	%	u=0
+	%	\quad \text{on }\partial_pQ_T,
+	%	\]
+	%	where
+	%	\[
+	%	\mathcal{P} u:=\partial_tu-a^{ij}D_{ij}u,
+	%	\]
+	%	and
+	%	\[
+	%	\sigma_1|\xi|^2
+	%	\le
+	%	a^{ij}(x,t)\xi_i\xi_j
+	%	\le
+	%	\sigma_2|\xi|^2.
+	%	\]
+	%	
+	%	Assume furthermore that
+	%	\[
+	%	\boldsymbol A=(a^{ij})\in\Gamma_2^\ast,
+	%	\qquad
+	%	\rho_2^\ast(\boldsymbol A)\ge\lambda>0.
+	%	\]
+	%	
+	%	If
+	%	\[
+	%	\bar p>\frac{d+2}{2},
+	%	\]
+	%	then there exist constants
+	%	\[
+	%	\alpha=\alpha(d,\bar p,\sigma_1,\sigma_2,\lambda)\in(0,1)
+	%	\]
+	%	and
+	%	\[
+	%	C=
+	%	C(Q_T,\bar p,\sigma_1,\sigma_2,\lambda)
+	%	>0
+	%	\]
+	%	such that
+	%	\begin{equation}
+	%		\label{ineq:Holder-bound-global-parabolic}
+	%		\|u\|_{C^{0,\alpha}(\overline{Q_T})}
+	%		\le
+	%		C
+	%		\left(
+	%		\|u\|_{L^\infty(Q_T)}
+	%		+
+	%		\left\|
+	%		\frac{f}
+	%		{
+		%			\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+		%		}
+	%		\right\|_{L^{\bar p}(Q_T)}
+	%		\right).
+	%	\end{equation}
+	%\end{lemma}
+	%
+	%\begin{proof}
+	%	We divide the parabolic boundary into
+	%	\[
+	%	\partial_pQ_T
+	%	=
+	%	S_T\cup B_0\cup\Sigma_0,
+	%	\]
+	%	where
+	%	\[
+	%	S_T:=\partial\Omega\times(0,T],
+	%	\qquad
+	%	B_0:=\Omega\times\{0\},
+	%	\qquad
+	%	\Sigma_0:=\partial\Omega\times\{0\}.
+	%	\]
+	%	
+	%	We first establish boundary Hölder estimates near each portion of
+	%	$\partial_pQ_T$.
+	%	
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	\medskip
+	%	\noindent
+	%	{\bf Step 1: Lateral boundary estimate.}
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	
+	%	Fix
+	%	\[
+	%	(x_0,t_0)\in\partial\Omega\times(0,T].
+	%	\]
+	%	
+	%	By the exterior sphere condition, there exist
+	%	$R_0>0$ and $z\in\mathbb{R}^d\setminus\Omega$ such that
+	%	\[
+	%	B_{R_0}(z)\subset\mathbb{R}^d\setminus\Omega,
+	%	\qquad
+	%	\overline{B_{R_0}(z)}\cap\overline{\Omega}
+	%	=
+	%	\{x_0\}.
+	%	\]
+	%	
+	%	For $R>0$, define
+	%	\[
+	%	Q_R(x_0,t_0)
+	%	:=
+	%	(\Omega\cap B_R(x_0))
+	%	\times
+	%	(t_0-R^2,t_0].
+	%	\]
+	%	
+	%	Let
+	%	\[
+	%	r:=|x-z|,
+	%	\]
+	%	and define
+	%	\[
+	%	\psi(x)
+	%	:=
+	%	R_0^{-\mu}-r^{-\mu},
+	%	\]
+	%	where $\mu>0$ will be chosen later.
+	%	
+	%	Since $r>R_0$ in $\Omega$ near $x_0$,
+	%	\[
+	%	\psi(x)\ge0,
+	%	\qquad
+	%	\psi(x_0)=0.
+	%	\]
+	%	
+	%	A direct computation gives
+	%	\[
+	%	D_{ij}\psi
+	%	=
+	%	\mu r^{-\mu-2}\delta_{ij}
+	%	-
+	%	\mu(\mu+2)r^{-\mu-4}(x_i-z_i)(x_j-z_j).
+	%	\]
+	%	
+	%	Hence
+	%	\[
+	%	\mathcal{P} \psi
+	%	=
+	%	-a^{ij}D_{ij}\psi.
+	%	\]
+	%	
+	%	Using ellipticity,
+	%	\[
+	%	\sigma_1|\xi|^2
+	%	\le
+	%	a^{ij}\xi_i\xi_j
+	%	\le
+	%	\sigma_2|\xi|^2,
+	%	\]
+	%	we obtain
+	%	\[
+	%	\mathcal{P} \psi
+	%	\ge
+	%	\mu r^{-\mu-2}
+	%	\Bigl(
+	%	(\mu+2)\sigma_1-d\sigma_2
+	%	\Bigr).
+	%	\]
+	%	Choose
+	%	\[
+	%	\mu>d\frac{\sigma_2}{\sigma_1}-2.
+	%	\]
+	%	Then there exist $R_1>0$ and $C_0>0$ such that
+	%	\begin{equation}
+	%		\label{ineq:Ppsi-positive}
+	%		\mathcal{P} \psi\ge C_0
+	%		\qquad
+	%		\text{in }
+	%		\Omega\cap B_{R_1}(x_0).
+	%	\end{equation}
+	%	Now define
+	%	\[
+	%	\Psi(x,t)
+	%	:=
+	%	\psi(x)
+	%	+
+	%	\tau|x-x_0|^2
+	%	+
+	%	\tau(t_0-t),
+	%	\]
+	%	where $\tau>0$ will be chosen small.
+	%	\\
+	%	Since
+	%	\[
+	%	\mathcal{P}|x-x_0|^2
+	%	=
+	%	-2\operatorname{tr}\boldsymbol A,
+	%	\qquad
+	%	\mathcal{P} (t_0-t)=-1,
+	%	\]
+	%	we obtain
+	%	\[
+	%	\mathcal{P} \Psi
+	%	=
+	%	\mathcal{P} \psi
+	%	+
+	%	\tau
+	%	(-2\operatorname{tr}\boldsymbol A-1).
+	%	\]
+	%	Choosing $\tau>0$ sufficiently small,
+	%	\[
+	%	\mathcal{P} \Psi\ge\frac{C_0}{2}.
+	%	\]
+	%	
+	%	Set
+	%	\[
+	%	M_R:=\frac{\|u\|_{L^\infty(Q_T)}}{R},
+	%	\]
+	%	and define
+	%	\[
+	%	v:=u-M_R\Psi.
+	%	\]
+	%	Then
+	%	\[
+	%	\mathcal{P} v
+	%	=
+	%	f-M_RP\Psi
+	%	\le
+	%	|f|.
+	%	\]
+	%	We now verify that
+	%	\[
+	%	v\le0
+	%	\qquad
+	%	\text{on }\partial_pQ_R(x_0,t_0).
+	%	\]
+	%	
+	%	\medskip
+	%	\noindent
+	%	(i) On
+	%	\[
+	%	(\partial\Omega\cap B_R(x_0))
+	%	\times
+	%	(t_0-R^2,t_0],
+	%	\]
+	%	we have
+	%	\[
+	%	u=0,
+	%	\qquad
+	%	\Psi\ge0,
+	%	\]
+	%	hence
+	%	\[
+	%	v\le0.
+	%	\]
+	%	
+	%	\medskip
+	%	\noindent
+	%	(ii) On
+	%	\[
+	%	(\Omega\cap\partial B_R(x_0))
+	%	\times
+	%	(t_0-R^2,t_0],
+	%	\]
+	%	we have
+	%	\[
+	%	\Psi\ge \tau R^2,
+	%	\]
+	%	thus
+	%	\[
+	%	M_R\Psi
+	%	\ge
+	%	\tau R\|u\|_{L^\infty(Q_T)}.
+	%	\]
+	%	
+	%	Choosing $R$ sufficiently small,
+	%	\[
+	%	v\le0.
+	%	\]
+	%	
+	%	\medskip
+	%	\noindent
+	%	(iii) On
+	%	\[
+	%	(\overline{\Omega}\cap\overline{B_R(x_0)})
+	%	\times
+	%	\{t_0-R^2\},
+	%	\]
+	%	again
+	%	\[
+	%	\Psi\ge \tau R^2,
+	%	\]
+	%	and therefore
+	%	\[
+	%	v\le0.
+	%	\]
+	%	
+	%	Applying the parabolic ABP estimate in $Q_R(x_0,t_0)$,
+	%	\[
+	%	\sup_{Q_R}v
+	%	\le
+	%	C
+	%	R^{2-\frac{d+2}{\bar p}}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R)}.
+	%	\]
+	%	
+	%	Hence
+	%	\[
+	%	u(x,t)
+	%	\le
+	%	M_R\Psi(x,t)
+	%	+
+	%	C
+	%	R^{2-\frac{d+2}{\bar p}}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R)}.
+	%	\]
+	%	
+	%	Applying the same argument to $-u$ yields
+	%	\begin{equation}
+	%		\label{ineq:lateral-estimate}
+	%		|u(x,t)|
+	%		\le
+	%		M_R\Psi(x,t)
+	%		+
+	%		C
+	%		R^{2-\frac{d+2}{\bar p}}
+	%		\left\|
+	%		\frac{f}
+	%		{
+		%			\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+		%		}
+	%		\right\|_{L^{\bar p}(Q_R)}.
+	%	\end{equation}
+	%	
+	%	By the mean value theorem,
+	%	\[
+	%	\psi(x)\le C|x-x_0|.
+	%	\]
+	%	
+	%	Also,
+	%	\[
+	%	|x-x_0|^2\le R|x-x_0|,
+	%	\qquad
+	%	t_0-t\le\sqrt{T}(t_0-t)^{1/2}.
+	%	\]
+	%	
+	%	Therefore
+	%	\[
+	%	\Psi(x,t)
+	%	\le
+	%	C
+	%	\Bigl(
+	%	|x-x_0|
+	%	+
+	%	|t-t_0|^{1/2}
+	%	\Bigr).
+	%	\]
+	%	
+	%	Substituting into \eqref{ineq:lateral-estimate},
+	%	\[
+	%	|u(x,t)|
+	%	\le
+	%	C
+	%	\|u\|_{L^\infty(Q_T)}
+	%	\frac{
+	%		|x-x_0|
+	%		+
+	%		|t-t_0|^{1/2}
+	%	}{R}
+	%	+
+	%	C
+	%	R^{2-\frac{d+2}{\bar p}}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R)}.
+	%	\]
+	%	
+	%	Let
+	%	\[
+	%	\delta
+	%	:=
+	%	|x-x_0|
+	%	+
+	%	|t-t_0|^{1/2}.
+	%	\]
+	%	
+	%	Choose
+	%	\[
+	%	R=\delta^\theta,
+	%	\qquad
+	%	0<\theta<1.
+	%	\]
+	%	
+	%	Then
+	%	\[
+	%	\frac{\delta}{R}
+	%	=
+	%	\delta^{1-\theta},
+	%	\]
+	%	and
+	%	\[
+	%	R^{2-\frac{d+2}{\bar p}}
+	%	=
+	%	\delta^{
+	%		\theta\left(
+	%		2-\frac{d+2}{\bar p}
+	%		\right)
+	%	}.
+	%	\]
+	%	
+	%	Set
+	%	\[
+	%	\beta
+	%	:=
+	%	\min
+	%	\left\{
+	%	1-\theta,
+	%	\theta
+	%	\left(
+	%	2-\frac{d+2}{\bar p}
+	%	\right)
+	%	\right\}
+	%	>0.
+	%	\]
+	%	
+	%	Hence
+	%	\[
+	%	|u(x,t)-u(x_0,t_0)|
+	%	\le
+	%	C
+	%	\left(
+	%	\|u\|_{L^\infty(Q_T)}
+	%	+
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_T)}
+	%	\right)
+	%	\delta^\beta.
+	%	\]
+	%	
+	%	Thus $u$ is Hölder continuous near the lateral boundary.
+	%	
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	\medskip
+	%	\noindent
+	%	{\bf Step 2: Initial boundary estimate.}
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	
+	%	Fix
+	%	\[
+	%	(x_0,0),
+	%	\qquad
+	%	x_0\in\Omega.
+	%	\]
+	%	
+	%	Choose $R>0$ such that
+	%	\[
+	%	B_R(x_0)\Subset\Omega,
+	%	\]
+	%	and define
+	%	\[
+	%	Q_R^+
+	%	:=
+	%	B_R(x_0)\times(0,R^2].
+	%	\]
+	%	
+	%	Define
+	%	\[
+	%	\Psi_2(x,t)
+	%	:=
+	%	t+ \tau |x-x_0|^2.
+	%	\]
+	%	Then
+	%	\[
+	%	\mathcal{P} \Psi_2
+	%	=
+	%	1-2 \tau \operatorname{tr}\boldsymbol A.
+	%	\]
+	%	Choosing $ \tau >0$ sufficiently small,
+	%	\[
+	%	\mathcal{P} \Psi_2\ge C_1>0.
+	%	\]
+	%	Set
+	%	\[
+	%	M_R:=\frac{\|u\|_{L^\infty(Q_T)}}{R},
+	%	\qquad
+	%	v:=u-M_R\Psi_2.
+	%	\]
+	%	
+	%	Exactly as above,
+	%	\[
+	%	\mathcal{P} v\le|f|,
+	%	\qquad
+	%	v\le0
+	%	\quad
+	%	\text{on }\partial_pQ_R^+.
+	%	\]
+	%	Applying the parabolic ABP estimate gives
+	%	\[
+	%	|u(x,t)|
+	%	\le
+	%	C
+	%	\|u\|_{L^\infty(Q_T)}
+	%	\frac{
+	%		|x-x_0|+t^{1/2}
+	%	}{R}
+	%	+
+	%	C
+	%	R^{2-\frac{d+2}{\bar p}}
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_R^+)}.
+	%	\]
+	%	
+	%	Choosing again
+	%	\[
+	%	R=\delta^\theta,
+	%	\qquad
+	%	\delta:=|x-x_0|+t^{1/2},
+	%	\]
+	%	we obtain
+	%	\[
+	%	|u(x,t)-u(x_0,0)|
+	%	\le
+	%	C
+	%	\left(
+	%	\|u\|_{L^\infty(Q_T)}
+	%	+
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_T)}
+	%	\right)
+	%	\delta^\beta.
+	%	\]
+	%	
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	\medskip
+	%	\noindent
+	%	{\bf Step 3: Corner boundary estimate.}
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	
+	%	The argument near
+	%	\[
+	%	\Sigma_0=\partial\Omega\times\{0\}
+	%	\]
+	%	is identical, combining the barriers from Steps 1 and 2.
+	%	One obtains
+	%	\[
+	%	|u(x,t)-u(x_0,0)|
+	%	\le
+	%	C
+	%	\left(
+	%	\|u\|_{L^\infty(Q_T)}
+	%	+
+	%	\left\|
+	%	\frac{f}
+	%	{
+	%		\bigl(\rho_2^\ast(\boldsymbol A)\bigr)^{(\bar p-1)/\bar p}
+	%	}
+	%	\right\|_{L^{\bar p}(Q_T)}
+	%	\right)
+	%	\delta^\beta.
+	%	\]
+	%	
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	\medskip
+	%	\noindent
+	%	{\bf Step 4: Conclusion.}
+	%	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+	%	
+	%	Combining the boundary estimates above with the standard interior
+	%	parabolic Hölder estimate yields
+	%	\[
+	%	u\in C^{0,\alpha}(\overline{Q_T}),
+	%	\]
+	%	for some
+	%	\[
+	%	\alpha\in(0,\beta].
+	%	\]
+	%	
+	%	Estimate \eqref{ineq:Holder-bound-global-parabolic} follows.
+	%\end{proof}
+	
+	
+	
+	\bibliographystyle{siamplain}
+	\bibliography{references}
+	%
+	%\bigskip
+	%\medskip
+	
+	\vspace*{3mm}
+	\hspace*{.8mm}
+	\noindent {\footnotesize %Amireh Mousavi, 
+	%Friedrich-Schiller-Universität Jena, 07743, Jena, Germany 
+	\vspace*{-0.5mm}
+	\\
+	\hspace*{7mm}
+	\textit{Email address:} \texttt{
+		%amireh.mousavi@gmail.com}
+	}
+	
+\end{document}

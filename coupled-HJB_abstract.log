@@ -1,0 +1,1662 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2024.8.2)  28 NOV 2025 12:49
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**tmp_Mixed-FEM-uncertain-data-arxiv_abstract.tex
+(./tmp_Mixed-FEM-uncertain-data-arxiv_abstract.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2023-01-16>
+
+! LaTeX Error: Missing \begin{document}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.2 		\begin{center}
+                    
+You're in trouble here.  Try typing  <return>  to proceed.
+If that doesn't work, type  X <return>  to quit.
+
+
+Overfull \hbox (20.0pt too wide) in paragraph at lines 2--2
+[] 
+ []
+
+
+! LaTeX Error: Environment adjustwidth undefined.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.3 			\begin{adjustwidth}
+                          {1cm}{1cm} % عرض کمتر از متن اصلی
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+Missing character: There is no 1 in font nullfont!
+Missing character: There is no c in font nullfont!
+Missing character: There is no m in font nullfont!
+! Undefined control sequence.
+l.5 				{\FancyAbstractTitle
+                            {A}{\hspace*{-.8mm}}\fontsize{6pt}{1pt}\selectfo...
+The control sequence at the end of the top line
+of your error message was never \def'ed. If you have
+misspelled it (e.g., `\hobx'), type `I' and the correct
+spelling (e.g., `I\hbox'). Otherwise just continue,
+and I'll forget about whatever was undefined.
+
+Missing character: There is no A in font nullfont!
+
+! LaTeX Error: \begin{center} on input line 2 ended by \end{adjustwidth}.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.14 		\end{adjustwidth}
+                        
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+
+Overfull \hbox (35.1456pt too wide) in paragraph at lines 3--15
+ | \OT1/cmr/m/n/6 BSTRACT. 
+ []
+
+
+Overfull \hbox (19.35306pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 Weee 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (17.52664pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sider 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 an 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 el- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lip- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tic 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 par- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tial 
+ []
+
+
+Overfull \hbox (12.51407pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dif- 
+ []
+
+
+Overfull \hbox (12.52101pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fer- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 en- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tial 
+ []
+
+
+Overfull \hbox (20.06973pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 equa- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 non- 
+ []
+
+
+Overfull \hbox (38.72972pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 divergence 
+ []
+
+
+Overfull \hbox (17.2433pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 form 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 with 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ran- 
+ []
+
+
+Overfull \hbox (16.05579pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dom 
+ []
+
+
+Overfull \hbox (12.51407pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dif- 
+ []
+
+
+Overfull \hbox (10.15292pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fu- 
+ []
+
+
+Overfull \hbox (14.68633pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sion 
+ []
+
+
+Overfull \hbox (14.16687pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ma- 
+ []
+
+
+Overfull \hbox (13.46547pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 trix 
+ []
+
+
+Overfull \hbox (13.69464pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 and 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ran- 
+ []
+
+
+Overfull \hbox (16.05579pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dom 
+ []
+
+
+Overfull \hbox (16.77107pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 forc- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (19.84056pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 term. 
+ []
+
+
+Overfull \hbox (9.6807pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 To 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ad- 
+ []
+
+
+Overfull \hbox (18.51833pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dress 
+ []
+
+
+Overfull \hbox (16.10301pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 this, 
+ []
+
+
+Overfull \hbox (9.6807pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 we 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pro- 
+ []
+
+
+Overfull \hbox (16.33913pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pose 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (25.26425pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mixed- 
+ []
+
+
+Overfull \hbox (16.2919pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 type 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tin- 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 u- 
+ []
+
+
+Overfull \hbox (12.32518pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ous 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fi- 
+ []
+
+
+Overfull \hbox (14.16687pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 nite 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 el- 
+ []
+
+
+Overfull \hbox (6.6112pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 e- 
+ []
+
+
+Overfull \hbox (18.65305pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ment 
+ []
+
+
+Overfull \hbox (13.26964pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dis- 
+ []
+
+
+Overfull \hbox (27.39622pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cretiza- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (19.88084pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 phys- 
+ []
+
+
+Overfull \hbox (5.19452pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 i- 
+ []
+
+
+Overfull \hbox (10.38904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cal 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 do- 
+ []
+
+
+Overfull \hbox (20.77808pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 main, 
+ []
+
+
+Overfull \hbox (17.9447pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 com- 
+ []
+
+
+Overfull \hbox (20.30585pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 bined 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 with 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 col- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lo- 
+ []
+
+
+Overfull \hbox (10.86127pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ca- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (13.26964pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dis- 
+ []
+
+
+Overfull \hbox (27.39622pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cretiza- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (29.84488pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 stochas- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tic 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 do- 
+ []
+
+
+Overfull \hbox (20.77808pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 main. 
+ []
+
+
+Overfull \hbox (12.39879pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 For 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (22.43088pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mixed 
+ []
+
+
+Overfull \hbox (12.99324pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 for- 
+ []
+
+
+Overfull \hbox (14.40298pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mu- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 la- 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion, 
+ []
+
+
+Overfull \hbox (9.6807pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 we 
+ []
+
+
+Overfull \hbox (14.69327pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 first 
+ []
+
+
+Overfull \hbox (9.91681pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in- 
+ []
+
+
+Overfull \hbox (13.70158pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tro- 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 duce 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (29.84488pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 stochas- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tic 
+ []
+
+
+Overfull \hbox (14.68633pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cost 
+ []
+
+
+Overfull \hbox (18.65305pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 func- 
+ []
+
+
+Overfull \hbox (21.2503pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tional 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 at 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tin- 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 u- 
+ []
+
+
+Overfull \hbox (12.32518pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ous 
+ []
+
+
+Overfull \hbox (18.88916pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 level. 
+ []
+
+
+Overfull \hbox (16.57524pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 This 
+ []
+
+
+Overfull \hbox (12.99324pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 for- 
+ []
+
+
+Overfull \hbox (14.40298pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mu- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 la- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (5.71397pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 is 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 then 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 en- 
+ []
+
+
+Overfull \hbox (25.9726pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 hanced 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 to 
+ []
+
+
+Overfull \hbox (9.91681pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in- 
+ []
+
+
+Overfull \hbox (14.17381pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cor- 
+ []
+
+
+Overfull \hbox (12.04184pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 po- 
+ []
+
+
+Overfull \hbox (14.64604pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 rate 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (15.81967pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 van- 
+ []
+
+
+Overfull \hbox (13.26964pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ish- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (15.11133pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tan- 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 gen- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tial 
+ []
+
+
+Overfull \hbox (18.42387pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 trace 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (24.37396pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 straint 
+ []
+
+
+Overfull \hbox (9.91681pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 di- 
+ []
+
+
+Overfull \hbox (21.02113pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 rectly 
+ []
+
+
+Overfull \hbox (14.40298pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 into 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (21.76976pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mesh- 
+ []
+
+
+Overfull \hbox (38.25055pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dependent 
+ []
+
+
+Overfull \hbox (14.68633pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cost 
+ []
+
+
+Overfull \hbox (18.65305pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 func- 
+ []
+
+
+Overfull \hbox (23.61145pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tional, 
+ []
+
+
+Overfull \hbox (22.68088pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 rather 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 than 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 en- 
+ []
+
+
+Overfull \hbox (16.77107pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 forc- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (5.66675pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 it 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 in 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (10.43626pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 so- 
+ []
+
+
+Overfull \hbox (9.91681pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lu- 
+ []
+
+
+Overfull \hbox (20.35307pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion's 
+ []
+
+
+Overfull \hbox (18.65305pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 func- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (22.24199pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 space. 
+ []
+
+
+Overfull \hbox (7.78345pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 In 
+ []
+
+
+Overfull \hbox (13.74187pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 this 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (17.23636pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 text, 
+ []
+
+
+Overfull \hbox (9.6807pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 we 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 de- 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fine 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (21.76976pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mesh- 
+ []
+
+
+Overfull \hbox (38.25055pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dependent 
+ []
+
+
+Overfull \hbox (19.36833pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 norm 
+ []
+
+
+Overfull \hbox (13.69464pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 and 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pro- 
+ []
+
+
+Overfull \hbox (15.34744pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 vide 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 an 
+ []
+
+
+Overfull \hbox (9.92375pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 er- 
+ []
+
+
+Overfull \hbox (10.87515pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ror 
+ []
+
+
+Overfull \hbox (18.41693pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 anal- 
+ []
+
+
+Overfull \hbox (7.31955pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 y- 
+ []
+
+
+Overfull \hbox (9.0668pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sis 
+ []
+
+
+Overfull \hbox (20.8253pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 based 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 on 
+ []
+
+
+Overfull \hbox (13.74187pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 this 
+ []
+
+
+Overfull \hbox (21.72948pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 norm. 
+ []
+
+
+Overfull \hbox (11.7974pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 We 
+ []
+
+
+Overfull \hbox (13.69464pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 em- 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ploy 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 col- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lo- 
+ []
+
+
+Overfull \hbox (10.86127pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ca- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (28.09763pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 method 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 by 
+ []
+
+
+Overfull \hbox (13.22241pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 col- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lo- 
+ []
+
+
+Overfull \hbox (14.16687pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cat- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (29.84488pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 stochas- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tic 
+ []
+
+
+Overfull \hbox (20.06973pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 equa- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 at 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (10.38904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ze- 
+ []
+
+
+Overfull \hbox (10.91544pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ros 
+ []
+
+
+Overfull \hbox (6.84732pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 of 
+ []
+
+
+Overfull \hbox (16.57524pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 suit- 
+ []
+
+
+Overfull \hbox (15.11133pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 able 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ten- 
+ []
+
+
+Overfull \hbox (10.91544pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sor 
+ []
+
+
+Overfull \hbox (20.07668pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 prod- 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 uct 
+ []
+
+
+Overfull \hbox (10.39598pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 or- 
+ []
+
+
+Overfull \hbox (19.36139pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 thog- 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 o- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 nal 
+ []
+
+
+Overfull \hbox (18.88916pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 poly- 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 no- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mi- 
+ []
+
+
+Overfull \hbox (12.32518pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 als. 
+ []
+
+
+Overfull \hbox (16.57524pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 This 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ap- 
+ []
+
+
+Overfull \hbox (24.79897pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 proach 
+ []
+
+
+Overfull \hbox (18.46416pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 leads 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 to 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (14.0252pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sys- 
+ []
+
+
+Overfull \hbox (14.16687pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tem 
+ []
+
+
+Overfull \hbox (6.84732pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 of 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 un- 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cou- 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pled 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 de- 
+ []
+
+
+Overfull \hbox (13.22935pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ter- 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 min- 
+ []
+
+
+Overfull \hbox (8.54735pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 is- 
+ []
+
+
+Overfull \hbox (9.44458pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tic 
+ []
+
+
+Overfull \hbox (19.84056pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 prob- 
+ []
+
+
+Overfull \hbox (18.93639pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lems, 
+ []
+
+
+Overfull \hbox (15.63078pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sim- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pli- 
+ []
+
+
+Overfull \hbox (9.91681pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fy- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (17.9447pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 com- 
+ []
+
+
+Overfull \hbox (12.27795pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pu- 
+ []
+
+
+Overfull \hbox (10.38904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ta- 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion. 
+ []
+
+
+Overfull \hbox (15.70439pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 Fur- 
+ []
+
+
+Overfull \hbox (17.95164pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ther- 
+ []
+
+
+Overfull \hbox (20.78502pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 more, 
+ []
+
+
+Overfull \hbox (9.6807pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 we 
+ []
+
+
+Overfull \hbox (9.96404pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 es- 
+ []
+
+
+Overfull \hbox (15.11133pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tab- 
+ []
+
+
+Overfull \hbox (12.79741pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 lish 
+ []
+
+
+Overfull \hbox (8.97235pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 an 
+ []
+
+
+Overfull \hbox (4.25006pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 a 
+ []
+
+
+Overfull \hbox (12.04184pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 po- 
+ []
+
+
+Overfull \hbox (8.50706pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ri- 
+ []
+
+
+Overfull \hbox (9.92375pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ori 
+ []
+
+
+Overfull \hbox (9.92375pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 er- 
+ []
+
+
+Overfull \hbox (10.87515pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ror 
+ []
+
+
+Overfull \hbox (23.37534pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 bound 
+ []
+
+
+Overfull \hbox (10.15987pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 for 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 fully 
+ []
+
+
+Overfull \hbox (13.26964pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dis- 
+ []
+
+
+Overfull \hbox (17.95164pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 crete 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ap- 
+ []
+
+
+Overfull \hbox (19.36833pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 prox- 
+ []
+
+
+Overfull \hbox (5.19452pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 i- 
+ []
+
+
+Overfull \hbox (14.16687pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ma- 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion, 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 de- 
+ []
+
+
+Overfull \hbox (15.11133pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tail- 
+ []
+
+
+Overfull \hbox (11.3335pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ing 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (14.17381pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ver- 
+ []
+
+
+Overfull \hbox (20.30585pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 gence 
+ []
+
+
+Overfull \hbox (17.99887pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 rates 
+ []
+
+
+Overfull \hbox (16.52802pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 with 
+ []
+
+
+Overfull \hbox (9.92375pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 re- 
+ []
+
+
+Overfull \hbox (19.1725pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 spect 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 to 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (13.26964pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 dis- 
+ []
+
+
+Overfull \hbox (27.39622pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cretiza- 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 tion 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pa- 
+ []
+
+
+Overfull \hbox (17.47942pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ram- 
+ []
+
+
+Overfull \hbox (6.6112pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 e- 
+ []
+
+
+Overfull \hbox (16.10995pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ters. 
+ []
+
+
+Overfull \hbox (10.73904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 Fi- 
+ []
+
+
+Overfull \hbox (19.83362pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 nally, 
+ []
+
+
+Overfull \hbox (12.04184pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 nu- 
+ []
+
+
+Overfull \hbox (17.00719pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 mer- 
+ []
+
+
+Overfull \hbox (5.19452pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 i- 
+ []
+
+
+Overfull \hbox (10.38904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cal 
+ []
+
+
+Overfull \hbox (9.92375pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 re- 
+ []
+
+
+Overfull \hbox (17.0947pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sults 
+ []
+
+
+Overfull \hbox (11.34044pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 are 
+ []
+
+
+Overfull \hbox (14.64604pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 pre- 
+ []
+
+
+Overfull \hbox (23.42256pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 sented 
+ []
+
+
+Overfull \hbox (7.55566pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 to 
+ []
+
+
+Overfull \hbox (15.58356pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 con- 
+ []
+
+
+Overfull \hbox (15.11827pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 firm 
+ []
+
+
+Overfull \hbox (13.69464pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 and 
+ []
+
+
+Overfull \hbox (13.45853pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 val- 
+ []
+
+
+Overfull \hbox (5.19452pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 i- 
+ []
+
+
+Overfull \hbox (16.05579pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 date 
+ []
+
+
+Overfull \hbox (11.80573pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the 
+ []
+
+
+Overfull \hbox (14.6391pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 the- 
+ []
+
+
+Overfull \hbox (7.08344pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 o- 
+ []
+
+
+Overfull \hbox (13.22935pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ret- 
+ []
+
+
+Overfull \hbox (5.19452pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 i- 
+ []
+
+
+Overfull \hbox (10.38904pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 cal 
+ []
+
+
+Overfull \hbox (17.00024pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 find- 
+ []
+
+
+Overfull \hbox (17.04747pt too wide) in paragraph at lines 3--15
+ \OT1/cmr/m/n/8 ings. 
+ []
+
+
+! LaTeX Error: The font size command \normalsize is not defined:
+               there is probably something wrong with the class file.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.15 	\end{center}
+                  
+Your command was ignored.
+Type  I <command> <return>  to replace it with another command,
+or  <return>  to continue without it.
+
+[1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
+! Emergency stop.
+<*> ...Mixed-FEM-uncertain-data-arxiv_abstract.tex
+                                                  
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 24 strings out of 477884
+ 643 string characters out of 5835938
+ 1862330 words of memory out of 5000000
+ 20280 multiletter control sequences out of 15000+600000
+ 512887 words of font info for 34 fonts, out of 8000000 for 9000
+ 81 hyphenation exceptions out of 8191
+ 28i,5n,26p,470b,164s stack positions out of 10000i,1000n,20000p,200000b,200000s
+!  ==> Fatal error occurred, no output PDF file produced!

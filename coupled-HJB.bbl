@@ -1,0 +1,48 @@
+\begin{thebibliography}{1}
+
+\bibitem{cerutti1993uniqueness}
+{\sc M.~C. Cerutti, L.~Escauriaza, and E.~B. Fabes}, {\em Uniqueness in the
+  dirichlet problem for some elliptic operators with discontinuous
+  coefficients}, Annali di Matematica pura ed applicata, 163 (1993),
+  pp.~161--180.
+
+\bibitem{evans2010partial}
+{\sc L.~C. Evans}, {\em Partial Differential Equations}, Graduate studies in
+  mathematics, American Mathematical Society, 2010,
+  \url{https://books.google.de/books?id=Xnu0o_EJrCQC}.
+
+\bibitem{gilbarg2001elliptic}
+{\sc D.~Gilbarg and N.~S. Trudinger}, {\em Elliptic Partial Differential
+  Equations of Second Order}, Classics in Mathematics, Springer Berlin
+  Heidelberg, 2001, \url{https://books.google.de/books?id=eoiGTf4cmhwC}.
+
+\bibitem{kuo2007new}
+{\sc H.-J. Kuo and N.~S. Trudinger}, {\em New maximum principles for linear
+  elliptic equations}, Indiana University mathematics journal,  (2007),
+  pp.~2439--2452.
+
+\bibitem{kuo2008maximum}
+{\sc H.-J. Kuo and N.~S. Trudinger}, {\em On the maximum principle for linear
+  parabolic equations}, Journal of Global Optimization, 40 (2008),
+  pp.~495--500.
+
+\bibitem{ladyzhenskai1988linear}
+{\sc O.~A. Ladyženskaja, V.~A. Solonnikov, and N.~N. Uraltseva}, {\em Linear
+  and Quasi-linear Equations of Parabolic Type}, Translations of mathematical
+  monographs, American Mathematical Society, 1988,
+  \url{https://books.google.de/books?id=hjMp0QEACAAJ}.
+
+\bibitem{maugeri2000elliptic}
+{\sc A.~Maugeri, D.~Palagachev, and L.~Softova}, {\em Elliptic and Parabolic
+  Equations with Discontinuous Coefficients}, Mathematical Research, Wiley,
+  2000, \url{https://books.google.de/books?id=sFQZAQAAIAAJ}.
+
+\bibitem{rudin1976principles}
+{\sc W.~Rudin}, {\em Principles of Mathematical Analysis}, McGraw-Hill,
+  3rd~ed., 1976.
+
+\bibitem{safonov1994weak}
+{\sc M.~V. Safonov}, {\em On a weak uniqueness for some elliptic equations},
+  Communications in partial differential equations, 19 (1994), pp.~943--957.
+
+\end{thebibliography}

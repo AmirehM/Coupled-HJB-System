@@ -1,0 +1,151 @@
+or $i= 1, \cdots, d$ and any $v \in W_q$, we first extend $a_i[v]$
+		as
+		%to  $\mathbb{R}^d \setminus \Omega$ by zero
+		\[
+		\tilde{a}_i[v](\boldsymbol{x}):=
+		\begin{cases}
+			a_i[v](\boldsymbol{x}), ~~ &\text{if }\boldsymbol{x} \in \Omega,
+			\\
+			\frac{\left( \sigma_1 + \sigma_2\right)}{2}, ~~ &\text{if } \boldsymbol{x} \notin \Omega.
+		\end{cases}
+		\]
+		so that,
+		\begin{equation}
+			\label{ineq:uniform-upper-bound-extension}
+			\left\| \tilde{a}_i\left[ v \right]  \right\|_{L_{\infty}(\mathbb{R}^d)}
+			\leq
+			\sigma_2.
+		\end{equation}
+		%
+		We then define the regularized operator
+		\begin{equation}
+			\label{oper:convolution}
+			a_{i,\varepsilon}\left[ v \right](\boldsymbol{x}) :=
+			%		\frac{1}{\left\| v \right\|_{W^{2,p}(\Omega)} + C }
+			\bigl( \eta_{\varepsilon} \ast \tilde{a}_i\left[ v \right]) \big|_{\Omega} (\boldsymbol{x}),
+		\end{equation}
+		where $\eta_\varepsilon$ denotes the standard {\color{red}exponential} mollifier.
+		%The scaling factor $\left( \left\| v \right\|_{W^{2,p}(\Omega)} + C \right)^{-1}$ is used to ensure that	$a_{i, \varepsilon}[v]$ admits a modulus of continuity that is uniform with respect to $v$.
+		%
+		\paragraph{Compactness of $a_{i,\varepsilon}$.}
+		We first show that the operator $a_{i,\varepsilon} : W_q \to C(\bar{\Omega})$ is compact. Indeed, using Young's convolution inequality and \eqref{ineq:uniform-upper-bound-extension}, we have
+		\begin{equation}
+			\label{ineq:uniform-boundedness-convolution}
+			\| a_{i,\varepsilon}[v] \|_{L_\infty(\Omega)}
+			\le
+			\| \eta_\varepsilon \ast \tilde{a}_{i}\left[ v\right]  \|_{L_\infty(\mathbb{R}^d)}
+			%\\
+			\le
+			\| \eta_\varepsilon \|_{L_1(\mathbb{R}^d)} \, \| \tilde{a}_i\left[ v \right] \|_{L_\infty(\mathbb{R}^d)}
+			\leq \sigma_2.
+		\end{equation}
+		Since the mollifier is normalized, we have $\left\| \eta_{\varepsilon} \right\|_{L_1(\mathbb{R}^d)} =1 $.
+		\\
+		Moreover, for any multi-index $\boldsymbol{k} \in \mathbb{N}^d$,
+		\[
+		\partial^{\boldsymbol{k}} \bigl(\eta_\varepsilon \ast \tilde{a}_i\left[ v \right]\bigr)
+		= (\partial^{\boldsymbol{k}} \eta_\varepsilon) \ast \tilde{a}_i \left[ v \right],
+		\]
+		so that
+		\begin{equation}
+			\label{ineq:upper-bound-derivative-S}
+			\left\| \partial^{\boldsymbol{k}} \left( \eta_\varepsilon \ast \tilde{a}_i\left[ v \right] \right)  \right\|_{L_\infty(\mathbb{R}^d)}
+			\le
+			\left\| \partial^{\boldsymbol{k}} \eta_\varepsilon \right\| _{L_1(\mathbb{R}^d)} \, \left\| \tilde{a}_i\left[ v \right]\right\| _{L_{\infty}(\mathbb{R}^d)}
+			\le
+			\varepsilon^{-|\boldsymbol{k}|}
+			\sigma_2
+			.
+		\end{equation}
+		%
+		If $\{v_m\}_m \subset W_q$ is bounded, $\|v_m\|_{W^{2}_q(\Omega)} \le C$, then the sequence $\left\lbrace \eta_\varepsilon \ast \tilde{a}_i\left[ v_m \right] \right\rbrace_m  \subset C^\infty(\mathbb{R}^d)$ is
+		\begin{itemize}
+			\item uniformly bounded in $L_\infty(\mathbb{R}^d)$,
+			\item equicontinuous on compact subset $\bar{\Omega}$.
+		\end{itemize}
+		By the Arzelà–Ascoli theorem, $a_{i,\varepsilon}[v_m]$ has a uniformly convergent subsequence in $C(\bar{\Omega})$.
+		Therefore,
+		for each fixed $\varepsilon>0$, $a_{i,\varepsilon}: W_q \to C(\bar{\Omega})$ is compact.
+		%	Since $a_\varepsilon$ is smooth, the composition $a_{i,\varepsilon,\delta} = a_\varepsilon \circ S_{i,\delta}$ is compact.
+		%
+		\paragraph{Pointwise convergence.}
+		For any $v \in W_q$,
+		\begin{equation}
+			\label{limit:pointwise-S}
+			\lim_{\varepsilon \to 0} a_{i,\varepsilon}[v](\boldsymbol{x})
+			=
+			\lim_{\varepsilon \to 0} (\eta_\varepsilon \ast \tilde{a}_i\left[ v \right])(\boldsymbol{x})
+			=
+			a_i\left[ v \right](\boldsymbol{x})
+			\quad \text{a.e. in } \Omega.
+		\end{equation}
+		Hence,
+		\begin{equation}
+			\label{limit:pointwise-regularized}
+			\lim_{\varepsilon \to 0}
+			\text{dist}\left(
+			a_{i,\varepsilon}[v](\boldsymbol{x})
+			,
+			\left\lbrace
+			\operatorname*{arg\,max}_{\alpha \in [\sigma_1,\sigma_2]}
+			\left[  \alpha\, \partial_{x_i x_i} v (\boldsymbol{x}) \right] \right\rbrace
+			\right) =0,
+			\quad \text{a.e. in } \Omega.
+		\end{equation}
+		%		At points where $\partial_{x_i x_i} v = 0$, the limit depends on the choice of $a_\varepsilon$, which matches the original $\arg\max$ set $[\sigma_1, \sigma_2]$.
+		Therefore, pointwise a.e. convergence is guaranteed.
+		\paragraph{Uniform modulus of continuity.}
+		%Since $a_{\varepsilon}(s)$ is smooth with derivative
+		%\[
+		%{a}^{\prime}_{\varepsilon}(s)
+		%=
+		%\frac{\sigma_2- \sigma_1}{2 \varepsilon} ~\mathrm{sech}^2(\frac{s}{\varepsilon}),
+		%\]
+		%we have
+		%\[
+		%\left|
+		%{a}^{\prime}_{\varepsilon}(s)
+		%\right|
+		%\le
+		%\frac{\sigma_2- \sigma_1}{2 \varepsilon}
+		%~~
+		%\forall s \in \mathbb{R}.
+		%\]
+		%On the other hand, by Young’s inequality and the extension property of $W^{2,d}(\Omega)$ we have
+		%\[
+		%\left\|  \nabla S_{i, \delta}[v] \right\|_{L^{\infty}(\Omega)}\le
+		%\frac{C_{\delta}}{\delta^d}
+		%\quad
+		%\text{(similar to argument (\ref{ineq:upper-bound-derivative-S}))}.
+		%\]
+		%Therefore
+		%\[
+		%\left| \nabla a_{i, \varepsilon, \delta}[v](\boldsymbol{x}) \right|
+		%=
+		%\left|
+		%a^{\prime}_{\varepsilon}\left(
+		%S_{i, \delta}[v](\boldsymbol{x})
+		%\right)
+		%\nabla S_{i, \delta}[v](\boldsymbol{x})
+		%\right|
+		%\le
+		%\frac{\sigma_2 - \sigma_1}{2 \varepsilon} \frac{C_{\delta}}{\delta^d}.
+		%\]
+		%This bound is independent of $v$.
+		The upper bound \eqref{ineq:upper-bound-derivative-S} implies that for any $\boldsymbol{x}, \boldsymbol{y} \in \bar{\Omega}$ we have
+		\begin{equation}
+			\label{ineq:uniform-modulus-of-continuity}
+			\left|
+			a_{i, \varepsilon}\left[ v \right] (\boldsymbol{x})
+			-
+			a_{i, \varepsilon}\left[ v \right] (\boldsymbol{y})
+			\right|
+			\le
+			\left\|
+			\nabla a_{i, \varepsilon}\left[ v \right]
+			\right\|_{L_{\infty}(\Omega)}\left| \boldsymbol{x} - \boldsymbol{y} \right|
+			\le
+			\frac{\sigma_2}{\varepsilon}
+			\left| \boldsymbol{x} - \boldsymbol{y} \right| .
+		\end{equation}
+		Thus the modulus of continuity $\omega[a_{i, \varepsilon} \left[ v \right] ](r):= \frac{\sigma_2}{\varepsilon} r $ is uniform in $v$.

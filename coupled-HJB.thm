@@ -1,0 +1,41 @@
+\contentsline {example}{{Example}{3.1}{Regularized coefficients}}{2}{theorem.14}%
+\contentsline {theorem}{{Theorem}{3.2}{well-posedness of a linear equation with continuous coefficients {\cite [Theorem 9.15 and Lemma 9.17]{gilbarg2001elliptic}} }}{4}{theorem.32}%
+\contentsline {lemma}{{Lemma}{3.3}{Stability with respect to the diffusion coefficients}}{5}{theorem.35}%
+\contentsline {proof}{{Proof}{1}{}}{5}{proof.38}%
+\contentsline {theorem}{{Theorem}{3.4}{Schaefer's fixed point theorem {\cite [Section 9.2.2., Theorem 4]{evans2010partial}}}}{5}{theorem.39}%
+\contentsline {lemma}{{Lemma}{3.5}{existence of strong solution for the regularized system}}{5}{theorem.41}%
+\contentsline {proof}{{Proof}{2}{}}{6}{proof.42}%
+\contentsline {assumption}{{Assumption}{1}{Cordes condition}}{7}{assumption.49}%
+\contentsline {remark}{{Remark}{3.6}{}}{7}{theorem.51}%
+\contentsline {lemma}{{Lemma}{3.7}{ABP estimate {\color {red}{\cite [Corollary 4.2]{kuo2007new}}}}}{7}{theorem.52}%
+\contentsline {proof}{{Proof}{3}{}}{7}{proof.54}%
+\contentsline {lemma}{{Lemma}{3.8}{Hölder continuity}}{7}{theorem.55}%
+\contentsline {proof}{{Proof}{4}{}}{7}{proof.57}%
+\contentsline {remark}{{Remark}{3.9}{}}{7}{theorem.58}%
+\contentsline {remark}{{Remark}{3.10}{}}{7}{theorem.59}%
+\contentsline {remark}{{Remark}{3.11}{equicontinuity}}{8}{theorem.60}%
+\contentsline {proof}{{Proof}{5}{}}{8}{proof.61}%
+\contentsline {definition}{{Definition}{4.1}{{\color {blue}weak solution} or {\color {red} limit solution}}}{8}{theorem.66}%
+\contentsline {lemma}{{Lemma}{4.2}{existence of weak solution for the fully coupled HJB system}}{8}{theorem.67}%
+\contentsline {proof}{{Proof}{6}{}}{8}{proof.68}%
+\contentsline {lemma}{{Lemma}{4.3}{uniform a priori \(W^{2}_{\hat p}\) estimate for the regularized system}}{9}{theorem.70}%
+\contentsline {proof}{{Proof}{7}{}}{9}{proof.72}%
+\contentsline {remark}{{Remark}{4.4}{$W^{2}_{\hat {p}}$-regularity of a weak solution}}{9}{theorem.75}%
+\contentsline {theorem}{{Theorem}{4.5}{well-posedness of a linear equation with coefficients satisfying Cordes condition and $d\leq 4$ {\cite [Theorem 1.2.3]{maugeri2000elliptic}}}}{10}{theorem.77}%
+\contentsline {remark}{{Remark}{5.1}{}}{11}{theorem.81}%
+\contentsline {theorem}{{Theorem}{5.2}{well-posedness of a linear time-dependent equation with continuous coefficients {\cite [Chapter IV, Theorem 9.1]{ladyzhenskai1988linear}}}}{11}{theorem.82}%
+\contentsline {definition}{{Definition}{A.1}{}}{12}{theorem.88}%
+\contentsline {lemma}{{Lemma}{A.2}{Young's convolution inequality}}{12}{theorem.89}%
+\contentsline {theorem}{{Theorem}{A.3}{Arzelà–Ascoli theorem {\cite [Theorem~7.25]{rudin1976principles}}}}{12}{theorem.91}%
+\contentsline {lemma}{{Lemma}{A.4}{strong-weak continuity}}{13}{theorem.92}%
+\contentsline {lemma}{{Lemma}{B.1}{ABP estimate {\cite [Corollary~4.2]{kuo2007new}}}}{14}{theorem.100}%
+\contentsline {remark}{{Remark}{B.2}{}}{14}{theorem.102}%
+\contentsline {lemma}{{Lemma}{B.3}{interior Hölder continuity {\cite [Theorem~4.3]{kuo2007new}}}}{14}{theorem.103}%
+\contentsline {remark}{{Remark}{B.4}{interior Hölder continuity}}{14}{theorem.106}%
+\contentsline {lemma}{{Lemma}{B.5}{global Hölder continuity}}{15}{theorem.108}%
+\contentsline {proof}{{Proof}{8}{}}{15}{proof.110}%
+\contentsline {lemma}{{Lemma}{B.6}{ABP estimate {\cite [Theorem~1]{kuo2008maximum}}}}{16}{theorem.116}%
+\contentsline {lemma}{{Lemma}{B.7}{ABP estimate {\cite {kuo2008maximum}}}}{17}{theorem.118}%
+\contentsline {lemma}{{Lemma}{B.8}{interior Hölder continuity for parabolic equations~{\cite {kuo2008maximum}}}}{17}{theorem.120}%
+\contentsline {lemma}{{Lemma}{B.9}{global Hölder continuity}}{17}{theorem.123}%
+\contentsline {proof}{{Proof}{9}{}}{18}{proof.125}%
